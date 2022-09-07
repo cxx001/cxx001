@@ -1,0 +1,349 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+<head>
+    <!--Setting-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta name="apple-mobile-web-app-capable" content="Hexo">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    <meta name="browsermode" content="application">
+    <meta name="screen-orientation" content="portrait">
+    <meta name="theme-version" content="1.0.0">
+    <meta name="root" content="/">
+    <link rel="dns-prefetch" href="https://cxx001.gitee.io">
+    <!--SEO-->
+
+<meta name="keywords" content="npm" />
+
+
+<meta name="description" content="一 package.json
+组成：
+Dependencies依赖包支持的配置格式：
+
+
+&quot;core-js&quot;: &quot;^1.1.5&quot; 指定版本号，去npm服务..." />
+
+
+<meta name="robots" content="all" />
+<meta name="google" content="all" />
+<meta name="googlebot" content="all" />
+<meta name="verify" content="all" />
+    <!--Title-->
+
+<title>
+    
+    npm包管理机制 |
+    
+    Hexo
+</title>
+
+<link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+
+
+<link rel="icon" href="/favicon.ico">
+
+    
+
+
+<link rel="stylesheet" href="/css/bootstrap.min.css?rev=3.3.7.css">
+<link rel="stylesheet" href="/css/font-awesome.min.css?rev=4.7.0.css">
+<link rel="stylesheet" href="/css/style.css?rev=@@hash.css">
+
+    
+<div class="hide">
+    <script type="text/javascript">
+    var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+    document.write(unescape("%3Cspan class='cnzz_stat_icon_1263868967 hide' %3E%3Cscript%20src%3D%22https%3A%2F%2Fs95.cnzz.com%2Fz_stat.php%3Fweb_id%3D1272564536%22%3E%3C%2Fscript%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s19.cnzz.com/z_stat.php%3Fid%3D1263868967%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+    </script>
+</div>
+
+
+
+
+    
+
+<meta name="generator" content="Hexo 6.2.0"></head>
+<!--[if lte IE 8]>
+<style>
+    html{ font-size: 1em }
+</style>
+<![endif]-->
+<!--[if lte IE 9]>
+<div style="ie">你使用的浏览器版本过低，为了你更好的阅读体验，请更新浏览器的版本或者使用其他现代浏览器，比如Chrome、Firefox、Safari等。</div>
+<![endif]-->
+<body>
+    <header class="main-header"  style="background-image:url(
+    https://hexo-theme-snippet-1251680922.cos.ap-beijing.myqcloud.com/img/banner.jpg)"
+     >
+    <div class="main-header-box">
+        <a class="header-avatar" href="/" title='John Doe'>
+            <img src="/img/avatar.jpg" alt="logo头像" class="img-responsive center-block">
+        </a>
+        <div class="branding">
+            <!--<h2 class="text-hide">Snippet主题,从未如此简单有趣</h2>-->
+            
+            <img src="/img/branding.png" alt="Snippet 博客主题" class="img-responsive center-block">
+            
+        </div>
+    </div>
+</header>
+    <nav class="main-navigation">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="navbar-header"><span class="nav-toggle-button collapsed pull-right" data-toggle="collapse" data-target="#main-menu" id="mnav">
+                        <span class="sr-only"></span>
+                        <i class="fa fa-bars"></i>
+                    </span>
+                    <a class="navbar-brand" href="https://cxx001.gitee.io">
+                        Hexo</a>
+                </div>
+                <div class="collapse navbar-collapse" id="main-menu">
+                    <ul class="menu">
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/"><i class="fa "></i>
+                                首页</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/archives/"><i class="fa "></i>
+                                时间轴</a>
+                        </li>
+                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+    <section class="content-wrap">
+        <div class="container">
+            <div class="row">
+                <main class="col-md-8 main-content m-post">
+                    <p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id="npm包管理机制">
+            
+            npm包管理机制
+            
+        </h1>
+        <div class="post-meta">
+    
+    <span class="categories-meta fa-wrap">
+        <i class="fa fa-folder-open-o"></i>
+        <a class="category-link" href="/categories/nodejs/">nodejs</a>
+    </span>
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-tags"></i>
+        <span class="tags-meta">
+            
+            <a class="tag-none-link" href="/tags/npm/" rel="tag">npm</a>
+            
+        </span>
+    </span>
+    
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-clock-o"></i>
+        <span class="date-meta">
+            2022/08/01</span>
+    </span>
+    
+    <span class="fa-wrap">
+        <i class="fa fa-eye"></i>
+        <span id="busuanzi_value_page_pv"></span>
+    </span>
+    
+    
+</div>
+        
+        
+    </div>
+    
+    <div class="post-body post-content">
+        <h1 id="一-package-json"><a href="#一-package-json" class="headerlink" title="一 package.json"></a>一 package.json</h1><ul>
+<li>组成：<br><img src="/2022/08/01/nodejs/npm%E5%8C%85%E7%AE%A1%E7%90%86%E6%9C%BA%E5%88%B6/package.jpg"></li>
+<li>Dependencies依赖包支持的配置格式：</li>
+</ul>
+<ol>
+<li><code>&quot;core-js&quot;: &quot;^1.1.5&quot;</code> 指定版本号，去npm服务器下载包</li>
+<li><code>&quot;test2-js&quot;: &quot;http://cdn.com/test2-js.tar.gz&quot;</code> 一个可下载的压缩包地址，去下载并解压安装</li>
+<li><code>&quot;antd&quot;: &quot;ant-design/ant-design#4.0.0-alpha.8&quot;</code> github用户名&#x2F;仓库名[#tag&#x2F;commitid]这种格式</li>
+<li>git ulr形式下载安装，如：<br><code>git+https://github.com/itwmike/axios.git</code><br><code>git+ssh://git@github.com:itwmike/axios.git</code></li>
+</ol>
+<ul>
+<li><p>devDependencies属性与dependencies区别，dev是开发环境，只在开发环境使用，用户使用你的包时即使不安装这些依赖也可以正常运行，npm install时也会被安装和管理，但是不会被安装到生产环境。</p>
+</li>
+<li><p>scripts 用于配置一些脚本命令的缩写，各个脚本可以互相组合使用，这些脚本可以覆盖整个项目的生命周期，配置后可使用 npm run command 进行调用。如果是 npm 关键字，则可以直接调用。</p>
+</li>
+</ul>
+<h1 id="二-npm包管理"><a href="#二-npm包管理" class="headerlink" title="二 npm包管理"></a>二 npm包管理</h1><ul>
+<li><p><code>npm view xxx version/versions</code> 查看某个包最新版本&#x2F;所有发布的版本</p>
+</li>
+<li><p>~: 当安装依赖时获取到有新版本时，<code>安装到 x.y.z 中 z 的最新的版本</code>。即保持主版本号、次版本号不变的情况下，保持修订号的最新版本。</p>
+<p>^: 当安装依赖时获取到有新版本时，<code>安装到 x.y.z 中 y 和 z 都为最新版本</code>。即保持主版本号不变的情况下，保持次版本号、修订版本号为最新版本。</p>
+</li>
+<li><p>package-lock.json文件，锁定依赖版本意味着在我们不手动执行更新的情况下，每次安装依赖都会安装固定版本。保证整个团队使用版本号一致的依赖。</p>
+</li>
+<li><p>使用 <code>npm outdated</code> 可以帮助我们列出有哪些还没有升级到最新版本的依赖：</p>
+<p>黄色表示不符合我们指定的语意化版本范围 - 不需要升级</p>
+<p>红色表示符合指定的语意化版本范围 - 需要升级</p>
+<p>执行 <code>npm update</code> 会升级所有的红色依赖。</p>
+</li>
+<li><p>依赖变更</p>
+<p>升级依赖: 修改 package.json文件的依赖版本，执行 npm install。</p>
+<p>降级依赖: 执行 npm install package@version, 重新安装(改动package.json不会对依赖进行降级)。</p>
+<p>注意改动依赖后提交lock文件</p>
+</li>
+</ul>
+<h1 id="npm-install执行原理"><a href="#npm-install执行原理" class="headerlink" title="npm install执行原理"></a>npm install执行原理</h1><p><img src="/2022/08/01/nodejs/npm%E5%8C%85%E7%AE%A1%E7%90%86%E6%9C%BA%E5%88%B6/install.jpg"></p>
+<ul>
+<li><p>在执行 npm install 或 npm update命令下载依赖后，除了将依赖包安装在node_modules 目录下外，还会在本地的缓存目录缓存一份。查看缓存目录命令：<code>npm config get cache</code></p>
+</li>
+<li><p>npm 提供了几个命令来管理缓存数据：</p>
+<p>npm cache add：官方解释说这个命令主要是 npm 内部使用，但是也可以用来手动给一个指定的 package 添加缓存。</p>
+<p>npm cache clean：删除缓存目录下的所有数据，为了保证缓存数据的完整性，需要加上 –force 参数。</p>
+<p>npm cache verify：验证缓存数据的有效性和完整性，清理垃圾数据。</p>
+<h1 id="yarn"><a href="#yarn" class="headerlink" title="yarn"></a>yarn</h1><ul>
+<li><p>yarn 是在 2016 年发布的，那时 npm 还处于 V3 时期，那时候还没有 package-lock.json 文件，就像上面我们提到的：不稳定性、安装速度慢等缺点经常会受到广大开发者吐槽。此时，yarn 诞生.</p>
+</li>
+<li><p>yarn也有yarn.lock文件，原理大致和npm的一致，只是yarn.lock 中子依赖的版本号不是固定的，意味着单独一个 yarn.lock 确定不了 node_modules 目录结构，还需要和 package.json 文件进行配合。而 package-lock.json 只需要一个文件即可确定。</p>
+</li>
+<li><p>查看缓存目录：<code>yarn cache dir</code><br>删除缓存：<code>yarn cache clean</code></p>
+</li>
+</ul>
+</li>
+</ul>
+
+    </div>
+    
+    <div class="post-footer">
+        <div>
+            
+            转载声明：
+            商业转载请联系作者获得授权,非商业转载请注明出处 © <a href="" target="_blank">cxx</a>
+            
+            
+        </div>
+        <div>
+            
+        </div>
+    </div>
+</article>
+<div class="article-nav prev-next-wrap clearfix">
+    
+    <a href="/2022/08/01/pomelo/pomelo%E6%9B%B4%E6%96%B0%E6%97%A5%E5%BF%97/" class="pre-post btn btn-default" title='pomelo更新日志'>
+        <i class="fa fa-angle-left fa-fw"></i><span class="hidden-lg">上一篇</span>
+        <span class="hidden-xs">
+            pomelo更新日志</span>
+    </a>
+    
+    
+    <a href="/2022/07/07/hello-world/" class="next-post btn btn-default" title='Hello World'>
+        <span class="hidden-lg">下一篇</span>
+        <span class="hidden-xs">
+            Hello World</span><i class="fa fa-angle-right fa-fw"></i>
+    </a>
+    
+</div>
+
+<div id="comments">
+    
+    
+<div class="utteranc">
+  
+  <script
+    src='https://utteranc.es/client.js'
+    repo='cxx001/myblog-comment'
+    issue-term='pathname'
+    issue-number=''
+    theme='github-light'
+    label=''
+    crossorigin='anonymous'
+    async
+  ></script>
+</div>
+
+
+
+</div>
+
+                </main>
+                
+                    <aside id="article-toc" role="navigation" class="col-md-4">
+    <div class="widget">
+        <h3 class="title">
+            文章目录
+        </h3>
+        
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%80-package-json"><span class="toc-text">一 package.json</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BA%8C-npm%E5%8C%85%E7%AE%A1%E7%90%86"><span class="toc-text">二 npm包管理</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#npm-install%E6%89%A7%E8%A1%8C%E5%8E%9F%E7%90%86"><span class="toc-text">npm install执行原理</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#yarn"><span class="toc-text">yarn</span></a></li></ol>
+        
+    </div>
+</aside>
+                
+            </div>
+        </div>
+    </section>
+    <footer class="main-footer">
+    <div class="container">
+        <div class="row">
+        </div>
+    </div>
+</footer>
+<a id="back-to-top" class="icon-btn hide">
+    <i class="fa fa-chevron-up"></i>
+</a>
+    <div class="copyright">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="busuanzi">
+    
+    访问量:
+    <strong id="busuanzi_value_site_pv">
+        <i class="fa fa-spinner fa-spin"></i>
+    </strong>
+    &nbsp; | &nbsp;
+    访客数:
+    <strong id="busuanzi_value_site_uv">
+        <i class="fa fa-spinner fa-spin"></i>
+    </strong>
+    
+</div>
+            </div>
+            <div class="col-sm-12">
+                <span>Copyright &copy;
+                    2022
+                    
+                </span> |
+                <span>
+                    Powered by <a href="//hexo.io" class="copyright-links" target="_blank" rel="nofollow">Hexo</a>
+                </span> |
+                <span>
+                    Theme by <a href="//github.com/shenliyang/hexo-theme-snippet.git" class="copyright-links" target="_blank" rel="nofollow">Snippet</a>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+<script src="/js/app.js?rev=@@hash.js"></script>
+
+</body>
+</html>

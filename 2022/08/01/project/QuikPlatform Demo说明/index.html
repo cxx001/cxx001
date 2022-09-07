@@ -1,0 +1,314 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+<head>
+    <!--Setting-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta name="apple-mobile-web-app-capable" content="Hexo">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    <meta name="browsermode" content="application">
+    <meta name="screen-orientation" content="portrait">
+    <meta name="theme-version" content="1.0.0">
+    <meta name="root" content="/">
+    <link rel="dns-prefetch" href="https://cxx001.gitee.io">
+    <!--SEO-->
+
+<meta name="keywords" content="QT,软件架构" />
+
+
+<meta name="description" content="QuikPaltformTest目录结构12345678910111213141516171819202122232425QuikPaltformTest   |--&gt; bin  // 打..." />
+
+
+<meta name="robots" content="all" />
+<meta name="google" content="all" />
+<meta name="googlebot" content="all" />
+<meta name="verify" content="all" />
+    <!--Title-->
+
+<title>
+    
+    QuikPlatform Demo说明 |
+    
+    Hexo
+</title>
+
+<link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+
+
+<link rel="icon" href="/favicon.ico">
+
+    
+
+
+<link rel="stylesheet" href="/css/bootstrap.min.css?rev=3.3.7.css">
+<link rel="stylesheet" href="/css/font-awesome.min.css?rev=4.7.0.css">
+<link rel="stylesheet" href="/css/style.css?rev=@@hash.css">
+
+    
+<div class="hide">
+    <script type="text/javascript">
+    var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+    document.write(unescape("%3Cspan class='cnzz_stat_icon_1263868967 hide' %3E%3Cscript%20src%3D%22https%3A%2F%2Fs95.cnzz.com%2Fz_stat.php%3Fweb_id%3D1272564536%22%3E%3C%2Fscript%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s19.cnzz.com/z_stat.php%3Fid%3D1263868967%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+    </script>
+</div>
+
+
+
+
+    
+
+<meta name="generator" content="Hexo 6.2.0"></head>
+<!--[if lte IE 8]>
+<style>
+    html{ font-size: 1em }
+</style>
+<![endif]-->
+<!--[if lte IE 9]>
+<div style="ie">你使用的浏览器版本过低，为了你更好的阅读体验，请更新浏览器的版本或者使用其他现代浏览器，比如Chrome、Firefox、Safari等。</div>
+<![endif]-->
+<body>
+    <header class="main-header"  style="background-image:url(
+    https://hexo-theme-snippet-1251680922.cos.ap-beijing.myqcloud.com/img/banner.jpg)"
+     >
+    <div class="main-header-box">
+        <a class="header-avatar" href="/" title='John Doe'>
+            <img src="/img/avatar.jpg" alt="logo头像" class="img-responsive center-block">
+        </a>
+        <div class="branding">
+            <!--<h2 class="text-hide">Snippet主题,从未如此简单有趣</h2>-->
+            
+            <img src="/img/branding.png" alt="Snippet 博客主题" class="img-responsive center-block">
+            
+        </div>
+    </div>
+</header>
+    <nav class="main-navigation">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="navbar-header"><span class="nav-toggle-button collapsed pull-right" data-toggle="collapse" data-target="#main-menu" id="mnav">
+                        <span class="sr-only"></span>
+                        <i class="fa fa-bars"></i>
+                    </span>
+                    <a class="navbar-brand" href="https://cxx001.gitee.io">
+                        Hexo</a>
+                </div>
+                <div class="collapse navbar-collapse" id="main-menu">
+                    <ul class="menu">
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/"><i class="fa "></i>
+                                首页</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/archives/"><i class="fa "></i>
+                                时间轴</a>
+                        </li>
+                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+    <section class="content-wrap">
+        <div class="container">
+            <div class="row">
+                <main class="col-md-8 main-content m-post">
+                    <p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id="QuikPlatform Demo说明">
+            
+            QuikPlatform Demo说明
+            
+        </h1>
+        <div class="post-meta">
+    
+    <span class="categories-meta fa-wrap">
+        <i class="fa fa-folder-open-o"></i>
+        <a class="category-link" href="/categories/project/">project</a>
+    </span>
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-tags"></i>
+        <span class="tags-meta">
+            
+            <a class="tag-none-link" href="/tags/QT/" rel="tag">QT</a> <a class="tag-none-link" href="/tags/%E8%BD%AF%E4%BB%B6%E6%9E%B6%E6%9E%84/" rel="tag">软件架构</a>
+            
+        </span>
+    </span>
+    
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-clock-o"></i>
+        <span class="date-meta">
+            2022/08/01</span>
+    </span>
+    
+    <span class="fa-wrap">
+        <i class="fa fa-eye"></i>
+        <span id="busuanzi_value_page_pv"></span>
+    </span>
+    
+    
+</div>
+        
+        
+    </div>
+    
+    <div class="post-body post-content">
+        <h1 id="QuikPaltformTest目录结构"><a href="#QuikPaltformTest目录结构" class="headerlink" title="QuikPaltformTest目录结构"></a>QuikPaltformTest目录结构</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">QuikPaltformTest</span><br><span class="line">   |--&gt; bin  // 打包后可执行程序</span><br><span class="line">   |--&gt; doc  // 文档</span><br><span class="line">   |--&gt; trunk</span><br><span class="line">           |--&gt; bin       // 平台的动态库</span><br><span class="line">           |--&gt; include   // 平台的头文件</span><br><span class="line">                  |--&gt; CoreApp</span><br><span class="line">                  |--&gt; CoreLib</span><br><span class="line">                  |--&gt; CoreUi</span><br><span class="line">                  |--&gt; KIQtGui</span><br><span class="line">                  |--&gt; MyUI</span><br><span class="line">                  |--&gt; server</span><br><span class="line">                  |--&gt; server_imp</span><br><span class="line">                  |--&gt; ToolsLib</span><br><span class="line">           |--&gt; lib  // 平台的静态库</span><br><span class="line">           |--&gt; src  // 自定义源码      </span><br><span class="line">                  |--&gt; plugins  // 自定义插件</span><br><span class="line">                          |--&gt; MyUI</span><br><span class="line">                          |--&gt; PluginGreetServer</span><br><span class="line">                          |--&gt; PluginUIA</span><br><span class="line">                          |--&gt; PluginUIB</span><br><span class="line">                          |--&gt; PluginUIC</span><br><span class="line">                  |--&gt; QuikPlatformIDE // 工程目录</span><br><span class="line">                          |--&gt; QuikPlatformIDE.sln  // vs启动文件</span><br><span class="line">                          |--&gt; ...   </span><br></pre></td></tr></table></figure>
+
+<h1 id="创建插件"><a href="#创建插件" class="headerlink" title="创建插件"></a>创建插件</h1><blockquote>
+<p>QuikPaltform平台封装了一套插件机制，通过开发各种插件然后组装起来就形成了一个软件。插件分为UI插件、Server插件、两者都有插件，他们遵循的规范都大同小异，分为声明接口、实现接口、注册这3个步骤。下面以Demo中”SayHello”服务接口为例：</p>
+</blockquote>
+<h2 id="1-声明对外提供的接口"><a href="#1-声明对外提供的接口" class="headerlink" title="1.声明对外提供的接口"></a>1.声明对外提供的接口</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// IGreetServer.h</span></span><br><span class="line">...</span><br><span class="line">namespace Kcc &#123; namespace Greet &#123;</span><br><span class="line">    <span class="class"><span class="keyword">class</span> <span class="title">IGreetServer</span> &#123;</span></span><br><span class="line">    public：</span><br><span class="line">        virtual ~IGreetServer() &#123;&#125;</span><br><span class="line">        virtual <span class="type">void</span> <span class="title function_">SayHello</span><span class="params">()</span> = <span class="number">0</span>;   <span class="comment">// 对外提供的接口</span></span><br><span class="line">    &#125;;</span><br><span class="line">    <span class="keyword">typedef</span> QSharedPointer&lt;IGreetServer&gt; PIGreetServer; <span class="comment">// 接口对象的智能指针</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 插件定义的通知事件类型</span></span><br><span class="line">    <span class="class"><span class="keyword">enum</span> &#123;</span></span><br><span class="line">        Notify_SayHello = <span class="number">1</span></span><br><span class="line">    &#125;;</span><br><span class="line">&#125;&#125;</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+
+<h2 id="2-实现接口"><a href="#2-实现接口" class="headerlink" title="2.实现接口"></a>2.实现接口</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// GreetSever.h</span></span><br><span class="line">...</span><br><span class="line"><span class="comment">/*如果想构建自己的服务，必须先继承ServerBase和自己自定义的服务接口（IGreetServer）*/</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">GreetServer</span> :</span> public ServerBase, public IGreetServer</span><br><span class="line">&#123;</span><br><span class="line">public:</span><br><span class="line">    GreetServer();</span><br><span class="line">    ~GreetServer();</span><br><span class="line"></span><br><span class="line">public:</span><br><span class="line">    <span class="comment">// IServerInterfaceBase里的这几个接口必须要实现</span></span><br><span class="line">    virtual QString <span class="title function_">GetServerGroupName</span><span class="params">()</span> <span class="type">const</span> &#123; <span class="keyword">return</span> SERVER_GROUP_IGREETSERVER_NAME; &#125;</span><br><span class="line">    virtual QString <span class="title function_">GetInterfaceDefName</span><span class="params">()</span> <span class="type">const</span> &#123; <span class="keyword">return</span> SERVER_INTERFACE_IGREETSERVER_NAME; &#125;</span><br><span class="line">    virtual <span class="type">unsigned</span> <span class="type">int</span> <span class="title function_">GetVersion</span><span class="params">()</span> <span class="type">const</span> &#123; <span class="keyword">return</span> SERVER_VERSION; &#125;</span><br><span class="line"></span><br><span class="line">public:</span><br><span class="line">    <span class="comment">// IGreetServer</span></span><br><span class="line">    virtual <span class="type">void</span> <span class="title function_">SayHello</span><span class="params">()</span>;</span><br><span class="line">&#125;;</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// GreetSever.cpp</span></span><br><span class="line">...</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">GreetServer::SayHello</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">//输出log日志</span></span><br><span class="line">    <span class="built_in">LOGOUT</span>(<span class="built_in">QString</span>(<span class="string">&quot;GreetServer SayHello&quot;</span>), LOG_NORMAL);</span><br><span class="line"></span><br><span class="line">    <span class="comment">//1.发送通知：先请求对应的服务，这个服务对象类型为必须是PIServerInterfaceBase  </span></span><br><span class="line">    PIServerInterfaceBase pserver = <span class="built_in">RequestServer</span>(SERVER_GROUP_IGREETSERVER_NAME, SERVER_INTERFACE_IGREETSERVER_NAME);</span><br><span class="line"></span><br><span class="line">    <span class="comment">//2.确定发送参数，发送命令（Notify_SayHello）是必须的，参数可以根据实际情况判断是否需要</span></span><br><span class="line">    NotifyStruct notifyStruct;</span><br><span class="line">    notifyStruct.code = Notify_SayHello;</span><br><span class="line">    notifyStruct.paramMap[<span class="string">&quot;Sender&quot;</span>] = <span class="string">&quot;come from Greetserver&quot;</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//3.发送通知</span></span><br><span class="line">    <span class="keyword">if</span> (pserver)</span><br><span class="line">    &#123;</span><br><span class="line">        pserver-&gt;<span class="built_in">emitNotify</span>(notifyStruct);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+
+<h2 id="3-插件注册"><a href="#3-插件注册" class="headerlink" title="3.插件注册"></a>3.插件注册</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// PluginGreetServer.h</span></span><br><span class="line">...</span><br><span class="line"><span class="comment">//每个被注册的模块都必须继承Module</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">PluginGreetServer</span> : <span class="keyword">public</span> Module</span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">//每个模块都必须使用此宏</span></span><br><span class="line">    DEFINE_MODULE</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">PluginGreetServer</span>(QString strName);</span><br><span class="line">    ~<span class="built_in">PluginGreetServer</span>();</span><br><span class="line">&#125;;</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">...</span><br><span class="line"><span class="comment">// 静态注册（当dll被加载时会调用），每个模块都必须使用此宏（第一个参数是当前类的类型；第二个是组的名称，一般为空；第三个是显示名称，一般是类型名称）</span></span><br><span class="line"><span class="built_in">REG_MODULE_BEGIN</span>(PluginGreetServer, <span class="string">&quot;&quot;</span>, <span class="string">&quot;PluginGreetServer&quot;</span>)</span><br><span class="line"><span class="built_in">REG_MODULE_END</span>(PluginGreetServer)</span><br><span class="line"></span><br><span class="line"><span class="comment">//每个Module的参数一般情况为Module_Type_Normal，根据实际情况而定</span></span><br><span class="line">PluginGreetServer::<span class="built_in">PluginGreetServer</span>(QString strName):<span class="built_in">Module</span>(Module_Type_Normal, strName)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">    注册问候服务（服务都必须在构造的时候注册，请求服务一般都在所有模块构造之后，这样可以确保所有服务都已经被注册，</span></span><br><span class="line"><span class="comment">    可以在每个模块的init()函数中请求，因为这个函数会在所有模块被构造之后被调用）</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">    <span class="built_in">RegServer</span>&lt;GreetServer&gt;(<span class="keyword">new</span> <span class="built_in">GreetServer</span>());</span><br><span class="line">&#125;</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+
+<h1 id="使用插件"><a href="#使用插件" class="headerlink" title="使用插件"></a>使用插件</h1><h2 id="1-通过直接获取插件对象指针来调用其接口"><a href="#1-通过直接获取插件对象指针来调用其接口" class="headerlink" title="1. 通过直接获取插件对象指针来调用其接口"></a>1. 通过直接获取插件对象指针来调用其接口</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// PluginUIB.h</span></span><br><span class="line">...</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">PluginUIB</span> :</span>public QWidget, public Module</span><br><span class="line">&#123;</span><br><span class="line">    Q_OBJECT</span><br><span class="line">    DEFINE_MODULE</span><br><span class="line">public:</span><br><span class="line">    PluginUIB(QString strName);</span><br><span class="line">    ~PluginUIB();</span><br><span class="line"></span><br><span class="line">public: <span class="comment">//Module</span></span><br><span class="line">    virtual <span class="type">void</span> <span class="title function_">init</span><span class="params">(KeyValueMap ¶ms)</span>;</span><br><span class="line">    virtual <span class="type">void</span> <span class="title function_">unInit</span><span class="params">(KeyValueMap &amp;saveParams)</span>;</span><br><span class="line"></span><br><span class="line">private:</span><br><span class="line">    PIGreetServer m_pGreetServer;       <span class="comment">// 问候服务接口</span></span><br><span class="line">&#125;;</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// PluginUIB.cpp</span></span><br><span class="line">...</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">PluginUIB::init</span><span class="params">(KeyValueMap ¶ms)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">// 1. 获取要使用插件对象</span></span><br><span class="line">    m_pGreetServer = <span class="built_in">RequestServer</span>&lt;IGreetServer&gt;(SERVER_GROUP_IGREETSERVER_NAME, SERVER_INTERFACE_IGREETSERVER_NAME);</span><br><span class="line">    <span class="keyword">if</span> (!m_pGreetServer)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">LOGOUT</span>(<span class="string">&quot;IGreetServer未注册&quot;</span>, LOG_ERROR);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">PluginUIB::unInit</span><span class="params">(KeyValueMap &amp;saveParams)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">// 3. 使用插件对象释放</span></span><br><span class="line">    m_pGreetServer.<span class="built_in">clear</span>();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 槽函数</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">PluginUIB::onPluginBTest</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    ui.textEdit-&gt;<span class="built_in">append</span>(<span class="string">&quot;面板B的按钮已经被按下&quot;</span>);</span><br><span class="line">    <span class="keyword">if</span> (m_pGreetServer)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">// 2. 调用插件对象对外提供的接口</span></span><br><span class="line">        m_pGreetServer-&gt;<span class="built_in">SayHello</span>();   </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="2-通过消息发布-x2F-订阅的形式使用插件接口"><a href="#2-通过消息发布-x2F-订阅的形式使用插件接口" class="headerlink" title="2. 通过消息发布&#x2F;订阅的形式使用插件接口"></a>2. 通过消息发布&#x2F;订阅的形式使用插件接口</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// PluginUIC.cpp</span></span><br><span class="line"><span class="comment">// 订阅消息(消息接收方)</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">PluginUIC::init</span><span class="params">(KeyValueMap &amp;params)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">// 1.请求问候服务</span></span><br><span class="line">    PIServerInterfaceBase pGreetserver = <span class="built_in">RequestServer</span>(SERVER_GROUP_IGREETSERVER_NAME, SERVER_INTERFACE_IGREETSERVER_NAME);</span><br><span class="line">    <span class="comment">// 2.连接槽函数</span></span><br><span class="line">    pGreetserver-&gt;<span class="built_in">connectNotify</span>(Notify_SayHello, <span class="keyword">this</span>, <span class="built_in">SLOT</span>(<span class="built_in">onRecieveGreetMsg</span>(<span class="type">unsigned</span> <span class="type">int</span>, <span class="type">const</span> NotifyStruct&amp;)));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 3. 槽函数消息响应</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">PluginUIC::onRecieveGreetMsg</span><span class="params">(<span class="type">unsigned</span> <span class="type">int</span> code, <span class="type">const</span> NotifyStruct&amp; param)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (code == Notify_SayHello)</span><br><span class="line">    &#123;</span><br><span class="line">        QString strGreetMsg = param.paramMap[<span class="string">&quot;Sender&quot;</span>].<span class="built_in">toString</span>();</span><br><span class="line">        ui.textEdit-&gt;<span class="built_in">append</span>(strGreetMsg);</span><br><span class="line">    &#125;    </span><br><span class="line">	QMessageBox::<span class="built_in">about</span>(<span class="keyword">this</span>, <span class="built_in">tr</span>(<span class="string">&quot;测试双击菜单&quot;</span>), <span class="built_in">tr</span>(<span class="string">&quot;双击响应！&quot;</span>));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// GreetSever.cpp</span></span><br><span class="line"><span class="comment">// 发布消息(消息发送方)</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">GreetServer::SayHello</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">//输出log日志</span></span><br><span class="line">    <span class="built_in">LOGOUT</span>(<span class="built_in">QString</span>(<span class="string">&quot;GreetServer SayHello&quot;</span>), LOG_NORMAL);</span><br><span class="line">   </span><br><span class="line">    <span class="comment">//1.发送通知：先请求对应的服务，这个服务对象类型为必须是PIServerInterfaceBase  </span></span><br><span class="line">    PIServerInterfaceBase pserver = <span class="built_in">RequestServer</span>(SERVER_GROUP_IGREETSERVER_NAME, SERVER_INTERFACE_IGREETSERVER_NAME);</span><br><span class="line"></span><br><span class="line">    <span class="comment">//2.确定发送参数，发送命令（Notify_SayHello）是必须的，参数可以根据实际情况判断是否需要</span></span><br><span class="line">    NotifyStruct notifyStruct;</span><br><span class="line">    notifyStruct.code = Notify_SayHello;</span><br><span class="line">    notifyStruct.paramMap[<span class="string">&quot;Sender&quot;</span>] = <span class="string">&quot;come from Greetserver&quot;</span>;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//3.发送通知</span></span><br><span class="line">    <span class="keyword">if</span> (pserver)</span><br><span class="line">    &#123;</span><br><span class="line">        pserver-&gt;<span class="built_in">emitNotify</span>(notifyStruct);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+    </div>
+    
+    <div class="post-footer">
+        <div>
+            
+            转载声明：
+            商业转载请联系作者获得授权,非商业转载请注明出处 © <a href="" target="_blank">cxx</a>
+            
+            
+        </div>
+        <div>
+            
+        </div>
+    </div>
+</article>
+<div class="article-nav prev-next-wrap clearfix">
+    
+    <a href="/2022/08/20/computer%20system/%E8%99%9A%E6%8B%9F%E5%9C%B0%E5%9D%80%E5%88%B0%E7%89%A9%E7%90%86%E5%9C%B0%E5%9D%80%E6%98%A0%E5%B0%84/" class="pre-post btn btn-default" title='虚拟地址到物理地址映射'>
+        <i class="fa fa-angle-left fa-fw"></i><span class="hidden-lg">上一篇</span>
+        <span class="hidden-xs">
+            虚拟地址到物理地址映射</span>
+    </a>
+    
+    
+    <a href="/2022/08/01/project/%E9%A3%9E%E8%A1%8C%E4%BB%BF%E7%9C%9F%E9%A1%B9%E7%9B%AE%E6%9C%8D%E5%8A%A1%E7%AB%AF%E8%AE%BE%E8%AE%A1/" class="next-post btn btn-default" title='飞行仿真项目服务端设计'>
+        <span class="hidden-lg">下一篇</span>
+        <span class="hidden-xs">
+            飞行仿真项目服务端设计</span><i class="fa fa-angle-right fa-fw"></i>
+    </a>
+    
+</div>
+
+<div id="comments">
+    
+    
+<div class="utteranc">
+  
+  <script
+    src='https://utteranc.es/client.js'
+    repo='cxx001/myblog-comment'
+    issue-term='pathname'
+    issue-number=''
+    theme='github-light'
+    label=''
+    crossorigin='anonymous'
+    async
+  ></script>
+</div>
+
+
+
+</div>
+
+                </main>
+                
+                    <aside id="article-toc" role="navigation" class="col-md-4">
+    <div class="widget">
+        <h3 class="title">
+            文章目录
+        </h3>
+        
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#QuikPaltformTest%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84"><span class="toc-text">QuikPaltformTest目录结构</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E6%8F%92%E4%BB%B6"><span class="toc-text">创建插件</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E5%A3%B0%E6%98%8E%E5%AF%B9%E5%A4%96%E6%8F%90%E4%BE%9B%E7%9A%84%E6%8E%A5%E5%8F%A3"><span class="toc-text">1.声明对外提供的接口</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E5%AE%9E%E7%8E%B0%E6%8E%A5%E5%8F%A3"><span class="toc-text">2.实现接口</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E6%8F%92%E4%BB%B6%E6%B3%A8%E5%86%8C"><span class="toc-text">3.插件注册</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8%E6%8F%92%E4%BB%B6"><span class="toc-text">使用插件</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E9%80%9A%E8%BF%87%E7%9B%B4%E6%8E%A5%E8%8E%B7%E5%8F%96%E6%8F%92%E4%BB%B6%E5%AF%B9%E8%B1%A1%E6%8C%87%E9%92%88%E6%9D%A5%E8%B0%83%E7%94%A8%E5%85%B6%E6%8E%A5%E5%8F%A3"><span class="toc-text">1. 通过直接获取插件对象指针来调用其接口</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E9%80%9A%E8%BF%87%E6%B6%88%E6%81%AF%E5%8F%91%E5%B8%83-x2F-%E8%AE%A2%E9%98%85%E7%9A%84%E5%BD%A2%E5%BC%8F%E4%BD%BF%E7%94%A8%E6%8F%92%E4%BB%B6%E6%8E%A5%E5%8F%A3"><span class="toc-text">2. 通过消息发布&#x2F;订阅的形式使用插件接口</span></a></li></ol></li></ol>
+        
+    </div>
+</aside>
+                
+            </div>
+        </div>
+    </section>
+    <footer class="main-footer">
+    <div class="container">
+        <div class="row">
+        </div>
+    </div>
+</footer>
+<a id="back-to-top" class="icon-btn hide">
+    <i class="fa fa-chevron-up"></i>
+</a>
+    <div class="copyright">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="busuanzi">
+    
+    访问量:
+    <strong id="busuanzi_value_site_pv">
+        <i class="fa fa-spinner fa-spin"></i>
+    </strong>
+    &nbsp; | &nbsp;
+    访客数:
+    <strong id="busuanzi_value_site_uv">
+        <i class="fa fa-spinner fa-spin"></i>
+    </strong>
+    
+</div>
+            </div>
+            <div class="col-sm-12">
+                <span>Copyright &copy;
+                    2022
+                    
+                </span> |
+                <span>
+                    Powered by <a href="//hexo.io" class="copyright-links" target="_blank" rel="nofollow">Hexo</a>
+                </span> |
+                <span>
+                    Theme by <a href="//github.com/shenliyang/hexo-theme-snippet.git" class="copyright-links" target="_blank" rel="nofollow">Snippet</a>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+<script src="/js/app.js?rev=@@hash.js"></script>
+
+</body>
+</html>

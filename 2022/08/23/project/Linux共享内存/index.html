@@ -1,0 +1,326 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+<head>
+    <!--Setting-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta name="apple-mobile-web-app-capable" content="Hexo">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    <meta name="browsermode" content="application">
+    <meta name="screen-orientation" content="portrait">
+    <meta name="theme-version" content="1.0.0">
+    <meta name="root" content="/">
+    <link rel="dns-prefetch" href="https://cxx001.gitee.io">
+    <!--SEO-->
+
+<meta name="keywords" content="共享内存" />
+
+
+<meta name="description" content="基础在linux系统开发当中，时常需要在多个进程之间交换数据，在多个进程之间交换数据，有很多方法，但最高效的方法莫过于共享内存。
+linux共享内存是通过tmpfs这个文件系统来实现的，tmpf..." />
+
+
+<meta name="robots" content="all" />
+<meta name="google" content="all" />
+<meta name="googlebot" content="all" />
+<meta name="verify" content="all" />
+    <!--Title-->
+
+<title>
+    
+    Linux共享内存 |
+    
+    Hexo
+</title>
+
+<link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+
+
+<link rel="icon" href="/favicon.ico">
+
+    
+
+
+<link rel="stylesheet" href="/css/bootstrap.min.css?rev=3.3.7.css">
+<link rel="stylesheet" href="/css/font-awesome.min.css?rev=4.7.0.css">
+<link rel="stylesheet" href="/css/style.css?rev=@@hash.css">
+
+    
+<div class="hide">
+    <script type="text/javascript">
+    var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+    document.write(unescape("%3Cspan class='cnzz_stat_icon_1263868967 hide' %3E%3Cscript%20src%3D%22https%3A%2F%2Fs95.cnzz.com%2Fz_stat.php%3Fweb_id%3D1272564536%22%3E%3C%2Fscript%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s19.cnzz.com/z_stat.php%3Fid%3D1263868967%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+    </script>
+</div>
+
+
+
+
+    
+
+<meta name="generator" content="Hexo 6.2.0"></head>
+<!--[if lte IE 8]>
+<style>
+    html{ font-size: 1em }
+</style>
+<![endif]-->
+<!--[if lte IE 9]>
+<div style="ie">你使用的浏览器版本过低，为了你更好的阅读体验，请更新浏览器的版本或者使用其他现代浏览器，比如Chrome、Firefox、Safari等。</div>
+<![endif]-->
+<body>
+    <header class="main-header"  style="background-image:url(
+    https://hexo-theme-snippet-1251680922.cos.ap-beijing.myqcloud.com/img/banner.jpg)"
+     >
+    <div class="main-header-box">
+        <a class="header-avatar" href="/" title='John Doe'>
+            <img src="/img/avatar.jpg" alt="logo头像" class="img-responsive center-block">
+        </a>
+        <div class="branding">
+            <!--<h2 class="text-hide">Snippet主题,从未如此简单有趣</h2>-->
+            
+            <img src="/img/branding.png" alt="Snippet 博客主题" class="img-responsive center-block">
+            
+        </div>
+    </div>
+</header>
+    <nav class="main-navigation">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="navbar-header"><span class="nav-toggle-button collapsed pull-right" data-toggle="collapse" data-target="#main-menu" id="mnav">
+                        <span class="sr-only"></span>
+                        <i class="fa fa-bars"></i>
+                    </span>
+                    <a class="navbar-brand" href="https://cxx001.gitee.io">
+                        Hexo</a>
+                </div>
+                <div class="collapse navbar-collapse" id="main-menu">
+                    <ul class="menu">
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/"><i class="fa "></i>
+                                首页</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/archives/"><i class="fa "></i>
+                                时间轴</a>
+                        </li>
+                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+    <section class="content-wrap">
+        <div class="container">
+            <div class="row">
+                <main class="col-md-8 main-content m-post">
+                    <p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id="Linux共享内存">
+            
+            Linux共享内存
+            
+        </h1>
+        <div class="post-meta">
+    
+    <span class="categories-meta fa-wrap">
+        <i class="fa fa-folder-open-o"></i>
+        <a class="category-link" href="/categories/project/">project</a>
+    </span>
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-tags"></i>
+        <span class="tags-meta">
+            
+            <a class="tag-none-link" href="/tags/%E5%85%B1%E4%BA%AB%E5%86%85%E5%AD%98/" rel="tag">共享内存</a>
+            
+        </span>
+    </span>
+    
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-clock-o"></i>
+        <span class="date-meta">
+            2022/08/23</span>
+    </span>
+    
+    <span class="fa-wrap">
+        <i class="fa fa-eye"></i>
+        <span id="busuanzi_value_page_pv"></span>
+    </span>
+    
+    
+</div>
+        
+        
+    </div>
+    
+    <div class="post-body post-content">
+        <h1 id="基础"><a href="#基础" class="headerlink" title="基础"></a>基础</h1><p>在linux系统开发当中，时常需要在多个进程之间交换数据，在多个进程之间交换数据，有很多方法，但最高效的方法莫过于共享内存。</p>
+<p>linux共享内存是通过tmpfs这个文件系统来实现的，tmpfs文件系的目录为&#x2F;dev&#x2F;shm，&#x2F;dev&#x2F;shm是驻留在内存 RAM 当中的，因此读写速度与读写内存速度一样，&#x2F;dev&#x2F;shm的容量默认尺寸为系统内存大小的一半大小，使用df -h命令可以看到。但实际上它并不会真正的占用这块内存，如果&#x2F;dev&#x2F;shm&#x2F;下没有任何文件，它占用的内存实际上就是0字节，仅在使用shm_open文件时，&#x2F;dev&#x2F;shm才会真正占用内存。</p>
+<p>在Linux系统使用共享内存，一般用到以下几个函数：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 用于创建或者打开共享内存文件</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">shm_open</span><span class="params">(<span class="type">const</span> <span class="type">char</span> *name, <span class="type">int</span> oflag, <span class="type">mode_t</span> mode)</span></span>;</span><br><span class="line"><span class="comment">// 将打开的文件映射到内存</span></span><br><span class="line"><span class="function"><span class="type">void</span> *<span class="title">mmap</span><span class="params">(<span class="type">void</span> *addr, <span class="type">size_t</span> length, <span class="type">int</span> prot, <span class="type">int</span> flags,<span class="type">int</span> fd, <span class="type">off_t</span> offset)</span></span>;</span><br><span class="line"><span class="comment">// 取消内存映射</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">munmap</span><span class="params">(<span class="type">void</span> *addr, <span class="type">size_t</span> length)</span></span>;</span><br><span class="line"><span class="comment">// 删除/dev/shm目录的文件</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">shm_unlink</span><span class="params">(<span class="type">const</span> <span class="type">char</span> *name)</span></span>;</span><br><span class="line"><span class="comment">// 重置文件大小</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">ftruncate</span><span class="params">(<span class="type">int</span> fd, <span class="type">off_t</span> length)</span></span>;</span><br></pre></td></tr></table></figure>
+
+<h1 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h1><h2 id="1-共享内存相关操作封装"><a href="#1-共享内存相关操作封装" class="headerlink" title="1. 共享内存相关操作封装"></a>1. 共享内存相关操作封装</h2><p>SimuShareMem.h</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">ifndef</span> __SIMU_SHARE_MEM_</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> __SIMU_SHARE_MEM_</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">enum</span> &#123;</span></span><br><span class="line">    SIMU_MAX_SHM_BLOCK_QUEUE_LEN = <span class="number">1024</span>,  <span class="comment">// 队列长度</span></span><br><span class="line">    SIMU_MAX_SHM_BLOCK_BUFF_LEN = <span class="number">2048</span>    <span class="comment">// 缓冲区数据长度</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 共享内存块</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">TagSimuShareMemBlock</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    <span class="type">int</span> ReadDataPtr;            <span class="comment">// 读下标</span></span><br><span class="line">    <span class="type">int</span> WriteDataptr;           <span class="comment">// 写下标</span></span><br><span class="line">    <span class="type">unsigned</span> <span class="type">long</span> nCoverCount;  <span class="comment">// 写覆盖次数(好像不准确)</span></span><br><span class="line">    <span class="type">unsigned</span> <span class="type">long</span> nRepeatCount; <span class="comment">// 读重复次数(没用到)</span></span><br><span class="line">    <span class="type">unsigned</span> <span class="type">long</span> nDataType[SIMU_MAX_SHM_BLOCK_QUEUE_LEN];   <span class="comment">// 数据类型</span></span><br><span class="line">    <span class="type">unsigned</span> <span class="type">long</span> nDataLen[SIMU_MAX_SHM_BLOCK_QUEUE_LEN];    <span class="comment">// 数据长度</span></span><br><span class="line">    <span class="type">char</span> szData[SIMU_MAX_SHM_BLOCK_QUEUE_LEN][SIMU_MAX_SHM_BLOCK_BUFF_LEN]; <span class="comment">// 数据区 </span></span><br><span class="line">&#125;SimuShareMemBlock_t;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 共享全双工节点</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">TagSimuShareMemNode</span> </span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    <span class="type">int</span> nReadShmfd;    <span class="comment">// 读共享内存文件句柄</span></span><br><span class="line">    <span class="type">int</span> nWriteShmfd;   <span class="comment">// 写共享内存文件句柄</span></span><br><span class="line">    SimuShareMemBlock_t* pReadShm;  <span class="comment">// 读共享内存区块</span></span><br><span class="line">    SimuShareMemBlock_t* pWriteShm; <span class="comment">// 写共享内存区块</span></span><br><span class="line">    <span class="type">char</span> szReadShmName[<span class="number">128</span>];  <span class="comment">// 读共享内存块名称</span></span><br><span class="line">    <span class="type">char</span> szWriteShmName[<span class="number">128</span>]; <span class="comment">// 写共享内存块名称</span></span><br><span class="line">&#125;SimuShareMemNode_t;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 共享内存数据</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">TagSimuShareMemData</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    <span class="type">int</span> nDataType;</span><br><span class="line">    <span class="type">unsigned</span> <span class="type">long</span> ulDataLen;</span><br><span class="line">    <span class="type">char</span>* pData;</span><br><span class="line">    <span class="type">unsigned</span> <span class="type">long</span> ulTsl;</span><br><span class="line">    <span class="type">unsigned</span> <span class="type">long</span> ulTs2;</span><br><span class="line">&#125;SimuShareMemData_t;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">CreateShareMemNode</span><span class="params">(SimuShareMemNode_t* pNode, <span class="type">const</span> <span class="type">char</span>* szWriteShmName, <span class="type">const</span> <span class="type">char</span>* szReadShmName)</span>;</span><br><span class="line"><span class="type">int</span> <span class="title function_">OpenShareMemNode</span><span class="params">(SimuShareMemNode_t* pNode, <span class="type">const</span> <span class="type">char</span>* szWriteShmName, <span class="type">const</span> <span class="type">char</span>* szReadShmName)</span>;</span><br><span class="line"><span class="type">int</span> <span class="title function_">CloseShareMemNode</span><span class="params">(SimuShareMemNode_t* pNode)</span>;  <span class="comment">// 取消内存映射</span></span><br><span class="line"><span class="type">int</span> <span class="title function_">UnlinkShareMem</span><span class="params">(<span class="type">const</span> <span class="type">char</span>* szWriteShmName, <span class="type">const</span> <span class="type">char</span>* szReadShmName)</span>; <span class="comment">// 删除/dev/shm目录的文件</span></span><br><span class="line"><span class="type">int</span> <span class="title function_">IsNewShareMemData</span><span class="params">(SimuShareMemNode_t* pNode)</span>;</span><br><span class="line"><span class="type">int</span> <span class="title function_">ReadShareMemData</span><span class="params">(SimuShareMemNode_t* pNode, SimuShareMemData_t* pShmData)</span>;</span><br><span class="line"><span class="type">int</span> <span class="title function_">WriteShareMemData</span><span class="params">(SimuShareMemNode_t* pNode, <span class="type">int</span> nDataType, <span class="type">const</span> <span class="type">char</span>* pData, <span class="type">unsigned</span> <span class="type">long</span> ulDataLen)</span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">endif</span></span></span><br></pre></td></tr></table></figure>
+
+<p>SimuShareMem.cpp</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//#ifdef LINUX_PLATFORM</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;SimuShareMem.h&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdbool.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;time.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;sys/types.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;sys/stat.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;fcntl.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;sys/mman.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;errno.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;unistd.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">static</span> SimuShareMemBlock_t* <span class="title function_">CreateShareMemBlock</span><span class="params">(<span class="type">int</span>* pFd, <span class="type">const</span> <span class="type">char</span>* szBlockName)</span>;</span><br><span class="line"><span class="type">static</span> SimuShareMemBlock_t* <span class="title function_">OpenShareMemBlock</span><span class="params">(<span class="type">int</span>* pFd, <span class="type">const</span> <span class="type">char</span>* szBlockName)</span>;</span><br><span class="line"></span><br><span class="line">SimuShareMemBlock_t* <span class="title function_">CreateShareMemBlock</span><span class="params">(<span class="type">int</span>* pFd, <span class="type">const</span> <span class="type">char</span>* szBlockName)</span></span><br><span class="line">&#123;</span><br><span class="line">    SimuShareMemBlock_t* pBlock = <span class="literal">NULL</span>;</span><br><span class="line">    <span class="type">int</span> hFd = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (pFd == <span class="literal">NULL</span> || szBlockName == <span class="literal">NULL</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 打开文件如果没有就创建, 存在则打开失败返回-1</span></span><br><span class="line">    hFd = shm_open(szBlockName, O_CREAT|O_EXCL|O_RDWR, S_IRWXU|S_IRWXG);</span><br><span class="line">    <span class="keyword">if</span> (hFd == <span class="number">-1</span>) &#123;</span><br><span class="line">        <span class="keyword">if</span> (errno == EEXIST) &#123;</span><br><span class="line">            hFd = shm_open(szBlockName, O_RDWR, S_IRWXU);</span><br><span class="line">            <span class="keyword">if</span> (hFd == <span class="number">-1</span>) &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 重置文件大小</span></span><br><span class="line">    <span class="keyword">if</span> (ftruncate(hFd, <span class="keyword">sizeof</span>(SimuShareMemBlock_t)) == <span class="number">-1</span>) &#123;</span><br><span class="line">        close(hFd);</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 将打开的文件映射到内存</span></span><br><span class="line">    pBlock = (SimuShareMemBlock_t*)mmap(<span class="literal">NULL</span>, <span class="keyword">sizeof</span>(SimuShareMemBlock_t), PROT_READ|PROT_WRITE, MAP_SHARED, hFd, <span class="number">0</span>);</span><br><span class="line">    <span class="keyword">if</span> (pBlock == <span class="literal">NULL</span>) &#123;</span><br><span class="line">        close(hFd);</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    *pFd = hFd;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> pBlock; <span class="comment">// 共享内存地址</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">SimuShareMemBlock_t* <span class="title function_">OpenShareMemBlock</span><span class="params">(<span class="type">int</span>* pFd, <span class="type">const</span> <span class="type">char</span>* szBlockName)</span></span><br><span class="line">&#123;</span><br><span class="line">    SimuShareMemBlock_t* pBlock = <span class="literal">NULL</span>;</span><br><span class="line">    <span class="type">int</span> hFd = shm_open(szBlockName, O_RDWR, S_IRWXU);</span><br><span class="line">    <span class="keyword">if</span> (hFd == <span class="number">-1</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    pBlock = (SimuShareMemBlock_t*)mmap(<span class="literal">NULL</span>, <span class="keyword">sizeof</span>(SimuShareMemBlock_t), PROT_READ|PROT_WRITE, MAP_SHARED, hFd, <span class="number">0</span>);</span><br><span class="line">    <span class="keyword">if</span> (pBlock == <span class="literal">NULL</span>) &#123;</span><br><span class="line">        close(hFd);</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    *pFd = hFd;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> pBlock;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">CreateShareMemNode</span><span class="params">(SimuShareMemNode_t* pNode, <span class="type">const</span> <span class="type">char</span>* szWriteName, <span class="type">const</span> <span class="type">char</span>* szReadName)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">bool</span> bError = <span class="literal">false</span>;</span><br><span class="line">    <span class="keyword">if</span> (pNode == <span class="literal">NULL</span> || szWriteName == <span class="literal">NULL</span> || szReadName == <span class="literal">NULL</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">strcpy</span>(pNode-&gt;szWriteShmName, szWriteName);</span><br><span class="line">    <span class="built_in">strcpy</span>(pNode-&gt;szReadShmName, szReadName);</span><br><span class="line">    pNode-&gt;nReadShmfd = <span class="number">0</span>;</span><br><span class="line">    pNode-&gt;nWriteShmfd = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">do</span> &#123;</span><br><span class="line">        pNode-&gt;pReadShm = CreateShareMemBlock(&amp;pNode-&gt;nReadShmfd, pNode-&gt;szReadShmName);</span><br><span class="line">        <span class="keyword">if</span> (pNode-&gt;pReadShm == <span class="literal">NULL</span>) &#123;</span><br><span class="line">            bError = <span class="literal">true</span>;</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        pNode-&gt;pReadShm-&gt;nCoverCount = <span class="number">0</span>;</span><br><span class="line">        pNode-&gt;pReadShm-&gt;nRepeatCount = <span class="number">0</span>;</span><br><span class="line">        pNode-&gt;pReadShm-&gt;ReadDataPtr = <span class="number">0</span>;</span><br><span class="line">        pNode-&gt;pReadShm-&gt;WriteDataptr = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">        pNode-&gt;pWriteShm = CreateShareMemBlock(&amp;pNode-&gt;nWriteShmfd, pNode-&gt;szWriteShmName);</span><br><span class="line">        <span class="keyword">if</span> (pNode-&gt;pWriteShm == <span class="literal">NULL</span>) &#123;</span><br><span class="line">            bError = <span class="literal">true</span>;</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        pNode-&gt;pWriteShm-&gt;nCoverCount = <span class="number">0</span>;</span><br><span class="line">        pNode-&gt;pWriteShm-&gt;nRepeatCount = <span class="number">0</span>;</span><br><span class="line">        pNode-&gt;pWriteShm-&gt;ReadDataPtr = <span class="number">0</span>;</span><br><span class="line">        pNode-&gt;pWriteShm-&gt;WriteDataptr = <span class="number">0</span>;</span><br><span class="line">    &#125; <span class="keyword">while</span>(<span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span>(bError) &#123;</span><br><span class="line">        CloseShareMemNode(pNode);</span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">OpenShareMemNode</span><span class="params">(SimuShareMemNode_t* pNode, <span class="type">const</span> <span class="type">char</span>* szWriteName, <span class="type">const</span> <span class="type">char</span>* szReadName)</span></span><br><span class="line">&#123;</span><br><span class="line">   <span class="type">bool</span> bError = <span class="literal">false</span>;</span><br><span class="line">    <span class="keyword">if</span> (pNode == <span class="literal">NULL</span> || szWriteName == <span class="literal">NULL</span> || szReadName == <span class="literal">NULL</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">strcpy</span>(pNode-&gt;szWriteShmName, szWriteName);</span><br><span class="line">    <span class="built_in">strcpy</span>(pNode-&gt;szReadShmName, szReadName);</span><br><span class="line">    pNode-&gt;nReadShmfd = <span class="number">0</span>;</span><br><span class="line">    pNode-&gt;nWriteShmfd = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">do</span> &#123;</span><br><span class="line">        pNode-&gt;pReadShm = OpenShareMemBlock(&amp;pNode-&gt;nReadShmfd, pNode-&gt;szReadShmName);</span><br><span class="line">        <span class="keyword">if</span> (pNode-&gt;pReadShm == <span class="literal">NULL</span>) &#123;</span><br><span class="line">            bError = <span class="literal">true</span>;</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// 这里注释是因为写的测试程序起来就写数据了, 所以读的测试程序获取这块空间时不能重置了.</span></span><br><span class="line">        <span class="comment">// 正常程序这里不要注释，所有进程都要启动了，才能往共享内存里读写数据.</span></span><br><span class="line">        <span class="comment">/*</span></span><br><span class="line"><span class="comment">        pNode-&gt;pReadShm-&gt;nCoverCount = 0;</span></span><br><span class="line"><span class="comment">        pNode-&gt;pReadShm-&gt;nRepeatCount = 0;</span></span><br><span class="line"><span class="comment">        pNode-&gt;pReadShm-&gt;ReadDataPtr = 0;</span></span><br><span class="line"><span class="comment">        pNode-&gt;pReadShm-&gt;WriteDataptr = 0;</span></span><br><span class="line"><span class="comment">        */</span></span><br><span class="line"></span><br><span class="line">        pNode-&gt;pWriteShm = OpenShareMemBlock(&amp;pNode-&gt;nWriteShmfd, pNode-&gt;szWriteShmName);</span><br><span class="line">        <span class="keyword">if</span> (pNode-&gt;pWriteShm == <span class="literal">NULL</span>) &#123;</span><br><span class="line">            bError = <span class="literal">true</span>;</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">/*</span></span><br><span class="line"><span class="comment">        pNode-&gt;pWriteShm-&gt;nCoverCount = 0;</span></span><br><span class="line"><span class="comment">        pNode-&gt;pWriteShm-&gt;nRepeatCount = 0;</span></span><br><span class="line"><span class="comment">        pNode-&gt;pWriteShm-&gt;ReadDataPtr = 0;</span></span><br><span class="line"><span class="comment">        pNode-&gt;pWriteShm-&gt;WriteDataptr = 0;</span></span><br><span class="line"><span class="comment">        */</span></span><br><span class="line"></span><br><span class="line">    &#125; <span class="keyword">while</span>(<span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span>(bError) &#123;</span><br><span class="line">        CloseShareMemNode(pNode);</span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">CloseShareMemNode</span><span class="params">(SimuShareMemNode_t* pNode)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">if</span> (pNode == <span class="literal">NULL</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (pNode-&gt;pReadShm != <span class="literal">NULL</span>) &#123;</span><br><span class="line">        <span class="comment">// 取消内存映射</span></span><br><span class="line">        munmap(pNode-&gt;pReadShm, <span class="keyword">sizeof</span>(SimuShareMemBlock_t));</span><br><span class="line">        pNode-&gt;pReadShm = <span class="literal">NULL</span>;</span><br><span class="line">        close(pNode-&gt;nReadShmfd);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (pNode-&gt;pWriteShm != <span class="literal">NULL</span>) &#123;</span><br><span class="line">        <span class="comment">// 取消内存映射</span></span><br><span class="line">        munmap(pNode-&gt;pWriteShm, <span class="keyword">sizeof</span>(SimuShareMemBlock_t));</span><br><span class="line">        pNode-&gt;pWriteShm = <span class="literal">NULL</span>;</span><br><span class="line">        close(pNode-&gt;nWriteShmfd);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">UnlinkShareMem</span><span class="params">(<span class="type">const</span> <span class="type">char</span>* szWriteName, <span class="type">const</span> <span class="type">char</span>* szReadName)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">// 删除/dev/shm目录的文件</span></span><br><span class="line">    shm_unlink(szWriteName);</span><br><span class="line">    shm_unlink(szReadName);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">IsNewShareMemData</span><span class="params">(SimuShareMemNode_t* pNode)</span></span><br><span class="line">&#123;</span><br><span class="line">    SimuShareMemBlock_t* pShm = pNode-&gt;pReadShm;</span><br><span class="line">    <span class="keyword">if</span> (pShm-&gt;ReadDataPtr % SIMU_MAX_SHM_BLOCK_QUEUE_LEN == pShm-&gt;WriteDataptr % SIMU_MAX_SHM_BLOCK_QUEUE_LEN) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">ReadShareMemData</span><span class="params">(SimuShareMemNode_t* pNode, SimuShareMemData_t* pShmData)</span></span><br><span class="line">&#123;</span><br><span class="line">    SimuShareMemBlock_t* pShm = pNode-&gt;pReadShm;</span><br><span class="line">    <span class="type">unsigned</span> <span class="type">long</span> nReadIdx = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (pShm-&gt;ReadDataPtr % SIMU_MAX_SHM_BLOCK_QUEUE_LEN == pShm-&gt;WriteDataptr % SIMU_MAX_SHM_BLOCK_QUEUE_LEN) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    nReadIdx = pShm-&gt;ReadDataPtr % SIMU_MAX_SHM_BLOCK_QUEUE_LEN;</span><br><span class="line">    pShmData-&gt;nDataType = pShm-&gt;nDataType[nReadIdx];</span><br><span class="line">    pShmData-&gt;ulDataLen = pShm-&gt;nDataLen[nReadIdx];</span><br><span class="line">    pShmData-&gt;pData = (<span class="type">char</span>*)<span class="built_in">malloc</span>(pShmData-&gt;ulDataLen);</span><br><span class="line">    <span class="built_in">memcpy</span>((<span class="type">void</span>*)pShmData-&gt;pData, pShm-&gt;szData[nReadIdx], pShmData-&gt;ulDataLen);</span><br><span class="line">    pShm-&gt;ReadDataPtr += <span class="number">1</span>;</span><br><span class="line">    pShm-&gt;ReadDataPtr %= SIMU_MAX_SHM_BLOCK_QUEUE_LEN;</span><br><span class="line">    pShmData-&gt;ulTsl = time(<span class="literal">NULL</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">WriteShareMemData</span><span class="params">(SimuShareMemNode_t* pNode, <span class="type">int</span> nDataType, <span class="type">const</span> <span class="type">char</span>* pData, <span class="type">unsigned</span> <span class="type">long</span> ulDataLen)</span></span><br><span class="line">&#123;</span><br><span class="line">    SimuShareMemBlock_t* pShm = pNode-&gt;pWriteShm;</span><br><span class="line">    <span class="type">unsigned</span> <span class="type">long</span> nWriteIdx = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (pShm-&gt;ReadDataPtr == (pShm-&gt;WriteDataptr + <span class="number">1</span>) % SIMU_MAX_SHM_BLOCK_QUEUE_LEN) &#123;</span><br><span class="line">        pShm-&gt;nCoverCount++;  <span class="comment">// 这里不知道啥意思</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    nWriteIdx = pShm-&gt;WriteDataptr % SIMU_MAX_SHM_BLOCK_QUEUE_LEN;</span><br><span class="line">    <span class="built_in">memcpy</span>(pShm-&gt;szData[nWriteIdx], pData, ulDataLen);</span><br><span class="line">    pShm-&gt;nDataLen[nWriteIdx] = ulDataLen;</span><br><span class="line">    pShm-&gt;nDataType[nWriteIdx] = nDataType;</span><br><span class="line">    pShm-&gt;WriteDataptr++;</span><br><span class="line">    pShm-&gt;WriteDataptr %= SIMU_MAX_SHM_BLOCK_QUEUE_LEN;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//#endif</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="2-使用示例"><a href="#2-使用示例" class="headerlink" title="2. 使用示例"></a>2. 使用示例</h2><p>共享内存写数据: writer.c</p>
+<p>编译命令: <code>g++ writer.c SimuShareMem.h SimuShareMem.cpp -o writer -lrt</code></p>
+<p>注意最后的 <code>-lrt</code>链接库不能少，不然shm_open等相关函数不认识 !</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;SimuShareMem.h&quot;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">(<span class="type">int</span> argc,<span class="type">char</span> * argv[])</span></span><br><span class="line">&#123;</span><br><span class="line">    SimuShareMemNode_t pNode;</span><br><span class="line">    <span class="type">const</span> <span class="type">char</span>* szWriteShmName = <span class="string">&quot;shm_writer&quot;</span>;</span><br><span class="line">    <span class="type">const</span> <span class="type">char</span>* szReadShmName = <span class="string">&quot;shm_reader&quot;</span>;</span><br><span class="line">    CreateShareMemNode(&amp;pNode, szWriteShmName, szReadShmName);</span><br><span class="line"></span><br><span class="line">    <span class="type">char</span> writeData[] = <span class="string">&quot;test share memory writer.&quot;</span>;</span><br><span class="line">    <span class="type">int</span> result = WriteShareMemData(&amp;pNode, <span class="number">1</span>, writeData, <span class="keyword">sizeof</span>(writeData));</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;result:%d, data:%s, len:%ld&quot;</span>, result, writeData, <span class="keyword">sizeof</span>(writeData));</span><br><span class="line"></span><br><span class="line">    getchar();</span><br><span class="line"></span><br><span class="line">    CloseShareMemNode(&amp;pNode);</span><br><span class="line">    UnlinkShareMem(szWriteShmName, szReadShmName);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>共享内存读数据：reader.c</p>
+<p>编译命令: <code>g++ reader.c SimuShareMem.h SimuShareMem.cpp -o reader -lrt</code></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;SimuShareMem.h&quot;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">(<span class="type">int</span> argc,<span class="type">char</span> * argv[])</span></span><br><span class="line">&#123;</span><br><span class="line">    SimuShareMemNode_t pNode;</span><br><span class="line">    <span class="type">const</span> <span class="type">char</span>* szWriteShmName = <span class="string">&quot;shm_writer&quot;</span>;</span><br><span class="line">    <span class="type">const</span> <span class="type">char</span>* szReadShmName = <span class="string">&quot;shm_reader&quot;</span>;</span><br><span class="line">    OpenShareMemNode(&amp;pNode, szReadShmName, szWriteShmName);  <span class="comment">// 这里的读是对面的写</span></span><br><span class="line"></span><br><span class="line">    SimuShareMemData_t srData;</span><br><span class="line">    <span class="type">int</span> result = ReadShareMemData(&amp;pNode, &amp;srData);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;result: %d, data: %s, len: %ld&quot;</span>, result, srData.pData, srData.ulDataLen);</span><br><span class="line"></span><br><span class="line">    getchar();</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="3-测试结果"><a href="#3-测试结果" class="headerlink" title="3. 测试结果"></a>3. 测试结果</h2><ul>
+<li><p>测试机器</p>
+<p><img src="/2022/08/23/project/Linux%E5%85%B1%E4%BA%AB%E5%86%85%E5%AD%98/image-20220823160557979.png" alt="image-20220823160557979"></p>
+</li>
+<li><p>分别启动writer&#x2F;reader程序读写结果</p>
+<p><img src="/2022/08/23/project/Linux%E5%85%B1%E4%BA%AB%E5%86%85%E5%AD%98/image-20220823160814048.png" alt="image-20220823160814048"></p>
+</li>
+</ul>
+<p><img src="/2022/08/23/project/Linux%E5%85%B1%E4%BA%AB%E5%86%85%E5%AD%98/image-20220823160834319.png" alt="image-20220823160834319"></p>
+<ul>
+<li><p>&#x2F;dev&#x2F;shm目录下新增对应两个共享内存文件</p>
+<p><img src="/2022/08/23/project/Linux%E5%85%B1%E4%BA%AB%E5%86%85%E5%AD%98/image-20220823161537465.png" alt="image-20220823161537465"></p>
+</li>
+</ul>
+
+    </div>
+    
+    <div class="post-footer">
+        <div>
+            
+            转载声明：
+            商业转载请联系作者获得授权,非商业转载请注明出处 © <a href="" target="_blank">cxx</a>
+            
+            
+        </div>
+        <div>
+            
+        </div>
+    </div>
+</article>
+<div class="article-nav prev-next-wrap clearfix">
+    
+    <a href="/2022/09/06/notes/makefile/" class="pre-post btn btn-default" title='提炼《跟我一起写 Makefile》教程'>
+        <i class="fa fa-angle-left fa-fw"></i><span class="hidden-lg">上一篇</span>
+        <span class="hidden-xs">
+            提炼《跟我一起写 Makefile》教程</span>
+    </a>
+    
+    
+    <a href="/2022/08/20/computer%20system/%E8%99%9A%E6%8B%9F%E5%9C%B0%E5%9D%80%E5%88%B0%E7%89%A9%E7%90%86%E5%9C%B0%E5%9D%80%E6%98%A0%E5%B0%84/" class="next-post btn btn-default" title='虚拟地址到物理地址映射'>
+        <span class="hidden-lg">下一篇</span>
+        <span class="hidden-xs">
+            虚拟地址到物理地址映射</span><i class="fa fa-angle-right fa-fw"></i>
+    </a>
+    
+</div>
+
+<div id="comments">
+    
+    
+<div class="utteranc">
+  
+  <script
+    src='https://utteranc.es/client.js'
+    repo='cxx001/myblog-comment'
+    issue-term='pathname'
+    issue-number=''
+    theme='github-light'
+    label=''
+    crossorigin='anonymous'
+    async
+  ></script>
+</div>
+
+
+
+</div>
+
+                </main>
+                
+                    <aside id="article-toc" role="navigation" class="col-md-4">
+    <div class="widget">
+        <h3 class="title">
+            文章目录
+        </h3>
+        
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%9F%BA%E7%A1%80"><span class="toc-text">基础</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%A4%BA%E4%BE%8B"><span class="toc-text">示例</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E5%85%B1%E4%BA%AB%E5%86%85%E5%AD%98%E7%9B%B8%E5%85%B3%E6%93%8D%E4%BD%9C%E5%B0%81%E8%A3%85"><span class="toc-text">1. 共享内存相关操作封装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E4%BD%BF%E7%94%A8%E7%A4%BA%E4%BE%8B"><span class="toc-text">2. 使用示例</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E6%B5%8B%E8%AF%95%E7%BB%93%E6%9E%9C"><span class="toc-text">3. 测试结果</span></a></li></ol></li></ol>
+        
+    </div>
+</aside>
+                
+            </div>
+        </div>
+    </section>
+    <footer class="main-footer">
+    <div class="container">
+        <div class="row">
+        </div>
+    </div>
+</footer>
+<a id="back-to-top" class="icon-btn hide">
+    <i class="fa fa-chevron-up"></i>
+</a>
+    <div class="copyright">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="busuanzi">
+    
+    访问量:
+    <strong id="busuanzi_value_site_pv">
+        <i class="fa fa-spinner fa-spin"></i>
+    </strong>
+    &nbsp; | &nbsp;
+    访客数:
+    <strong id="busuanzi_value_site_uv">
+        <i class="fa fa-spinner fa-spin"></i>
+    </strong>
+    
+</div>
+            </div>
+            <div class="col-sm-12">
+                <span>Copyright &copy;
+                    2022
+                    
+                </span> |
+                <span>
+                    Powered by <a href="//hexo.io" class="copyright-links" target="_blank" rel="nofollow">Hexo</a>
+                </span> |
+                <span>
+                    Theme by <a href="//github.com/shenliyang/hexo-theme-snippet.git" class="copyright-links" target="_blank" rel="nofollow">Snippet</a>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+<script src="/js/app.js?rev=@@hash.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,318 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+<head>
+    <!--Setting-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta name="apple-mobile-web-app-capable" content="Hexo">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    <meta name="browsermode" content="application">
+    <meta name="screen-orientation" content="portrait">
+    <meta name="theme-version" content="1.0.0">
+    <meta name="root" content="/">
+    <link rel="dns-prefetch" href="https://cxx001.gitee.io">
+    <!--SEO-->
+
+<meta name="keywords" content="内存,虚拟地址,物理地址" />
+
+
+<meta name="description" content="前言程序在编译链接完成后所有指令虚拟地址就已经确定了，CPU在执行到某条指令，得到它的虚拟地址，然后通过其芯片里的MMU硬件将虚拟地址转换为物理地址，然后先去CPU芯片里的高速缓存中获取数据，如..." />
+
+
+<meta name="robots" content="all" />
+<meta name="google" content="all" />
+<meta name="googlebot" content="all" />
+<meta name="verify" content="all" />
+    <!--Title-->
+
+<title>
+    
+    虚拟地址到物理地址映射 |
+    
+    Hexo
+</title>
+
+<link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+
+
+<link rel="icon" href="/favicon.ico">
+
+    
+
+
+<link rel="stylesheet" href="/css/bootstrap.min.css?rev=3.3.7.css">
+<link rel="stylesheet" href="/css/font-awesome.min.css?rev=4.7.0.css">
+<link rel="stylesheet" href="/css/style.css?rev=@@hash.css">
+
+    
+<div class="hide">
+    <script type="text/javascript">
+    var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+    document.write(unescape("%3Cspan class='cnzz_stat_icon_1263868967 hide' %3E%3Cscript%20src%3D%22https%3A%2F%2Fs95.cnzz.com%2Fz_stat.php%3Fweb_id%3D1272564536%22%3E%3C%2Fscript%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s19.cnzz.com/z_stat.php%3Fid%3D1263868967%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+    </script>
+</div>
+
+
+
+
+    
+
+<meta name="generator" content="Hexo 6.2.0"></head>
+<!--[if lte IE 8]>
+<style>
+    html{ font-size: 1em }
+</style>
+<![endif]-->
+<!--[if lte IE 9]>
+<div style="ie">你使用的浏览器版本过低，为了你更好的阅读体验，请更新浏览器的版本或者使用其他现代浏览器，比如Chrome、Firefox、Safari等。</div>
+<![endif]-->
+<body>
+    <header class="main-header"  style="background-image:url(
+    https://hexo-theme-snippet-1251680922.cos.ap-beijing.myqcloud.com/img/banner.jpg)"
+     >
+    <div class="main-header-box">
+        <a class="header-avatar" href="/" title='John Doe'>
+            <img src="/img/avatar.jpg" alt="logo头像" class="img-responsive center-block">
+        </a>
+        <div class="branding">
+            <!--<h2 class="text-hide">Snippet主题,从未如此简单有趣</h2>-->
+            
+            <img src="/img/branding.png" alt="Snippet 博客主题" class="img-responsive center-block">
+            
+        </div>
+    </div>
+</header>
+    <nav class="main-navigation">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="navbar-header"><span class="nav-toggle-button collapsed pull-right" data-toggle="collapse" data-target="#main-menu" id="mnav">
+                        <span class="sr-only"></span>
+                        <i class="fa fa-bars"></i>
+                    </span>
+                    <a class="navbar-brand" href="https://cxx001.gitee.io">
+                        Hexo</a>
+                </div>
+                <div class="collapse navbar-collapse" id="main-menu">
+                    <ul class="menu">
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/"><i class="fa "></i>
+                                首页</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/archives/"><i class="fa "></i>
+                                时间轴</a>
+                        </li>
+                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+    <section class="content-wrap">
+        <div class="container">
+            <div class="row">
+                <main class="col-md-8 main-content m-post">
+                    <p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id="虚拟地址到物理地址映射">
+            
+            虚拟地址到物理地址映射
+            
+        </h1>
+        <div class="post-meta">
+    
+    <span class="categories-meta fa-wrap">
+        <i class="fa fa-folder-open-o"></i>
+        <a class="category-link" href="/categories/computer-system/">computer system</a>
+    </span>
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-tags"></i>
+        <span class="tags-meta">
+            
+            <a class="tag-none-link" href="/tags/%E5%86%85%E5%AD%98/" rel="tag">内存</a> <a class="tag-none-link" href="/tags/%E7%89%A9%E7%90%86%E5%9C%B0%E5%9D%80/" rel="tag">物理地址</a> <a class="tag-none-link" href="/tags/%E8%99%9A%E6%8B%9F%E5%9C%B0%E5%9D%80/" rel="tag">虚拟地址</a>
+            
+        </span>
+    </span>
+    
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-clock-o"></i>
+        <span class="date-meta">
+            2022/08/20</span>
+    </span>
+    
+    <span class="fa-wrap">
+        <i class="fa fa-eye"></i>
+        <span id="busuanzi_value_page_pv"></span>
+    </span>
+    
+    
+</div>
+        
+        
+    </div>
+    
+    <div class="post-body post-content">
+        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>程序在编译链接完成后所有指令虚拟地址就已经确定了，CPU在执行到某条指令，得到它的虚拟地址，然后通过其芯片里的MMU硬件将虚拟地址转换为物理地址，然后先去CPU芯片里的高速缓存中获取数据，如果没有再去内存中获取(这里程序会自动预测CPU下次指令要执行的数据，会提前把数据从内存传递到高速缓存中)。</p>
+<p><img src="/2022/08/20/computer%20system/%E8%99%9A%E6%8B%9F%E5%9C%B0%E5%9D%80%E5%88%B0%E7%89%A9%E7%90%86%E5%9C%B0%E5%9D%80%E6%98%A0%E5%B0%84/image-20220818225428455.png" alt="image-20220818225428455"></p>
+<p>其中虚拟地址映射到物理地址的实现大体经历了4次优化历程，下面依次分析。</p>
+<p>名词约定：</p>
+<blockquote>
+<p>va: 虚拟地址</p>
+<p>pa: 物理地址</p>
+</blockquote>
+<h1 id="一-“-”取模"><a href="#一-“-”取模" class="headerlink" title="一  “%”取模"></a>一  “%”取模</h1><p>pa &#x3D; va % pa_max_len</p>
+<p>最早就是用这种取模的方式来做映射的，它保证了虚拟地址映射不会越界。但是有个很明显的问题，就是地址冲突，同时只能运行一个程序，不能多开。</p>
+<h1 id="二-哈希"><a href="#二-哈希" class="headerlink" title="二  哈希"></a>二  哈希</h1><p>后来为了解决地址冲突问题，我们想到了用哈希map来实现，va–&gt;hashmap–&gt;pa，它能保证每个va都能映射唯一的pa，解决了地址冲突的问题。</p>
+<p>但是通过hashmap计算出的pa地址分布是凌乱的，这样寻址就会很低效。</p>
+<h1 id="三-段地址"><a href="#三-段地址" class="headerlink" title="三  段地址"></a>三  段地址</h1><p>既然哈希算法转换的地址凌乱分布，导致寻址低效。那么有没有办法使得一段连续虚拟地址对应的物理地址也连续了？</p>
+<p>后面人们想到了用一段段连续空间来表示，如下图，程序p2分布在两个段空间内，段内地址是连续的，那么我们记录这样的段空间就可以用(<strong>va0, pa0, D</strong>)一个三元组来表示。va0是段虚拟地址的起始地址，pa0是物理地址的起始地址，D是段空间范围。</p>
+<p>那么我们要映射某个物理地址va，过程是这样，先循环判断条件 va0 &lt;&#x3D; va &lt;&#x3D; va0 + D，找出va属于哪个段，然后 pa &#x3D; va - va0 + pa0;</p>
+<p><img src="/2022/08/20/computer%20system/%E8%99%9A%E6%8B%9F%E5%9C%B0%E5%9D%80%E5%88%B0%E7%89%A9%E7%90%86%E5%9C%B0%E5%9D%80%E6%98%A0%E5%B0%84/image-20220819231709352.png" alt="image-20220819231709352"></p>
+<p>这种方式解决了映射地址分布凌乱的问题，但是我们发现段的范围D是不固定的，根据当前内存使用情况决定。随着各种程序运行推移，一个程序很难找到一段比较长的空闲空间，他会分布到多个段空间中，碎片化越来越严重。</p>
+<p>而且还一个问题是每次映射都要先查找属于哪个段的条件判断，这也是麻烦之一。</p>
+<h1 id="四-多级分页"><a href="#四-多级分页" class="headerlink" title="四  多级分页"></a>四  多级分页</h1><p>最终我们想到了让D保持不变，一般默认是4kb大小，这样的话我们描述映射表就只需要一个二元组了(va0, pa0)，甚至我们还可以直接用表的key索引来当va0字段，这样就只需要一个字段pa0记录了。</p>
+<p>同时把内存分成一个个固定大小的页来作为最小的储存单元，这样相对不定长的段碎片也会少很多。</p>
+<p>不过了光只是一层分页还不够，还可以再进一步优化，即多级分页，一般分到4层，每层4等分。那为什么要这么干了？下面我们来分析下其中缘由：</p>
+<p>对于我们64位cpu一般va寻址范围是2^48，首先我们按4kb(2^12)分页，总共页数&#x3D; 2^48 &#x2F; 2^12 &#x3D; 2^36. </p>
+<p><img src="/2022/08/20/computer%20system/%E8%99%9A%E6%8B%9F%E5%9C%B0%E5%9D%80%E5%88%B0%E7%89%A9%E7%90%86%E5%9C%B0%E5%9D%80%E6%98%A0%E5%B0%84/image-20220820000940664.png" alt="image-20220820000940664"></p>
+<p>假设有个程序只分布在上图中的3个区域，那么这样就有个问题，这个程序有效数据其实只有图中的3个区域，但是我们却要申请2^36这么大一个数组来记录，大部分都是无效数据。</p>
+<p>怎么优化了，那就是再往下分，每次4等分。</p>
+<p><img src="/2022/08/20/computer%20system/%E8%99%9A%E6%8B%9F%E5%9C%B0%E5%9D%80%E5%88%B0%E7%89%A9%E7%90%86%E5%9C%B0%E5%9D%80%E6%98%A0%E5%B0%84/image-20220820001507388.png" alt="image-20220820001507388"></p>
+<p>这样是不是这个程序的3个区域只在4(0~3)等分后的第1和第3个分区里。那么我们就只需要记录第1和第3个分区。依次类推再往下分，要记录的无效数据就会越来越少，即所要申请的记录数组越小。</p>
+
+    </div>
+    
+    <div class="post-footer">
+        <div>
+            
+            转载声明：
+            商业转载请联系作者获得授权,非商业转载请注明出处 © <a href="" target="_blank">cxx</a>
+            
+            
+        </div>
+        <div>
+            
+        </div>
+    </div>
+</article>
+<div class="article-nav prev-next-wrap clearfix">
+    
+    <a href="/2022/08/23/project/Linux%E5%85%B1%E4%BA%AB%E5%86%85%E5%AD%98/" class="pre-post btn btn-default" title='Linux共享内存'>
+        <i class="fa fa-angle-left fa-fw"></i><span class="hidden-lg">上一篇</span>
+        <span class="hidden-xs">
+            Linux共享内存</span>
+    </a>
+    
+    
+    <a href="/2022/08/01/project/QuikPlatform%20Demo%E8%AF%B4%E6%98%8E/" class="next-post btn btn-default" title='QuikPlatform Demo说明'>
+        <span class="hidden-lg">下一篇</span>
+        <span class="hidden-xs">
+            QuikPlatform Demo说明</span><i class="fa fa-angle-right fa-fw"></i>
+    </a>
+    
+</div>
+
+<div id="comments">
+    
+    
+<div class="utteranc">
+  
+  <script
+    src='https://utteranc.es/client.js'
+    repo='cxx001/myblog-comment'
+    issue-term='pathname'
+    issue-number=''
+    theme='github-light'
+    label=''
+    crossorigin='anonymous'
+    async
+  ></script>
+</div>
+
+
+
+</div>
+
+                </main>
+                
+                    <aside id="article-toc" role="navigation" class="col-md-4">
+    <div class="widget">
+        <h3 class="title">
+            文章目录
+        </h3>
+        
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-text">前言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%80-%E2%80%9C-%E2%80%9D%E5%8F%96%E6%A8%A1"><span class="toc-text">一  “%”取模</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BA%8C-%E5%93%88%E5%B8%8C"><span class="toc-text">二  哈希</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%89-%E6%AE%B5%E5%9C%B0%E5%9D%80"><span class="toc-text">三  段地址</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%9B%9B-%E5%A4%9A%E7%BA%A7%E5%88%86%E9%A1%B5"><span class="toc-text">四  多级分页</span></a></li></ol>
+        
+    </div>
+</aside>
+                
+            </div>
+        </div>
+    </section>
+    <footer class="main-footer">
+    <div class="container">
+        <div class="row">
+        </div>
+    </div>
+</footer>
+<a id="back-to-top" class="icon-btn hide">
+    <i class="fa fa-chevron-up"></i>
+</a>
+    <div class="copyright">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="busuanzi">
+    
+    访问量:
+    <strong id="busuanzi_value_site_pv">
+        <i class="fa fa-spinner fa-spin"></i>
+    </strong>
+    &nbsp; | &nbsp;
+    访客数:
+    <strong id="busuanzi_value_site_uv">
+        <i class="fa fa-spinner fa-spin"></i>
+    </strong>
+    
+</div>
+            </div>
+            <div class="col-sm-12">
+                <span>Copyright &copy;
+                    2022
+                    
+                </span> |
+                <span>
+                    Powered by <a href="//hexo.io" class="copyright-links" target="_blank" rel="nofollow">Hexo</a>
+                </span> |
+                <span>
+                    Theme by <a href="//github.com/shenliyang/hexo-theme-snippet.git" class="copyright-links" target="_blank" rel="nofollow">Snippet</a>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+<script src="/js/app.js?rev=@@hash.js"></script>
+
+</body>
+</html>
