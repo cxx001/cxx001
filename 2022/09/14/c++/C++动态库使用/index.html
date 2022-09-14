@@ -1,0 +1,423 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+<head>
+    <!--Setting-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta name="apple-mobile-web-app-capable" content="Hexo">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    <meta name="browsermode" content="application">
+    <meta name="screen-orientation" content="portrait">
+    <meta name="theme-version" content="1.0.0">
+    <meta name="root" content="/">
+    <link rel="dns-prefetch" href="https://cxx001.gitee.io">
+    <!--SEO-->
+
+<meta name="keywords" content="动态库使用" />
+
+
+<meta name="description" content="前言Windows与Linux下面的动态链接库区别1. 文件后缀不同Linux动态库的后缀是 .so 文件，而window则是 .dll 文件。
+2. 文件格式不同（a）Linux下是ELF格式..." />
+
+
+<meta name="robots" content="all" />
+<meta name="google" content="all" />
+<meta name="googlebot" content="all" />
+<meta name="verify" content="all" />
+    <!--Title-->
+
+<title>
+    
+    C++动态库使用 |
+    
+    Hexo
+</title>
+
+<link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+
+
+<link rel="icon" href="/favicon.ico">
+
+    
+
+
+<link rel="stylesheet" href="/css/bootstrap.min.css?rev=3.3.7.css">
+<link rel="stylesheet" href="/css/font-awesome.min.css?rev=4.7.0.css">
+<link rel="stylesheet" href="/css/style.css?rev=@@hash.css">
+
+    
+<div class="hide">
+    <script type="text/javascript">
+    var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+    document.write(unescape("%3Cspan class='cnzz_stat_icon_1263868967 hide' %3E%3Cscript%20src%3D%22https%3A%2F%2Fs95.cnzz.com%2Fz_stat.php%3Fweb_id%3D1272564536%22%3E%3C%2Fscript%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s19.cnzz.com/z_stat.php%3Fid%3D1263868967%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+    </script>
+</div>
+
+
+
+
+    
+
+<meta name="generator" content="Hexo 6.2.0"></head>
+<!--[if lte IE 8]>
+<style>
+    html{ font-size: 1em }
+</style>
+<![endif]-->
+<!--[if lte IE 9]>
+<div style="ie">你使用的浏览器版本过低，为了你更好的阅读体验，请更新浏览器的版本或者使用其他现代浏览器，比如Chrome、Firefox、Safari等。</div>
+<![endif]-->
+<body>
+    <header class="main-header"  style="background-image:url(
+    https://hexo-theme-snippet-1251680922.cos.ap-beijing.myqcloud.com/img/banner.jpg)"
+     >
+    <div class="main-header-box">
+        <a class="header-avatar" href="/" title='John Doe'>
+            <img src="/img/avatar.jpg" alt="logo头像" class="img-responsive center-block">
+        </a>
+        <div class="branding">
+            <!--<h2 class="text-hide">Snippet主题,从未如此简单有趣</h2>-->
+            
+            <img src="/img/branding.png" alt="Snippet 博客主题" class="img-responsive center-block">
+            
+        </div>
+    </div>
+</header>
+    <nav class="main-navigation">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="navbar-header"><span class="nav-toggle-button collapsed pull-right" data-toggle="collapse" data-target="#main-menu" id="mnav">
+                        <span class="sr-only"></span>
+                        <i class="fa fa-bars"></i>
+                    </span>
+                    <a class="navbar-brand" href="https://cxx001.gitee.io">
+                        Hexo</a>
+                </div>
+                <div class="collapse navbar-collapse" id="main-menu">
+                    <ul class="menu">
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/"><i class="fa "></i>
+                                首页</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/archives/"><i class="fa "></i>
+                                时间轴</a>
+                        </li>
+                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+    <section class="content-wrap">
+        <div class="container">
+            <div class="row">
+                <main class="col-md-8 main-content m-post">
+                    <p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id="C++动态库使用">
+            
+            C++动态库使用
+            
+        </h1>
+        <div class="post-meta">
+    
+    <span class="categories-meta fa-wrap">
+        <i class="fa fa-folder-open-o"></i>
+        <a class="category-link" href="/categories/c/">c++</a>
+    </span>
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-tags"></i>
+        <span class="tags-meta">
+            
+            <a class="tag-none-link" href="/tags/%E5%8A%A8%E6%80%81%E5%BA%93%E4%BD%BF%E7%94%A8/" rel="tag">动态库使用</a>
+            
+        </span>
+    </span>
+    
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-clock-o"></i>
+        <span class="date-meta">
+            2022/09/14</span>
+    </span>
+    
+    <span class="fa-wrap">
+        <i class="fa fa-eye"></i>
+        <span id="busuanzi_value_page_pv"></span>
+    </span>
+    
+    
+</div>
+        
+        
+    </div>
+    
+    <div class="post-body post-content">
+        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><h2 id="Windows与Linux下面的动态链接库区别"><a href="#Windows与Linux下面的动态链接库区别" class="headerlink" title="Windows与Linux下面的动态链接库区别"></a>Windows与Linux下面的动态链接库区别</h2><h2 id="1-文件后缀不同"><a href="#1-文件后缀不同" class="headerlink" title="1. 文件后缀不同"></a>1. 文件后缀不同</h2><p>Linux动态库的后缀是<code> .so</code> 文件，而window则是 <code>.dll</code> 文件。</p>
+<h2 id="2-文件格式不同"><a href="#2-文件格式不同" class="headerlink" title="2. 文件格式不同"></a>2. 文件格式不同</h2><p>（a）Linux下是<code>ELF</code>格式，即Executable and Linkable Format</p>
+<p>在ELF之下，共享库中所有的全局函数和变量在默认情况下都可以被其它模块使用，即<strong>ELF默认导出所有的全局符号</strong>。</p>
+<p>（b）Windows下面是<code>PE</code>格式的文件，即Portable Executable Format</p>
+<p>DLL文件和EXE文件实际上是一个概念，都是PE格式的二进制文件。<strong>DLL需要显示地“告诉”编译器需要导出某个符号，否则编译器默认所有的符号都不导出。</strong></p>
+<h2 id="3-动态链接库的文件个数不一样"><a href="#3-动态链接库的文件个数不一样" class="headerlink" title="3. 动态链接库的文件个数不一样"></a>3. 动态链接库的文件个数不一样</h2><p>Linux的动态链接库就只有一个 .so 文件，还有与之对应的头文件，而在Windows下面的动态库有两个文件，</p>
+<p>一个是引入库（.LIB）文件，</p>
+<p>一个是动态库（.DLL）文件，</p>
+<p>需要的头文件（.h）文件</p>
+<p>（1）<strong>LIB引入库文件包含被DLL导出的函数名称和位置</strong>，对于导入库而言，其实际的执行代码位于动态库中，导入库只包含了地址符号表等，确保程序找到对应函数的一些基本地址信息。</p>
+<p>（2）DLL文件包含实际的函数和数据，应用程序使用LIB文件链接到所需要使用的DLL文件，库中的函数和数据并不复制到可执行文件中，因此在应用程序的可执行文件中，存放的不是被调用的函数代码，而是DLL中所要调用的函数的内存地址，这样当一个或多个应用程序运行是再把程序代码和被调用的函数代码链接起来，从而节省了内存资源。</p>
+<br/>
+
+<h1 id="Windows上动态库使用"><a href="#Windows上动态库使用" class="headerlink" title="Windows上动态库使用"></a>Windows上动态库使用</h1><h2 id="1-创建动态库"><a href="#1-创建动态库" class="headerlink" title="1. 创建动态库"></a>1. 创建动态库</h2><p>windows上创建动态库一般有两种方式：</p>
+<ol>
+<li><p>使用<code>_declspec </code>显示声明要导出的对象 。</p>
+</li>
+<li><p>和平时写程序一样，源码中不需要显示声明导出，导出放在<code>def</code>文件中声明。</p>
+</li>
+</ol>
+<blockquote>
+<p>首先介绍下使用<code>_declspec </code>来创建动态库的过程：</p>
+</blockquote>
+<p>（1）新建一个空项目或者是使用DLL模板都可以。(个人习惯用干净的空项目)</p>
+<p>（2）修改项目属性输出类型改为dll。</p>
+<p><img src="/2022/09/14/c++/C++%E5%8A%A8%E6%80%81%E5%BA%93%E4%BD%BF%E7%94%A8/image-20220914112138143.png" alt="image-20220914112138143"></p>
+<p>（3）正常添加.h与.cpp文件，.h中要导出的函数前添加<code>_declspec(dllexport)</code>声明即可。</p>
+<p><img src="/2022/09/14/c++/C++%E5%8A%A8%E6%80%81%E5%BA%93%E4%BD%BF%E7%94%A8/image-20220914112426652.png" alt="image-20220914112426652"></p>
+<p><img src="/2022/09/14/c++/C++%E5%8A%A8%E6%80%81%E5%BA%93%E4%BD%BF%E7%94%A8/image-20220914112447125.png" alt="image-20220914112447125"></p>
+<p>（4）重新生成，在工程目录即可生成对应的<code>dllapi.lib</code>与<code>dllapi.dll</code>文件。</p>
+<p><img src="/2022/09/14/c++/C++%E5%8A%A8%E6%80%81%E5%BA%93%E4%BD%BF%E7%94%A8/image-20220914112910035.png" alt="image-20220914112910035"></p>
+<blockquote>
+<p>再来看看使用def文件声明导出的方式：</p>
+</blockquote>
+<p>（1）添加def文件</p>
+<p><img src="/2022/09/14/c++/C++%E5%8A%A8%E6%80%81%E5%BA%93%E4%BD%BF%E7%94%A8/image-20220914144810392.png" alt="image-20220914144810392"></p>
+<p>（2）def文件中声明要导出的函数</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">LIBRARY</span><br><span class="line">EXPORTS</span><br><span class="line">	add</span><br></pre></td></tr></table></figure>
+
+<p>（3）重新生成，和第一种显示声明方式一样生成了.lib和.dll2个文件。</p>
+<p><img src="/2022/09/14/c++/C++%E5%8A%A8%E6%80%81%E5%BA%93%E4%BD%BF%E7%94%A8/image-20220914145244170.png" alt="image-20220914145244170"></p>
+<p><img src="/2022/09/14/c++/C++%E5%8A%A8%E6%80%81%E5%BA%93%E4%BD%BF%E7%94%A8/image-20220914145315233.png" alt="image-20220914145315233"></p>
+<h2 id="2-使用动态库"><a href="#2-使用动态库" class="headerlink" title="2. 使用动态库"></a>2. 使用动态库</h2><p>windows上使用动态库一般有2种方式：</p>
+<ul>
+<li>隐式调用(IDE上设置)</li>
+<li>显示调用</li>
+</ul>
+<p>下面分别介绍下详细的使用流程</p>
+<blockquote>
+<p>隐式调用使用流程</p>
+</blockquote>
+<p>（1）创建控制台测试工程，并建立一个依赖目录，将动态库的<code>.h</code>和<code>.lib</code>放在这个目录下，同时将<code>.dll</code>放在exe可执行程序同级目录。</p>
+<p><img src="/2022/09/14/c++/C++%E5%8A%A8%E6%80%81%E5%BA%93%E4%BD%BF%E7%94%A8/image-20220914134244370.png" alt="image-20220914134244370"></p>
+<p>（2）配置</p>
+<ol>
+<li><p>项目-&gt;属性-&gt;配置属性-&gt;VC++ 目录-&gt; 在“包含目录”里添加头文件<code>DllAPI.h</code><strong>所在的目录</strong> 。</p>
+</li>
+<li><p>项目-&gt;属性-&gt;配置属性-&gt;VC++ 目录-&gt; 在“库目录”里添加依赖文件<code>dllapi.lib</code><strong>所在的目录</strong>。 </p>
+</li>
+<li><p>项目-&gt;属性-&gt;配置属性-&gt;链接器-&gt;输入-&gt; 在“附加依赖项”里添加<code>dllapi.lib</code> 。 你也可以在代码中添加一行设置库的链接，<code>#pragma comment(lib, &quot;dllapi.lib&quot;)</code>，这样就不需要2、3配置了。</p>
+<p><img src="/2022/09/14/c++/C++%E5%8A%A8%E6%80%81%E5%BA%93%E4%BD%BF%E7%94%A8/image-20220914135324901.png" alt="image-20220914135324901"></p>
+<p><img src="/2022/09/14/c++/C++%E5%8A%A8%E6%80%81%E5%BA%93%E4%BD%BF%E7%94%A8/image-20220914135407082.png" alt="image-20220914135407082"></p>
+</li>
+</ol>
+<p> （3）测试运行</p>
+<p><img src="/2022/09/14/c++/C++%E5%8A%A8%E6%80%81%E5%BA%93%E4%BD%BF%E7%94%A8/image-20220914135507421.png" alt="image-20220914135507421"></p>
+<blockquote>
+<p>显示调用使用流程</p>
+</blockquote>
+<p>只需要将<code>.dll</code>放在exe可执行程序同级目录就行了，IDE不需要额外设置。注意要使用这个dll中的方法其创建时必须要<code>_declspec </code>显示导出，使用时只要这个dll文件就行了，.h和.lib不需要。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;Windows.h&quot;</span> <span class="comment">// 动态库加载、释放等接口头文件</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;tchar.h&quot;</span>   <span class="comment">// _T头文件，设置支持Unicode编码</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">typedef</span> <span class="title">int</span><span class="params">(*Dllfun)</span><span class="params">(<span class="type">int</span>, <span class="type">int</span>)</span></span>; <span class="comment">// 待使用接口的函数指针</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="comment">// 加载动态库</span></span><br><span class="line">	HINSTANCE hdll = <span class="built_in">LoadLibrary</span>(_T(<span class="string">&quot;dllapi.dll&quot;</span>));</span><br><span class="line">	<span class="keyword">if</span> (hdll == <span class="literal">NULL</span>) &#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 获取动态库中导出的函数指针</span></span><br><span class="line">	Dllfun funName = (Dllfun)<span class="built_in">GetProcAddress</span>(hdll, <span class="string">&quot;add&quot;</span>);</span><br><span class="line">	<span class="keyword">if</span> (funName == <span class="literal">NULL</span>) &#123;</span><br><span class="line">		<span class="built_in">FreeLibrary</span>(hdll);</span><br><span class="line">		<span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 调用、释放</span></span><br><span class="line">	<span class="type">int</span> ret = <span class="built_in">funName</span>(<span class="number">1</span>, <span class="number">2</span>);</span><br><span class="line">	<span class="built_in">FreeLibrary</span>(hdll);</span><br><span class="line"></span><br><span class="line">	std::cout &lt;&lt; <span class="string">&quot;result = &quot;</span> &lt;&lt; ret &lt;&lt; <span class="string">&quot;\n&quot;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<br/>
+
+
+
+<h1 id="Linux上动态库使用"><a href="#Linux上动态库使用" class="headerlink" title="Linux上动态库使用"></a>Linux上动态库使用</h1><p>Linux上创建动态库很简单，不需要显示声明导出的函数，它会默认导出。<br>在Linux上使用动态库也有2种方式：</p>
+<ul>
+<li>编译器链接</li>
+<li>库文件加载</li>
+</ul>
+<h2 id="1-编译器链接使用流程"><a href="#1-编译器链接使用流程" class="headerlink" title="1. 编译器链接使用流程"></a>1. 编译器链接使用流程</h2><blockquote>
+<ol>
+<li>编写源文件。</li>
+<li>将一个或几个源文件编译链接，生成libxxx.so。</li>
+<li>通过 <code>-L&lt;path&gt; -lxxx</code> 的gcc选项链接生成的libxxx.so。</li>
+<li>把libxxx.so放入链接库的标准路径，或指定 <code>LD_LIBRARY_PATH</code>，才能运行链接了libxxx.so的程序。</li>
+</ol>
+</blockquote>
+<p>(1) 编写源文件，生成so共享库</p>
+<p>建立一个源文件：add.c，代码如下：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">add</span><span class="params">(<span class="type">int</span> x, <span class="type">int</span> y)</span></span><br><span class="line">&#123;</span><br><span class="line">   <span class="keyword">return</span> x + y;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>编译生成libadd.so：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gcc -fPIC -shared -o libadd.so add.c</span><br></pre></td></tr></table></figure>
+
+<p>我们会得到libadd.so。</p>
+<p>实际上上述过程分为编译和链接两步， -fPIC是编译选项，PIC是 Position Independent Code 的缩写，表示要生成位置无关的代码，这是动态库需要的特性； -shared是链接选项，告诉gcc生成动态库而不是可执行文件。</p>
+<p>上述的一行命令等同于：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">gcc -c -fPIC add.c</span><br><span class="line">gcc -shared -o libadd.so add.o</span><br></pre></td></tr></table></figure>
+
+
+
+<p>（2）为动态库编写接口文件</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">pragma</span> once</span></span><br><span class="line"><span class="type">int</span> <span class="title function_">add</span><span class="params">(<span class="type">int</span> x, <span class="type">int</span> y)</span>;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>（3）测试，链接动态库生成可执行文件</p>
+<p>建立一个使用<code>add</code>函数的test.c，代码如下：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;add.h&quot;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">(<span class="type">int</span> argc, <span class="type">char</span> *argv[])</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">int</span> ret = add(<span class="number">1</span>, <span class="number">2</span>);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;ret= %d.\n&quot;</span>, ret);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>gcc test.c -L. -ladd</code> 生成a.out，其中<code>-ladd</code>表示要链接<code>libadd.so</code>。<br><code>-L.</code>表示搜索要链接的库文件时包含当前路径。</p>
+<p>注意，如果同一目录下同时存在同名的动态库和静态库，比如 <code>libadd.so</code> 和 <code>libadd.a</code> 都在当前路径下，<br>则gcc会优先链接动态库。</p>
+<p>（4） 运行</p>
+<p>运行 <code>./a.out</code> 会得到以下的错误提示。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./a.out: error while loading shared libraries: libadd.so: cannot open shared object file: No such file or directory</span><br></pre></td></tr></table></figure>
+
+<p>找不到libadd.so，原来Linux是通过 <code>/etc/ld.so.cache</code> 文件搜寻要链接的动态库的。<br>而 <code>/etc/ld.so.cache</code> 是 ldconfig 程序读取 <code>/etc/ld.so.conf</code> 文件生成的。<br>（注意， <code>/etc/ld.so.conf</code> 中并不必包含 <code>/lib</code> 和 <code>/usr/lib</code>，<code>ldconfig</code>程序会自动搜索这两个目录）</p>
+<p>如果我们把 <code>libadd.so</code> 所在的路径添加到 <code>/etc/ld.so.conf</code> 中，再以root权限运行 <code>ldconfig</code> 程序，更新 <code>/etc/ld.so.cache</code> ，<code>a.out</code>运行时，就可以找到 <code>libadd.so</code>。</p>
+<p>因此我们可以为<code>a.out</code>指定 <code>LD_LIBRARY_PATH</code>运行，如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">LD_LIBRARY_PATH=. ./a.out</span><br></pre></td></tr></table></figure>
+
+<p>程序就能正常运行了。<code>LD_LIBRARY_PATH=.</code> 是告诉 <code>a.out</code>，先在当前路径寻找链接的动态库。</p>
+<p>或者修改<code>LD_LIBRARY_PATH</code>环境变量，指定为当前目录也可以，如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">export LD_LIBRARY_PATH=$&#123;pwd&#125;:$&#123;LD_LIBRARY_PATH&#125;</span><br></pre></td></tr></table></figure>
+
+<p>然后直接执行<code>./a.out</code>也可以运行了。</p>
+<h2 id="2-库文件加载使用流程"><a href="#2-库文件加载使用流程" class="headerlink" title="2. 库文件加载使用流程"></a>2. 库文件加载使用流程</h2><p>像window调用库文件一样，在linux下，也有相应的API因为加载库文件而存在。它们主要是以下几个函数：<br><img src="/2022/09/14/c++/C++%E5%8A%A8%E6%80%81%E5%BA%93%E4%BD%BF%E7%94%A8/image-20220914174012815.png" alt="image-20220914135507421"></p>
+<p>使用源码如下：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// test2.c</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;dlfcn.h&gt;</span></span></span><br><span class="line"> </span><br><span class="line"> <span class="type">int</span> <span class="title function_">main</span><span class="params">(<span class="type">int</span> argc, <span class="type">char</span> *argv[])</span>&#123;</span><br><span class="line">     <span class="type">void</span> * libm_handle = <span class="literal">NULL</span>;</span><br><span class="line">     <span class="type">int</span> (*add_method)(<span class="type">int</span>, <span class="type">int</span>);</span><br><span class="line">     <span class="type">char</span> *errorInfo;</span><br><span class="line">     <span class="type">int</span> result;</span><br><span class="line">      </span><br><span class="line">    <span class="comment">// dlopen 函数还会自动解析共享库中的依赖项。这样，如果您打开了一个依赖于其他共享库的对象，它就会自动加载它们。</span></span><br><span class="line">    <span class="comment">// 函数返回一个句柄，该句柄用于后续的 API 调用</span></span><br><span class="line">    libm_handle = dlopen(<span class="string">&quot;libadd.so&quot;</span>, RTLD_LAZY );</span><br><span class="line">	<span class="comment">// 如果返回 NULL 句柄，表示无法找到对象文件，过程结束。否则的话，将会得到对象的一个句柄，可以进一步询问对象</span></span><br><span class="line">    <span class="keyword">if</span> (!libm_handle)&#123;</span><br><span class="line">        <span class="comment">// 如果返回 NULL 句柄,通过dlerror方法可以取得无法访问对象的原因</span></span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;Open Error:%s.\n&quot;</span>,dlerror());</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 使用 dlsym 函数，尝试解析新打开的对象文件中的符号。您将会得到一个有效的指向该符号的指针，或者是得到一个 NULL 并返回一个错误</span></span><br><span class="line">    add_method = dlsym(libm_handle,<span class="string">&quot;add&quot;</span>);</span><br><span class="line">    errorInfo = dlerror();<span class="comment">// 它会在发生前面的错误时返回一个字符串，同时将其从内存中清空； 在没有错误发生时返回 NULL</span></span><br><span class="line">	<span class="keyword">if</span> (errorInfo != <span class="literal">NULL</span>)&#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;Dlsym Error:%s.\n&quot;</span>,errorInfo);</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    <span class="comment">// 执行“cosf”方法</span></span><br><span class="line">    result = (*add_method)(<span class="number">1</span>, <span class="number">2</span>);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;result = %d.\n&quot;</span>,result);</span><br><span class="line">     </span><br><span class="line">    <span class="comment">// 调用 ELF 对象中的目标函数后，通过调用 dlclose 来关闭对它的访问</span></span><br><span class="line">    dlclose(libm_handle);</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>编译，运行<code>./test2</code>可以看到结果为3。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gcc test2.c -o test2 -ldl</span><br></pre></td></tr></table></figure>
+
+
+    </div>
+    
+    <div class="post-footer">
+        <div>
+            
+            转载声明：
+            商业转载请联系作者获得授权,非商业转载请注明出处 © <a href="" target="_blank">cxx</a>
+            
+            
+        </div>
+        <div>
+            
+        </div>
+    </div>
+</article>
+<div class="article-nav prev-next-wrap clearfix">
+    
+    
+    <a href="/2022/09/08/notes/cmake/" class="next-post btn btn-default" title='CMake使用'>
+        <span class="hidden-lg">下一篇</span>
+        <span class="hidden-xs">
+            CMake使用</span><i class="fa fa-angle-right fa-fw"></i>
+    </a>
+    
+</div>
+
+<div id="comments">
+    
+    
+<div class="utteranc">
+  
+  <script
+    src='https://utteranc.es/client.js'
+    repo='cxx001/myblog-comment'
+    issue-term='pathname'
+    issue-number=''
+    theme='github-light'
+    label=''
+    crossorigin='anonymous'
+    async
+  ></script>
+</div>
+
+
+
+</div>
+
+                </main>
+                
+                    <aside id="article-toc" role="navigation" class="col-md-4">
+    <div class="widget">
+        <h3 class="title">
+            文章目录
+        </h3>
+        
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-text">前言</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Windows%E4%B8%8ELinux%E4%B8%8B%E9%9D%A2%E7%9A%84%E5%8A%A8%E6%80%81%E9%93%BE%E6%8E%A5%E5%BA%93%E5%8C%BA%E5%88%AB"><span class="toc-text">Windows与Linux下面的动态链接库区别</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E6%96%87%E4%BB%B6%E5%90%8E%E7%BC%80%E4%B8%8D%E5%90%8C"><span class="toc-text">1. 文件后缀不同</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E6%96%87%E4%BB%B6%E6%A0%BC%E5%BC%8F%E4%B8%8D%E5%90%8C"><span class="toc-text">2. 文件格式不同</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E5%8A%A8%E6%80%81%E9%93%BE%E6%8E%A5%E5%BA%93%E7%9A%84%E6%96%87%E4%BB%B6%E4%B8%AA%E6%95%B0%E4%B8%8D%E4%B8%80%E6%A0%B7"><span class="toc-text">3. 动态链接库的文件个数不一样</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Windows%E4%B8%8A%E5%8A%A8%E6%80%81%E5%BA%93%E4%BD%BF%E7%94%A8"><span class="toc-text">Windows上动态库使用</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E5%88%9B%E5%BB%BA%E5%8A%A8%E6%80%81%E5%BA%93"><span class="toc-text">1. 创建动态库</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E4%BD%BF%E7%94%A8%E5%8A%A8%E6%80%81%E5%BA%93"><span class="toc-text">2. 使用动态库</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Linux%E4%B8%8A%E5%8A%A8%E6%80%81%E5%BA%93%E4%BD%BF%E7%94%A8"><span class="toc-text">Linux上动态库使用</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E7%BC%96%E8%AF%91%E5%99%A8%E9%93%BE%E6%8E%A5%E4%BD%BF%E7%94%A8%E6%B5%81%E7%A8%8B"><span class="toc-text">1. 编译器链接使用流程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E5%BA%93%E6%96%87%E4%BB%B6%E5%8A%A0%E8%BD%BD%E4%BD%BF%E7%94%A8%E6%B5%81%E7%A8%8B"><span class="toc-text">2. 库文件加载使用流程</span></a></li></ol></li></ol>
+        
+    </div>
+</aside>
+                
+            </div>
+        </div>
+    </section>
+    <footer class="main-footer">
+    <div class="container">
+        <div class="row">
+        </div>
+    </div>
+</footer>
+<a id="back-to-top" class="icon-btn hide">
+    <i class="fa fa-chevron-up"></i>
+</a>
+    <div class="copyright">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="busuanzi">
+    
+    访问量:
+    <strong id="busuanzi_value_site_pv">
+        <i class="fa fa-spinner fa-spin"></i>
+    </strong>
+    &nbsp; | &nbsp;
+    访客数:
+    <strong id="busuanzi_value_site_uv">
+        <i class="fa fa-spinner fa-spin"></i>
+    </strong>
+    
+</div>
+            </div>
+            <div class="col-sm-12">
+                <span>Copyright &copy;
+                    2022
+                    
+                </span> |
+                <span>
+                    Powered by <a href="//hexo.io" class="copyright-links" target="_blank" rel="nofollow">Hexo</a>
+                </span> |
+                <span>
+                    Theme by <a href="//github.com/shenliyang/hexo-theme-snippet.git" class="copyright-links" target="_blank" rel="nofollow">Snippet</a>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+<script src="/js/app.js?rev=@@hash.js"></script>
+
+</body>
+</html>
