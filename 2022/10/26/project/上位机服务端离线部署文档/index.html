@@ -1,0 +1,344 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+<head>
+    <!--Setting-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta name="apple-mobile-web-app-capable" content="Hexo">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    <meta name="browsermode" content="application">
+    <meta name="screen-orientation" content="portrait">
+    <meta name="theme-version" content="1.0.0">
+    <meta name="root" content="/">
+    <link rel="dns-prefetch" href="https://cxx001.gitee.io">
+    <!--SEO-->
+
+<meta name="keywords" content="pomelo环境部署" />
+
+
+<meta name="description" content="上位机服务端离线部署步骤一、环境部署1. 安装nodejs和npm
+建议8.11.x以上，当前14.16.0
+
+
+下载官方安装包并拷贝到离线机器上。官方下载地址：https://nodejs.o..." />
+
+
+<meta name="robots" content="all" />
+<meta name="google" content="all" />
+<meta name="googlebot" content="all" />
+<meta name="verify" content="all" />
+    <!--Title-->
+
+<title>
+    
+    上位机服务端离线部署步骤 |
+    
+    Hexo
+</title>
+
+<link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+
+
+<link rel="icon" href="/favicon.ico">
+
+    
+
+
+<link rel="stylesheet" href="/css/bootstrap.min.css?rev=3.3.7.css">
+<link rel="stylesheet" href="/css/font-awesome.min.css?rev=4.7.0.css">
+<link rel="stylesheet" href="/css/style.css?rev=@@hash.css">
+
+    
+<div class="hide">
+    <script type="text/javascript">
+    var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+    document.write(unescape("%3Cspan class='cnzz_stat_icon_1263868967 hide' %3E%3Cscript%20src%3D%22https%3A%2F%2Fs95.cnzz.com%2Fz_stat.php%3Fweb_id%3D1272564536%22%3E%3C%2Fscript%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s19.cnzz.com/z_stat.php%3Fid%3D1263868967%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+    </script>
+</div>
+
+
+
+
+    
+
+<meta name="generator" content="Hexo 6.2.0"></head>
+<!--[if lte IE 8]>
+<style>
+    html{ font-size: 1em }
+</style>
+<![endif]-->
+<!--[if lte IE 9]>
+<div style="ie">你使用的浏览器版本过低，为了你更好的阅读体验，请更新浏览器的版本或者使用其他现代浏览器，比如Chrome、Firefox、Safari等。</div>
+<![endif]-->
+<body>
+    <header class="main-header"  style="background-image:url(
+    https://hexo-theme-snippet-1251680922.cos.ap-beijing.myqcloud.com/img/banner.jpg)"
+     >
+    <div class="main-header-box">
+        <a class="header-avatar" href="/" title='John Doe'>
+            <img src="/img/avatar.jpg" alt="logo头像" class="img-responsive center-block">
+        </a>
+        <div class="branding">
+            <!--<h2 class="text-hide">Snippet主题,从未如此简单有趣</h2>-->
+            
+            <img src="/img/branding.png" alt="Snippet 博客主题" class="img-responsive center-block">
+            
+        </div>
+    </div>
+</header>
+    <nav class="main-navigation">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="navbar-header"><span class="nav-toggle-button collapsed pull-right" data-toggle="collapse" data-target="#main-menu" id="mnav">
+                        <span class="sr-only"></span>
+                        <i class="fa fa-bars"></i>
+                    </span>
+                    <a class="navbar-brand" href="https://cxx001.gitee.io">
+                        Hexo</a>
+                </div>
+                <div class="collapse navbar-collapse" id="main-menu">
+                    <ul class="menu">
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/"><i class="fa "></i>
+                                首页</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/archives/"><i class="fa "></i>
+                                时间轴</a>
+                        </li>
+                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+    <section class="content-wrap">
+        <div class="container">
+            <div class="row">
+                <main class="col-md-8 main-content m-post">
+                    <p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id="上位机服务端离线部署步骤">
+            
+            上位机服务端离线部署步骤
+            
+        </h1>
+        <div class="post-meta">
+    
+    <span class="categories-meta fa-wrap">
+        <i class="fa fa-folder-open-o"></i>
+        <a class="category-link" href="/categories/project/">project</a>
+    </span>
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-tags"></i>
+        <span class="tags-meta">
+            
+            <a class="tag-none-link" href="/tags/pomelo%E7%8E%AF%E5%A2%83%E9%83%A8%E7%BD%B2/" rel="tag">pomelo环境部署</a>
+            
+        </span>
+    </span>
+    
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-clock-o"></i>
+        <span class="date-meta">
+            2022/10/26</span>
+    </span>
+    
+    <span class="fa-wrap">
+        <i class="fa fa-eye"></i>
+        <span id="busuanzi_value_page_pv"></span>
+    </span>
+    
+    
+</div>
+        
+        
+    </div>
+    
+    <div class="post-body post-content">
+        <h1 id="上位机服务端离线部署步骤"><a href="#上位机服务端离线部署步骤" class="headerlink" title="上位机服务端离线部署步骤"></a>上位机服务端离线部署步骤</h1><h2 id="一、环境部署"><a href="#一、环境部署" class="headerlink" title="一、环境部署"></a>一、环境部署</h2><h3 id="1-安装nodejs和npm"><a href="#1-安装nodejs和npm" class="headerlink" title="1. 安装nodejs和npm"></a>1. 安装nodejs和npm</h3><blockquote>
+<p>建议8.11.x以上，当前14.16.0</p>
+</blockquote>
+<ul>
+<li><p>下载官方安装包并拷贝到离线机器上。官方下载地址：<a target="_blank" rel="noopener" href="https://nodejs.org/en/download/">https://nodejs.org/en/download/</a></p>
+</li>
+<li><p>解压文件：<code>tar zvxf node-v8.9.4-linux-x64.tar.xz</code></p>
+</li>
+<li><p>放到相应目录例如: <code>mv node-v8.9.4-linux-x64 /opt/</code></p>
+</li>
+<li><p>建立软链接使npm和node命令到系统命令</p>
+<p><code>sudo In -s /opt/node-v8.9.4-linux-x64/bin/node /usr/local/bin/node</code></p>
+<p><code>sudo In -s /opt/node-v8.9.4-linux-x64/bin/npm /usr/local/bin/npm</code></p>
+</li>
+<li><p>检查是否安装成功</p>
+<p> <code>node-v</code></p>
+<p> <code>npm-v</code></p>
+</li>
+</ul>
+<h3 id="2-安装python"><a href="#2-安装python" class="headerlink" title="2. 安装python"></a>2. 安装python</h3><blockquote>
+<p>版本 2.5 &lt; version &lt; 3.0，当前2.7.18</p>
+</blockquote>
+<h3 id="3-安装pomelo"><a href="#3-安装pomelo" class="headerlink" title="3. 安装pomelo"></a>3. 安装pomelo</h3><ul>
+<li>解压文件：<code>tar zvxf pomelo.tar.gz</code></li>
+<li>放到相应目录例如: <code>mv pomelo /usr/local/lib/node_modules/</code></li>
+<li>建立软链接: <code>ln -s usr/local/lib/node_modules/pomelo/bin/pomelo /usr/local/bin/pomelo</code></li>
+</ul>
+<h3 id="3-安装mongodb"><a href="#3-安装mongodb" class="headerlink" title="3. 安装mongodb"></a>3. 安装mongodb</h3><ul>
+<li>在mongodb官网下载所需安装包，比如 <code>mongodb-linux-x86_64-rhel70-3.6.23.tgz</code>, 官方下载地址: <a target="_blank" rel="noopener" href="https://www.mongodb.com/try/download/community">https://www.mongodb.com/try/download/community</a></li>
+<li>执行 <code>tar zxvf mongodb-linux-x86_64-rhel70-3.6.23.tgz</code> 命令解压软件包</li>
+<li>执行 <code>mv mongodb-linux-x86_64-rhel70-3.6.23 /usr/local/mongodb</code> 命令把解压的目录移动到local目录下并改名为mongodb</li>
+<li>进入mongodb目录依次执行 <code>mkdir data、mkdir data/db、mkdir conf、mkdir logs</code> 命令创建数据目录、配置目录、日志目录</li>
+<li>进入conf配置目录，执行vi mongodb.conf命令编写配置，在文件中写入：</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 日志文件位置  </span></span><br><span class="line">logpath=/usr/local/mongodb/logs/mongodb.log</span><br><span class="line"></span><br><span class="line"><span class="comment"># 以追加方式写入日志</span></span><br><span class="line">logappend=<span class="literal">true</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 是否以守护进程方式运行</span></span><br><span class="line">fork = <span class="literal">true</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 默认27017</span></span><br><span class="line"><span class="comment">#port = 27017</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 数据库文件位置</span></span><br><span class="line">dbpath=/usr/local/mongodb/data/db</span><br><span class="line"></span><br><span class="line"><span class="comment"># 启用定期记录CPU利用率和 I/O 等待</span></span><br><span class="line"><span class="comment">#cpu = true</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 是否以安全认证方式运行，默认是不认证的非安全方式</span></span><br><span class="line"><span class="comment"># noauth = true</span></span><br><span class="line">auth = <span class="literal">true</span></span><br><span class="line"> </span><br><span class="line"><span class="comment"># 默认127.0.0.1为只允许本地连接；0.0.0.0为不限制；多个指定服务器用，连接                                             </span></span><br><span class="line">bind_ip=0.0.0.0                                                                                                    </span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>进入bin目录启动</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#进入bin目录</span></span><br><span class="line"><span class="built_in">cd</span> /usr/local/mongodb/bin/</span><br><span class="line"></span><br><span class="line"><span class="comment">#启动</span></span><br><span class="line">./mongod -f /usr/local/mongodb/conf/mongodb.conf</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>输入以下内容表示成功</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">about to fork child process, waiting until server is ready <span class="keyword">for</span> connections.</span><br><span class="line">forked process: 29755</span><br><span class="line">child process started successfully, parent exiting</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>创建用户密码和添加登录用户<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 创建用户密码</span></span><br><span class="line">1. ./mongo ,连接mongodb</span><br><span class="line">2. use admin</span><br><span class="line">3. db.createUser(&#123;<span class="string">&quot;user&quot;</span>:<span class="string">&quot;root&quot;</span>,<span class="string">&quot;pwd&quot;</span>:<span class="string">&quot;123456&quot;</span>,<span class="string">&quot;roles&quot;</span>:[&#123;role:<span class="string">&quot;root&quot;</span>,db:<span class="string">&quot;admin&quot;</span>&#125;]&#125;)</span><br><span class="line">4. db.auth(<span class="string">&#x27;root&#x27;</span>,<span class="string">&#x27;123456&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 添加登录用户</span></span><br><span class="line">1. use mongo_fly</span><br><span class="line">2. db.avatars.insert(&#123;<span class="string">&quot;openid&quot;</span>: <span class="string">&quot;admin&quot;</span>, <span class="string">&quot;account&quot;</span>: <span class="string">&quot;admin&quot;</span>, <span class="string">&quot;password&quot;</span>: <span class="string">&quot;123456&quot;</span>&#125;)</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h2 id="二、启动上位机服务"><a href="#二、启动上位机服务" class="headerlink" title="二、启动上位机服务"></a>二、启动上位机服务</h2><ul>
+<li>解压源码：<code>unzip simufly_server.zip</code></li>
+<li>放到相应目录例如: <code>mv simufly_server /home/</code></li>
+<li>启动, <code>cd /home/simufly_server/ </code>执行 <code>pomelo start [-e &lt;development, production&gt;] [-D -d -t -i]</code></li>
+<li>支持的所有命令帮助查看 <code>pomelo --help</code></li>
+</ul>
+
+    </div>
+    
+    <div class="post-footer">
+        <div>
+            
+            转载声明：
+            商业转载请联系作者获得授权,非商业转载请注明出处 © <a href="" target="_blank">cxx</a>
+            
+            
+        </div>
+        <div>
+            
+        </div>
+    </div>
+</article>
+<div class="article-nav prev-next-wrap clearfix">
+    
+    
+    <a href="/2022/10/24/tools/windows11%E5%AE%89%E8%A3%85Linux%E5%AD%90%E7%B3%BB%E7%BB%9F/" class="next-post btn btn-default" title='windows11安装Linux子系统'>
+        <span class="hidden-lg">下一篇</span>
+        <span class="hidden-xs">
+            windows11安装Linux子系统</span><i class="fa fa-angle-right fa-fw"></i>
+    </a>
+    
+</div>
+
+<div id="comments">
+    
+    
+<div class="utteranc">
+  
+  <script
+    src='https://utteranc.es/client.js'
+    repo='cxx001/myblog-comment'
+    issue-term='pathname'
+    issue-number=''
+    theme='github-light'
+    label=''
+    crossorigin='anonymous'
+    async
+  ></script>
+</div>
+
+
+
+</div>
+
+                </main>
+                
+                    <aside id="article-toc" role="navigation" class="col-md-4">
+    <div class="widget">
+        <h3 class="title">
+            文章目录
+        </h3>
+        
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%8A%E4%BD%8D%E6%9C%BA%E6%9C%8D%E5%8A%A1%E7%AB%AF%E7%A6%BB%E7%BA%BF%E9%83%A8%E7%BD%B2%E6%AD%A5%E9%AA%A4"><span class="toc-text">上位机服务端离线部署步骤</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E7%8E%AF%E5%A2%83%E9%83%A8%E7%BD%B2"><span class="toc-text">一、环境部署</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E5%AE%89%E8%A3%85nodejs%E5%92%8Cnpm"><span class="toc-text">1. 安装nodejs和npm</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E5%AE%89%E8%A3%85python"><span class="toc-text">2. 安装python</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E5%AE%89%E8%A3%85pomelo"><span class="toc-text">3. 安装pomelo</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E5%AE%89%E8%A3%85mongodb"><span class="toc-text">3. 安装mongodb</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E5%90%AF%E5%8A%A8%E4%B8%8A%E4%BD%8D%E6%9C%BA%E6%9C%8D%E5%8A%A1"><span class="toc-text">二、启动上位机服务</span></a></li></ol></li></ol>
+        
+    </div>
+</aside>
+                
+            </div>
+        </div>
+    </section>
+    <footer class="main-footer">
+    <div class="container">
+        <div class="row">
+        </div>
+    </div>
+</footer>
+<a id="back-to-top" class="icon-btn hide">
+    <i class="fa fa-chevron-up"></i>
+</a>
+    <div class="copyright">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="busuanzi">
+    
+    访问量:
+    <strong id="busuanzi_value_site_pv">
+        <i class="fa fa-spinner fa-spin"></i>
+    </strong>
+    &nbsp; | &nbsp;
+    访客数:
+    <strong id="busuanzi_value_site_uv">
+        <i class="fa fa-spinner fa-spin"></i>
+    </strong>
+    
+</div>
+            </div>
+            <div class="col-sm-12">
+                <span>Copyright &copy;
+                    2022
+                    
+                </span> |
+                <span>
+                    Powered by <a href="//hexo.io" class="copyright-links" target="_blank" rel="nofollow">Hexo</a>
+                </span> |
+                <span>
+                    Theme by <a href="//github.com/shenliyang/hexo-theme-snippet.git" class="copyright-links" target="_blank" rel="nofollow">Snippet</a>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+<script src="/js/app.js?rev=@@hash.js"></script>
+
+</body>
+</html>
