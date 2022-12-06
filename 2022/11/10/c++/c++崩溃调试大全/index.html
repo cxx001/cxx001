@@ -1,0 +1,375 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+<head>
+    <!--Setting-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta name="apple-mobile-web-app-capable" content="Hexo">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    <meta name="browsermode" content="application">
+    <meta name="screen-orientation" content="portrait">
+    <meta name="theme-version" content="1.0.0">
+    <meta name="root" content="/">
+    <link rel="dns-prefetch" href="https://cxx001.gitee.io">
+    <!--SEO-->
+
+<meta name="keywords" content="core dump" />
+
+
+<meta name="description" content="windows上程序崩溃调试场景1 调用第三方dll崩溃调试需求
+需要第三方提供对应的pdb和源码。
+
+调试步骤
+把dll 、pdb和exe程序放同级目录。
+在调用dll崩溃的地方打上断点，F5..." />
+
+
+<meta name="robots" content="all" />
+<meta name="google" content="all" />
+<meta name="googlebot" content="all" />
+<meta name="verify" content="all" />
+    <!--Title-->
+
+<title>
+    
+    c++崩溃调试大全 |
+    
+    Hexo
+</title>
+
+<link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+
+
+<link rel="icon" href="/favicon.ico">
+
+    
+
+
+<link rel="stylesheet" href="/css/bootstrap.min.css?rev=3.3.7.css">
+<link rel="stylesheet" href="/css/font-awesome.min.css?rev=4.7.0.css">
+<link rel="stylesheet" href="/css/style.css?rev=@@hash.css">
+
+    
+<div class="hide">
+    <script type="text/javascript">
+    var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+    document.write(unescape("%3Cspan class='cnzz_stat_icon_1263868967 hide' %3E%3Cscript%20src%3D%22https%3A%2F%2Fs95.cnzz.com%2Fz_stat.php%3Fweb_id%3D1272564536%22%3E%3C%2Fscript%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s19.cnzz.com/z_stat.php%3Fid%3D1263868967%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+    </script>
+</div>
+
+
+
+
+    
+
+<meta name="generator" content="Hexo 6.2.0"></head>
+<!--[if lte IE 8]>
+<style>
+    html{ font-size: 1em }
+</style>
+<![endif]-->
+<!--[if lte IE 9]>
+<div style="ie">你使用的浏览器版本过低，为了你更好的阅读体验，请更新浏览器的版本或者使用其他现代浏览器，比如Chrome、Firefox、Safari等。</div>
+<![endif]-->
+<body>
+    <header class="main-header"  style="background-image:url(
+    https://hexo-theme-snippet-1251680922.cos.ap-beijing.myqcloud.com/img/banner.jpg)"
+     >
+    <div class="main-header-box">
+        <a class="header-avatar" href="/" title='John Doe'>
+            <img src="/img/avatar.jpg" alt="logo头像" class="img-responsive center-block">
+        </a>
+        <div class="branding">
+            <!--<h2 class="text-hide">Snippet主题,从未如此简单有趣</h2>-->
+            
+            <img src="/img/branding.png" alt="Snippet 博客主题" class="img-responsive center-block">
+            
+        </div>
+    </div>
+</header>
+    <nav class="main-navigation">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="navbar-header"><span class="nav-toggle-button collapsed pull-right" data-toggle="collapse" data-target="#main-menu" id="mnav">
+                        <span class="sr-only"></span>
+                        <i class="fa fa-bars"></i>
+                    </span>
+                    <a class="navbar-brand" href="https://cxx001.gitee.io">
+                        Hexo</a>
+                </div>
+                <div class="collapse navbar-collapse" id="main-menu">
+                    <ul class="menu">
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/"><i class="fa "></i>
+                                首页</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/archives/"><i class="fa "></i>
+                                时间轴</a>
+                        </li>
+                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+    <section class="content-wrap">
+        <div class="container">
+            <div class="row">
+                <main class="col-md-8 main-content m-post">
+                    <p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id="c++崩溃调试大全">
+            
+            c++崩溃调试大全
+            
+        </h1>
+        <div class="post-meta">
+    
+    <span class="categories-meta fa-wrap">
+        <i class="fa fa-folder-open-o"></i>
+        <a class="category-link" href="/categories/c/">c++</a>
+    </span>
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-tags"></i>
+        <span class="tags-meta">
+            
+            <a class="tag-none-link" href="/tags/core-dump/" rel="tag">core dump</a>
+            
+        </span>
+    </span>
+    
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-clock-o"></i>
+        <span class="date-meta">
+            2022/11/10</span>
+    </span>
+    
+    <span class="fa-wrap">
+        <i class="fa fa-eye"></i>
+        <span id="busuanzi_value_page_pv"></span>
+    </span>
+    
+    
+</div>
+        
+        
+    </div>
+    
+    <div class="post-body post-content">
+        <h1 id="windows上程序崩溃调试"><a href="#windows上程序崩溃调试" class="headerlink" title="windows上程序崩溃调试"></a>windows上程序崩溃调试</h1><h2 id="场景1-调用第三方dll崩溃"><a href="#场景1-调用第三方dll崩溃" class="headerlink" title="场景1 调用第三方dll崩溃"></a>场景1 调用第三方dll崩溃</h2><h3 id="调试需求"><a href="#调试需求" class="headerlink" title="调试需求"></a>调试需求</h3><ul>
+<li>需要第三方提供对应的<code>pdb</code>和源码。</li>
+</ul>
+<h3 id="调试步骤"><a href="#调试步骤" class="headerlink" title="调试步骤"></a>调试步骤</h3><ol>
+<li>把<code>dll</code> 、<code>pdb</code>和<code>exe</code>程序放同级目录。</li>
+<li>在调用<code>dll</code>崩溃的地方打上断点，<code>F5</code>运行，第一次调试需要选择<code>dll</code>对应源码路径。<code>F11</code>即可进入<code>dll</code>内部调试。</li>
+</ol>
+<h2 id="场景2-程序运行时崩溃"><a href="#场景2-程序运行时崩溃" class="headerlink" title="场景2 程序运行时崩溃"></a>场景2 程序运行时崩溃</h2><h3 id="调试需求-1"><a href="#调试需求-1" class="headerlink" title="调试需求"></a>调试需求</h3><ol>
+<li><code>.exe</code>文件（或<code>.dll</code>）</li>
+<li>对应的<code>.pdb</code>文件</li>
+<li>崩溃后的<code>.dmp</code>文件</li>
+<li>对应的结点源代码（当时编译出这个<code>exe/dll</code>的代码，提前留个备份，比如 <code>SVN / git</code> 上打个tag、代码打包<code>rar/zip</code>的备份、代码文件夹备份……）</li>
+</ol>
+<h3 id="调试步骤-1"><a href="#调试步骤-1" class="headerlink" title="调试步骤"></a>调试步骤</h3><h4 id="1-生成dump文件"><a href="#1-生成dump文件" class="headerlink" title="1. 生成dump文件"></a>1. <strong>生成dump文件</strong></h4><p>dump文件的生成常用有两种方式，一种是在程序main中封装崩溃时写dmp文件接口，一种是windbg工具。</p>
+<ul>
+<li>方式一：在main入口封装写dmp文件入口，运行exe程序崩溃时会在当前目录自动产生dmp文件。</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;Windows.h&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;DbgHelp.h&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;tchar.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">GenerateMiniDump</span><span class="params">(PEXCEPTION_POINTERS pExceptionPointers)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">// 定义函数指针</span></span><br><span class="line">    <span class="function"><span class="keyword">typedef</span> <span class="title">BOOL</span><span class="params">(WINAPI * MiniDumpWriteDumpT)</span><span class="params">(</span></span></span><br><span class="line"><span class="params"><span class="function">        HANDLE,</span></span></span><br><span class="line"><span class="params"><span class="function">        DWORD,</span></span></span><br><span class="line"><span class="params"><span class="function">        HANDLE,</span></span></span><br><span class="line"><span class="params"><span class="function">        MINIDUMP_TYPE,</span></span></span><br><span class="line"><span class="params"><span class="function">        PMINIDUMP_EXCEPTION_INFORMATION,</span></span></span><br><span class="line"><span class="params"><span class="function">        PMINIDUMP_USER_STREAM_INFORMATION,</span></span></span><br><span class="line"><span class="params"><span class="function">        PMINIDUMP_CALLBACK_INFORMATION)</span></span>;</span><br><span class="line">    <span class="comment">// 从 &quot;DbgHelp.dll&quot; 库中获取 &quot;MiniDumpWriteDump&quot; 函数</span></span><br><span class="line">    MiniDumpWriteDumpT pfnMiniDumpWriteDump = <span class="literal">NULL</span>;</span><br><span class="line">    HMODULE hDbgHelp = <span class="built_in">LoadLibrary</span>(_T(<span class="string">&quot;DbgHelp.dll&quot;</span>));</span><br><span class="line">    <span class="keyword">if</span> (<span class="literal">NULL</span> == hDbgHelp) &#123;</span><br><span class="line">        <span class="keyword">return</span> EXCEPTION_CONTINUE_EXECUTION;</span><br><span class="line">    &#125;</span><br><span class="line">    pfnMiniDumpWriteDump = (MiniDumpWriteDumpT)<span class="built_in">GetProcAddress</span>(hDbgHelp, <span class="string">&quot;MiniDumpWriteDump&quot;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (<span class="literal">NULL</span> == pfnMiniDumpWriteDump) &#123;</span><br><span class="line">        <span class="built_in">FreeLibrary</span>(hDbgHelp);</span><br><span class="line">        <span class="keyword">return</span> EXCEPTION_CONTINUE_EXECUTION;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 创建 dmp 文件件</span></span><br><span class="line">    TCHAR szFileName[MAX_PATH] = &#123; <span class="number">0</span> &#125;;</span><br><span class="line">    TCHAR* szVersion = <span class="built_in">const_cast</span>&lt;TCHAR*&gt;(_T(<span class="string">&quot;DumpDemo_v1.0&quot;</span>));</span><br><span class="line">    SYSTEMTIME stLocalTime;</span><br><span class="line">    <span class="built_in">GetLocalTime</span>(&amp;stLocalTime);</span><br><span class="line">    <span class="built_in">wsprintf</span>(szFileName, <span class="string">L&quot;%s-%04d%02d%02d-%02d%02d%02d.dmp&quot;</span>,</span><br><span class="line">        szVersion, stLocalTime.wYear, stLocalTime.wMonth, stLocalTime.wDay,</span><br><span class="line">        stLocalTime.wHour, stLocalTime.wMinute, stLocalTime.wSecond);</span><br><span class="line">    HANDLE hDumpFile = <span class="built_in">CreateFile</span>(szFileName, GENERIC_READ | GENERIC_WRITE,</span><br><span class="line">        FILE_SHARE_WRITE | FILE_SHARE_READ, <span class="number">0</span>, CREATE_ALWAYS, <span class="number">0</span>, <span class="number">0</span>);</span><br><span class="line">    <span class="keyword">if</span> (INVALID_HANDLE_VALUE == hDumpFile) &#123;</span><br><span class="line">        <span class="built_in">FreeLibrary</span>(hDbgHelp);</span><br><span class="line">        <span class="keyword">return</span> EXCEPTION_CONTINUE_EXECUTION;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 写入 dmp 文件</span></span><br><span class="line">    MINIDUMP_EXCEPTION_INFORMATION expParam;</span><br><span class="line">    expParam.ThreadId = <span class="built_in">GetCurrentThreadId</span>();</span><br><span class="line">    expParam.ExceptionPointers = pExceptionPointers;</span><br><span class="line">    expParam.ClientPointers = FALSE;</span><br><span class="line">    <span class="built_in">pfnMiniDumpWriteDump</span>(<span class="built_in">GetCurrentProcess</span>(), <span class="built_in">GetCurrentProcessId</span>(),</span><br><span class="line">        hDumpFile, MiniDumpWithDataSegs, (pExceptionPointers ? &amp;expParam : <span class="literal">NULL</span>), <span class="literal">NULL</span>, <span class="literal">NULL</span>);</span><br><span class="line">    <span class="comment">// 释放文件</span></span><br><span class="line">    <span class="built_in">CloseHandle</span>(hDumpFile);</span><br><span class="line">    <span class="built_in">FreeLibrary</span>(hDbgHelp);</span><br><span class="line">    <span class="keyword">return</span> EXCEPTION_EXECUTE_HANDLER;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function">LONG WINAPI <span class="title">ExceptionFilter</span><span class="params">(LPEXCEPTION_POINTERS lpExceptionInfo)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">// 这里做一些异常的过滤或提示</span></span><br><span class="line">    <span class="keyword">if</span> (<span class="built_in">IsDebuggerPresent</span>()) &#123;</span><br><span class="line">        <span class="keyword">return</span> EXCEPTION_CONTINUE_SEARCH;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">GenerateMiniDump</span>(lpExceptionInfo);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">// 加入崩溃dump文件功能</span></span><br><span class="line">    <span class="built_in">SetUnhandledExceptionFilter</span>(ExceptionFilter);</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 使程序崩溃产生 Dump 文件</span></span><br><span class="line">    <span class="type">int</span>* p = <span class="literal">NULL</span>;</span><br><span class="line">    *p = <span class="number">1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<ul>
+<li><p>方式二：windbg产生dmp文件</p>
+<p>首先商店直接下载，安装windbg工具</p>
+<p><img src="/2022/11/10/c++/c++%E5%B4%A9%E6%BA%83%E8%B0%83%E8%AF%95%E5%A4%A7%E5%85%A8/image-20221109224842515.png" alt="image-20221109224842515"></p>
+</li>
+</ul>
+<p>​    	</p>
+<p>然后通过.dump命令生成dmp文件。如果程序启动就崩溃，使用Launch executable选择exe，如果是运行期间崩溃，使用Attach to process选择对应进程。然后点击GO开始，等待崩溃后，在Command下面命令窗口输入.dump命令即可。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">.dump /ma C:\Users\Administrator\Desktop\ConsoleApplication1\x64\Debug\test.dmp</span><br><span class="line"></span><br><span class="line">/m  生成标准的minidump, 默认</span><br><span class="line">/ma 带有尽量多选项的minidump，文件大</span><br><span class="line">/mFhutwd 带有数据段、非共享的读/写内存页和其他有用的信息的minidump，折中</span><br><span class="line">/f  生成全信息dump</span><br><span class="line"></span><br><span class="line">还有很多高级调试命令自行查询~~</span><br></pre></td></tr></table></figure>
+
+
+
+<p><img src="/2022/11/10/c++/c++%E5%B4%A9%E6%BA%83%E8%B0%83%E8%AF%95%E5%A4%A7%E5%85%A8/image-20221109233443023.png" alt="image-20221109233443023"></p>
+<p><img src="/2022/11/10/c++/c++%E5%B4%A9%E6%BA%83%E8%B0%83%E8%AF%95%E5%A4%A7%E5%85%A8/image-20221109235748102.png" alt="image-20221109235748102"></p>
+<h4 id="2-打开dump文件调试"><a href="#2-打开dump文件调试" class="headerlink" title="2. 打开dump文件调试"></a>2. <strong>打开dump文件调试</strong></h4><p>同样常用有两种方式，一种是通过<code>visual studio</code>直接打开<code>dmp</code>文件调试，一种是使用<code>windbg</code>工具打开调试。</p>
+<ul>
+<li><p>方式一：使用<code>visual studio</code>直接打开<code>dmp</code>文件。</p>
+<p>需要<code>dmp</code>文件和<code>exe</code>、<code>pdb</code>在同级目录，打开<code>dmp</code>文件运行调试时第一次会提示指定源代码路径，然后就可以断到崩溃的地方了。</p>
+<p><img src="/2022/11/10/c++/c++%E5%B4%A9%E6%BA%83%E8%B0%83%E8%AF%95%E5%A4%A7%E5%85%A8/image-20221109223343356.png" alt="image-20221109223343356"></p>
+<p><img src="/2022/11/10/c++/c++%E5%B4%A9%E6%BA%83%E8%B0%83%E8%AF%95%E5%A4%A7%E5%85%A8/image-20221109223443144.png" alt="image-20221109223443144"></p>
+</li>
+<li><p>方式二：使用<code>windbg</code>工具打开dmp文件</p>
+<p>打开windbg,设置源码路径和pdb文件路径</p>
+<p>​	    <img src="/2022/11/10/c++/c++%E5%B4%A9%E6%BA%83%E8%B0%83%E8%AF%95%E5%A4%A7%E5%85%A8/image-20221109232647684.png" alt="image-20221109232647684"></p>
+</li>
+</ul>
+<p>然后打开dmp文件(exe, pdb, dmp文件在同级目录)</p>
+<p><img src="/2022/11/10/c++/c++%E5%B4%A9%E6%BA%83%E8%B0%83%E8%AF%95%E5%A4%A7%E5%85%A8/image-20221110000200688.png" alt="image-20221110000200688"></p>
+<p><img src="/2022/11/10/c++/c++%E5%B4%A9%E6%BA%83%E8%B0%83%E8%AF%95%E5%A4%A7%E5%85%A8/image-20221110000415076.png" alt="image-20221110000415076"></p>
+<br/>
+
+<h1 id="Linux上程序崩溃调试"><a href="#Linux上程序崩溃调试" class="headerlink" title="Linux上程序崩溃调试"></a>Linux上程序崩溃调试</h1><h2 id="场景一-程序运行时崩溃"><a href="#场景一-程序运行时崩溃" class="headerlink" title="场景一 程序运行时崩溃"></a>场景一 程序运行时崩溃</h2><h3 id="调试步骤-2"><a href="#调试步骤-2" class="headerlink" title="调试步骤"></a>调试步骤</h3><ol>
+<li><p><code>ulimit -c</code>命令查看是否开启core dump文件生成，为0则未开启。</p>
+</li>
+<li><p><code>ulimit -c unlimited</code> 开启core dump。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">如果要永久生效，编辑.bashrc文件：</span><br><span class="line">vi ~/.bashrc</span><br><span class="line">添加：</span><br><span class="line">ulimit -c unlimited</span><br><span class="line">保存，退出。</span><br><span class="line">source ~/.bashrc</span><br><span class="line">source命令使修改立即生效。</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>编写测试程序，gcc编译，运行崩溃后会在当前目录产生core.xxxx文件。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">crash</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">char</span> *xxx = <span class="string">&quot;crash!!&quot;</span>;</span><br><span class="line">    xxx[<span class="number">1</span>] = <span class="string">&#x27;D&#x27;</span>; <span class="comment">// 写只读存储区</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">2</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">foo</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">return</span> crash();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">return</span> foo();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#-g调试版本</span></span><br><span class="line">gcc -o test -g test.c</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>执行<code>gdb test ./core.xxx</code>调试。</p>
+<p><img src="/2022/11/10/c++/c++%E5%B4%A9%E6%BA%83%E8%B0%83%E8%AF%95%E5%A4%A7%E5%85%A8/image-20221110004757043.png" alt="image-20221110004757043"></p>
+</li>
+</ol>
+<h3 id="设置core-dump文件目录和名称"><a href="#设置core-dump文件目录和名称" class="headerlink" title="设置core dump文件目录和名称"></a>设置core dump文件目录和名称</h3><ol>
+<li><p>临时修改</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">echo &quot;/home/corefile/core-%e-%p-%t&quot; &gt; /proc/sys/kernel/core_pattern</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2022/11/10/c++/c++%E5%B4%A9%E6%BA%83%E8%B0%83%E8%AF%95%E5%A4%A7%E5%85%A8/image-20221110005814341.png" alt="image-20221110005814341"></p>
+</li>
+<li><p>永久修改</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sysctl -w kernel.core_pattern=/home/corefile/%e.core.%p</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2022/11/10/c++/c++%E5%B4%A9%E6%BA%83%E8%B0%83%E8%AF%95%E5%A4%A7%E5%85%A8/image-20221110010224647.png" alt="image-20221110010224647"></p>
+</li>
+</ol>
+
+    </div>
+    
+    <div class="post-footer">
+        <div>
+            
+            转载声明：
+            商业转载请联系作者获得授权,非商业转载请注明出处 © <a href="" target="_blank">cxx</a>
+            
+            
+        </div>
+        <div>
+            
+        </div>
+    </div>
+</article>
+<div class="article-nav prev-next-wrap clearfix">
+    
+    <a href="/2022/12/06/%E8%B5%84%E6%BA%90%E5%88%97%E8%A1%A8/" class="pre-post btn btn-default" title='资源列表'>
+        <i class="fa fa-angle-left fa-fw"></i><span class="hidden-lg">上一篇</span>
+        <span class="hidden-xs">
+            资源列表</span>
+    </a>
+    
+    
+    <a href="/2022/11/01/c++/c++%E6%99%BA%E8%83%BD%E6%8C%87%E9%92%88/" class="next-post btn btn-default" title='c++11智能指针'>
+        <span class="hidden-lg">下一篇</span>
+        <span class="hidden-xs">
+            c++11智能指针</span><i class="fa fa-angle-right fa-fw"></i>
+    </a>
+    
+</div>
+
+<div id="comments">
+    
+    
+<div class="utteranc">
+  
+  <script
+    src='https://utteranc.es/client.js'
+    repo='cxx001/myblog-comment'
+    issue-term='pathname'
+    issue-number=''
+    theme='github-light'
+    label=''
+    crossorigin='anonymous'
+    async
+  ></script>
+</div>
+
+
+
+</div>
+
+                </main>
+                
+                    <aside id="article-toc" role="navigation" class="col-md-4">
+    <div class="widget">
+        <h3 class="title">
+            文章目录
+        </h3>
+        
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#windows%E4%B8%8A%E7%A8%8B%E5%BA%8F%E5%B4%A9%E6%BA%83%E8%B0%83%E8%AF%95"><span class="toc-text">windows上程序崩溃调试</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9C%BA%E6%99%AF1-%E8%B0%83%E7%94%A8%E7%AC%AC%E4%B8%89%E6%96%B9dll%E5%B4%A9%E6%BA%83"><span class="toc-text">场景1 调用第三方dll崩溃</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%B0%83%E8%AF%95%E9%9C%80%E6%B1%82"><span class="toc-text">调试需求</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%B0%83%E8%AF%95%E6%AD%A5%E9%AA%A4"><span class="toc-text">调试步骤</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9C%BA%E6%99%AF2-%E7%A8%8B%E5%BA%8F%E8%BF%90%E8%A1%8C%E6%97%B6%E5%B4%A9%E6%BA%83"><span class="toc-text">场景2 程序运行时崩溃</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%B0%83%E8%AF%95%E9%9C%80%E6%B1%82-1"><span class="toc-text">调试需求</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%B0%83%E8%AF%95%E6%AD%A5%E9%AA%A4-1"><span class="toc-text">调试步骤</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E7%94%9F%E6%88%90dump%E6%96%87%E4%BB%B6"><span class="toc-text">1. 生成dump文件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-%E6%89%93%E5%BC%80dump%E6%96%87%E4%BB%B6%E8%B0%83%E8%AF%95"><span class="toc-text">2. 打开dump文件调试</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Linux%E4%B8%8A%E7%A8%8B%E5%BA%8F%E5%B4%A9%E6%BA%83%E8%B0%83%E8%AF%95"><span class="toc-text">Linux上程序崩溃调试</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9C%BA%E6%99%AF%E4%B8%80-%E7%A8%8B%E5%BA%8F%E8%BF%90%E8%A1%8C%E6%97%B6%E5%B4%A9%E6%BA%83"><span class="toc-text">场景一 程序运行时崩溃</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%B0%83%E8%AF%95%E6%AD%A5%E9%AA%A4-2"><span class="toc-text">调试步骤</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AE%BE%E7%BD%AEcore-dump%E6%96%87%E4%BB%B6%E7%9B%AE%E5%BD%95%E5%92%8C%E5%90%8D%E7%A7%B0"><span class="toc-text">设置core dump文件目录和名称</span></a></li></ol></li></ol></li></ol>
+        
+    </div>
+</aside>
+                
+            </div>
+        </div>
+    </section>
+    <footer class="main-footer">
+    <div class="container">
+        <div class="row">
+        </div>
+    </div>
+</footer>
+<a id="back-to-top" class="icon-btn hide">
+    <i class="fa fa-chevron-up"></i>
+</a>
+    <div class="copyright">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="busuanzi">
+    
+    访问量:
+    <strong id="busuanzi_value_site_pv">
+        <i class="fa fa-spinner fa-spin"></i>
+    </strong>
+    &nbsp; | &nbsp;
+    访客数:
+    <strong id="busuanzi_value_site_uv">
+        <i class="fa fa-spinner fa-spin"></i>
+    </strong>
+    
+</div>
+            </div>
+            <div class="col-sm-12">
+                <span>Copyright &copy;
+                    2022
+                    
+                </span> |
+                <span>
+                    Powered by <a href="//hexo.io" class="copyright-links" target="_blank" rel="nofollow">Hexo</a>
+                </span> |
+                <span>
+                    Theme by <a href="//github.com/shenliyang/hexo-theme-snippet.git" class="copyright-links" target="_blank" rel="nofollow">Snippet</a>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+<script src="/js/app.js?rev=@@hash.js"></script>
+
+</body>
+</html>
