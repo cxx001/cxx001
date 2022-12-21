@@ -1,0 +1,359 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+<head>
+    <!--Setting-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta name="apple-mobile-web-app-capable" content="Hexo">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    <meta name="browsermode" content="application">
+    <meta name="screen-orientation" content="portrait">
+    <meta name="theme-version" content="1.0.0">
+    <meta name="root" content="/">
+    <link rel="dns-prefetch" href="https://cxx001.gitee.io">
+    <!--SEO-->
+
+<meta name="keywords" content="boost" />
+
+
+<meta name="description" content="windows下boost库使用下面介绍完整安装boost库的方法：
+1. 去boost官网下载最新的boost库boost库官网
+2. 解压boost压缩包，打开根目录双击运行bootstra..." />
+
+
+<meta name="robots" content="all" />
+<meta name="google" content="all" />
+<meta name="googlebot" content="all" />
+<meta name="verify" content="all" />
+    <!--Title-->
+
+<title>
+    
+    boost库使用 |
+    
+    Hexo
+</title>
+
+<link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+
+
+<link rel="icon" href="/favicon.ico">
+
+    
+
+
+<link rel="stylesheet" href="/css/bootstrap.min.css?rev=3.3.7.css">
+<link rel="stylesheet" href="/css/font-awesome.min.css?rev=4.7.0.css">
+<link rel="stylesheet" href="/css/style.css?rev=@@hash.css">
+
+    
+<div class="hide">
+    <script type="text/javascript">
+    var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+    document.write(unescape("%3Cspan class='cnzz_stat_icon_1263868967 hide' %3E%3Cscript%20src%3D%22https%3A%2F%2Fs95.cnzz.com%2Fz_stat.php%3Fweb_id%3D1272564536%22%3E%3C%2Fscript%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s19.cnzz.com/z_stat.php%3Fid%3D1263868967%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+    </script>
+</div>
+
+
+
+
+    
+
+<meta name="generator" content="Hexo 6.2.0"></head>
+<!--[if lte IE 8]>
+<style>
+    html{ font-size: 1em }
+</style>
+<![endif]-->
+<!--[if lte IE 9]>
+<div style="ie">你使用的浏览器版本过低，为了你更好的阅读体验，请更新浏览器的版本或者使用其他现代浏览器，比如Chrome、Firefox、Safari等。</div>
+<![endif]-->
+<body>
+    <header class="main-header"  style="background-image:url(
+    https://hexo-theme-snippet-1251680922.cos.ap-beijing.myqcloud.com/img/banner.jpg)"
+     >
+    <div class="main-header-box">
+        <a class="header-avatar" href="/" title='John Doe'>
+            <img src="/img/avatar.jpg" alt="logo头像" class="img-responsive center-block">
+        </a>
+        <div class="branding">
+            <!--<h2 class="text-hide">Snippet主题,从未如此简单有趣</h2>-->
+            
+            <img src="/img/branding.png" alt="Snippet 博客主题" class="img-responsive center-block">
+            
+        </div>
+    </div>
+</header>
+    <nav class="main-navigation">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="navbar-header"><span class="nav-toggle-button collapsed pull-right" data-toggle="collapse" data-target="#main-menu" id="mnav">
+                        <span class="sr-only"></span>
+                        <i class="fa fa-bars"></i>
+                    </span>
+                    <a class="navbar-brand" href="https://cxx001.gitee.io">
+                        Hexo</a>
+                </div>
+                <div class="collapse navbar-collapse" id="main-menu">
+                    <ul class="menu">
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/"><i class="fa "></i>
+                                首页</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/archives/"><i class="fa "></i>
+                                时间轴</a>
+                        </li>
+                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+    <section class="content-wrap">
+        <div class="container">
+            <div class="row">
+                <main class="col-md-8 main-content m-post">
+                    <p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id="boost库使用">
+            
+            boost库使用
+            
+        </h1>
+        <div class="post-meta">
+    
+    <span class="categories-meta fa-wrap">
+        <i class="fa fa-folder-open-o"></i>
+        <a class="category-link" href="/categories/notes/">notes</a>
+    </span>
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-tags"></i>
+        <span class="tags-meta">
+            
+            <a class="tag-none-link" href="/tags/boost/" rel="tag">boost</a>
+            
+        </span>
+    </span>
+    
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-clock-o"></i>
+        <span class="date-meta">
+            2022/12/21</span>
+    </span>
+    
+    <span class="fa-wrap">
+        <i class="fa fa-eye"></i>
+        <span id="busuanzi_value_page_pv"></span>
+    </span>
+    
+    
+</div>
+        
+        
+    </div>
+    
+    <div class="post-body post-content">
+        <h1 id="windows下boost库使用"><a href="#windows下boost库使用" class="headerlink" title="windows下boost库使用"></a>windows下boost库使用</h1><p>下面介绍完整安装boost库的方法：</p>
+<h2 id="1-去boost官网下载最新的boost库"><a href="#1-去boost官网下载最新的boost库" class="headerlink" title="1. 去boost官网下载最新的boost库"></a>1. 去boost官网下载最新的boost库</h2><p><a target="_blank" rel="noopener" href="https://www.boost.org/">boost库官网</a></p>
+<h2 id="2-解压boost压缩包，打开根目录"><a href="#2-解压boost压缩包，打开根目录" class="headerlink" title="2. 解压boost压缩包，打开根目录"></a>2. 解压boost压缩包，打开根目录</h2><p>双击运行<code>bootstrap.bat</code>，会生成<code>b2.exe</code>。然后执行以下命令：</p>
+<p><code>b2.exe --toolset=msvc --build-type=complete stage</code></p>
+<p>或者直接双击运行<code>b2.exe</code>。</p>
+<p>等待编译完成，会在boost根目录下生成<code>bin.v2</code>和<code>stage</code>两个文件夹，其中<code>bin.v2</code>是中间文件，可以删除。<code>stage</code>下才是生成的dll或lib文件。</p>
+<h2 id="3-打开VS配置属性"><a href="#3-打开VS配置属性" class="headerlink" title="3. 打开VS配置属性"></a>3. 打开VS配置属性</h2><p>打开项目属性，</p>
+<ol>
+<li>VC++目录–&gt;包含目录，添加boost的根目录，如：<code>C:\Users\KL179\Desktop\boost_1_81_0</code>。</li>
+<li>VC++目录–&gt;库目录，添加stage下的库目录，如：<code>C:\Users\KL179\Desktop\boost_1_81_0\stage\lib</code>。</li>
+<li>链接器–&gt;常规–&gt;附加库目录，添加同2库目录。</li>
+</ol>
+<p>至此环境就以及配置好了，下面测试一下：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;boost/thread/thread.hpp&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;string&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">hello</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    std::cout &lt;&lt; <span class="string">&quot;Hello world, I&#x27;&#x27;m a thread!&quot;</span></span><br><span class="line">              &lt;&lt; std::endl;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="function">boost::thread <span class="title">thrd</span><span class="params">(&amp;hello)</span></span>;</span><br><span class="line">    thrd.<span class="built_in">join</span>();</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>程序正常运行：</p>
+<p><img src="/2022/12/21/notes/boost%E5%BA%93%E4%BD%BF%E7%94%A8/image-20221221094811619.png" alt="image-20221221094811619"></p>
+<h2 id="4-b2编译命令说明"><a href="#4-b2编译命令说明" class="headerlink" title="4. b2编译命令说明"></a>4. b2编译命令说明</h2><p><code>b2.exe --show-libraries</code> 列出所有编译的库</p>
+<p><code>b2.exe --help</code> 查看所有参数使用</p>
+<p>综合使用：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">b2.exe toolset=msvc-10.0 architecture=x86 address-model=32</span><br><span class="line"></span><br><span class="line">link=static variant=debug,release threading=multi runtime-link=shared</span><br><span class="line"></span><br><span class="line">--without-python --without-mpi --without-wave --without-graph</span><br><span class="line"></span><br><span class="line">--without-math --without-serialization stage</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li><p>toolset：表示编译器工具，我安装的是VS2010，所以是msvc-10(如果你是VS2005，可以使用msvc-8.0 VS2008是msvc-9.0)</p>
+</li>
+<li><p>architecture：表示架构，也就是你的CPU架构，x86,x64，因为我安装的是win7 32位，所以使用了x86的架构。</p>
+</li>
+<li><p>address-model：表示地址长度为32位。</p>
+</li>
+<li><p>link：表示生成动态&#x2F;静态链接库，动态链接库是shared，静态链接库是static，一般都会编译成静态库，因为给出程序的时候打包boost的库会非常庞大。</p>
+</li>
+<li><p>variant：表示生成的Debug或者release版本，一般情况下会两种版本都会编译出来的。</p>
+</li>
+<li><p>threading：表示单&#x2F;多线程编译，一般我们的程序都会用到多线程，所以选择了multi。</p>
+</li>
+<li><p>runtime-link：表示动态&#x2F;静态链接C&#x2F;C++运行时库(C&#x2F;C++ Runtime)，我们选择了动态链接。</p>
+</li>
+<li><p>without&#x2F;with：表示不需要编译&#x2F;需要编译哪些库，一些自己不用的库可以无需编译。</p>
+</li>
+<li><p>stage&#x2F;install：stage表示只生成库文件(DLL和Lib)，install还会生成包含头文件的include目录，推荐使用stage，因为boost_1_49\boost中就是boost库完整的头文件，所以无需再拷贝一份出来。编译出来的库会放在stage文件夹中。</p>
+</li>
+</ol>
+<br/>
+
+<h1 id="Linux下boost库使用"><a href="#Linux下boost库使用" class="headerlink" title="Linux下boost库使用"></a>Linux下boost库使用</h1><h2 id="1-去boost官网下载最新的boost库-1"><a href="#1-去boost官网下载最新的boost库-1" class="headerlink" title="1. 去boost官网下载最新的boost库"></a>1. 去boost官网下载最新的boost库</h2><p>同上</p>
+<h2 id="2-解压boost压缩包，进入根目录"><a href="#2-解压boost压缩包，进入根目录" class="headerlink" title="2. 解压boost压缩包，进入根目录"></a>2. 解压boost压缩包，进入根目录</h2><p>执行<code>./bootstrap.sh --prefix=/usr/local/boost_lib</code>。生成编译工具b2。</p>
+<p>prefix是指定编译生成的include&#x2F;lib路径，默认是在&#x2F;usr&#x2F;local下。</p>
+<p><strong>注意：</strong></p>
+<blockquote>
+<p>执行.&#x2F;bootstrap.sh报下面错误：</p>
+<p>.&#x2F;bootstrap.sh   Could not find a suitable toolset.  You can specify the toolset as the argument, i.e.:     .&#x2F;build.sh [options] gcc。。。</p>
+<p>这是因为系统没有安装编译工具。</p>
+<p>sudo apt update<br>sudo apt install build-essential    &#x2F;&#x2F; 这个命令将会安装一系列软件包，包括gcc,g++,和make。</p>
+</blockquote>
+<h2 id="3-编译boost库"><a href="#3-编译boost库" class="headerlink" title="3. 编译boost库"></a>3. 编译boost库</h2><p>执行<code>./b2 install --with=all</code></p>
+<p>完全编译，并会把生成的include和lib目录放到&#x2F;usr&#x2F;local&#x2F;boost_lib下。</p>
+<h2 id="4-测试"><a href="#4-测试" class="headerlink" title="4. 测试"></a>4. 测试</h2><p>测试程序同上。</p>
+<p>编译命令：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">g++ main.cpp -I /usr/local/boost_lib/include -I /home/boost_1_81_0 -L /usr/local/boost_lib/lib -lboost_thread -lboost_system -lpthread</span><br></pre></td></tr></table></figure>
+
+<p>-I 是指定头文件查找目录，多个用对应多个-I指定。</p>
+<p>-L 是指定链接库目录。</p>
+<p>-lxxx 是指定用到的库名称。</p>
+<p>编译完成，会生成a.out执行文件，这时直接运行还会报错：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./a.out: error while loading shared libraries: libboost_thread.so.1.81.0: cannot open shared object file: No such file or directory</span><br></pre></td></tr></table></figure>
+
+<p>解决方法：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo ldconfig /usr/local/lib/boost_lib/lib</span><br></pre></td></tr></table></figure>
+
+<p><strong>ldconfig命令的作用：</strong>ldconfig是一个动态链接库管理命令。安装完成某个工程后生成许多动态库，为了让这些动态链接库为系统所共享，还需运行动态链接库的管理命令–ldconfig。</p>
+<p>执行结果：</p>
+<p><img src="/2022/12/21/notes/boost%E5%BA%93%E4%BD%BF%E7%94%A8/image-20221221111716760.png" alt="image-20221221111716760"></p>
+
+    </div>
+    
+    <div class="post-footer">
+        <div>
+            
+            转载声明：
+            商业转载请联系作者获得授权,非商业转载请注明出处 © <a href="" target="_blank">cxx</a>
+            
+            
+        </div>
+        <div>
+            
+        </div>
+    </div>
+</article>
+<div class="article-nav prev-next-wrap clearfix">
+    
+    
+    <a href="/2022/12/19/notes/Effective%20C++/" class="next-post btn btn-default" title='《Effective C++》 全书内容提炼总结'>
+        <span class="hidden-lg">下一篇</span>
+        <span class="hidden-xs">
+            《Effective C++》 全书内容提炼总结</span><i class="fa fa-angle-right fa-fw"></i>
+    </a>
+    
+</div>
+
+<div id="comments">
+    
+    
+<div class="utteranc">
+  
+  <script
+    src='https://utteranc.es/client.js'
+    repo='cxx001/myblog-comment'
+    issue-term='pathname'
+    issue-number=''
+    theme='github-light'
+    label=''
+    crossorigin='anonymous'
+    async
+  ></script>
+</div>
+
+
+
+</div>
+
+                </main>
+                
+                    <aside id="article-toc" role="navigation" class="col-md-4">
+    <div class="widget">
+        <h3 class="title">
+            文章目录
+        </h3>
+        
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#windows%E4%B8%8Bboost%E5%BA%93%E4%BD%BF%E7%94%A8"><span class="toc-text">windows下boost库使用</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E5%8E%BBboost%E5%AE%98%E7%BD%91%E4%B8%8B%E8%BD%BD%E6%9C%80%E6%96%B0%E7%9A%84boost%E5%BA%93"><span class="toc-text">1. 去boost官网下载最新的boost库</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E8%A7%A3%E5%8E%8Bboost%E5%8E%8B%E7%BC%A9%E5%8C%85%EF%BC%8C%E6%89%93%E5%BC%80%E6%A0%B9%E7%9B%AE%E5%BD%95"><span class="toc-text">2. 解压boost压缩包，打开根目录</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E6%89%93%E5%BC%80VS%E9%85%8D%E7%BD%AE%E5%B1%9E%E6%80%A7"><span class="toc-text">3. 打开VS配置属性</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-b2%E7%BC%96%E8%AF%91%E5%91%BD%E4%BB%A4%E8%AF%B4%E6%98%8E"><span class="toc-text">4. b2编译命令说明</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Linux%E4%B8%8Bboost%E5%BA%93%E4%BD%BF%E7%94%A8"><span class="toc-text">Linux下boost库使用</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E5%8E%BBboost%E5%AE%98%E7%BD%91%E4%B8%8B%E8%BD%BD%E6%9C%80%E6%96%B0%E7%9A%84boost%E5%BA%93-1"><span class="toc-text">1. 去boost官网下载最新的boost库</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E8%A7%A3%E5%8E%8Bboost%E5%8E%8B%E7%BC%A9%E5%8C%85%EF%BC%8C%E8%BF%9B%E5%85%A5%E6%A0%B9%E7%9B%AE%E5%BD%95"><span class="toc-text">2. 解压boost压缩包，进入根目录</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E7%BC%96%E8%AF%91boost%E5%BA%93"><span class="toc-text">3. 编译boost库</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-%E6%B5%8B%E8%AF%95"><span class="toc-text">4. 测试</span></a></li></ol></li></ol>
+        
+    </div>
+</aside>
+                
+            </div>
+        </div>
+    </section>
+    <footer class="main-footer">
+    <div class="container">
+        <div class="row">
+        </div>
+    </div>
+</footer>
+<a id="back-to-top" class="icon-btn hide">
+    <i class="fa fa-chevron-up"></i>
+</a>
+    <div class="copyright">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="busuanzi">
+    
+    访问量:
+    <strong id="busuanzi_value_site_pv">
+        <i class="fa fa-spinner fa-spin"></i>
+    </strong>
+    &nbsp; | &nbsp;
+    访客数:
+    <strong id="busuanzi_value_site_uv">
+        <i class="fa fa-spinner fa-spin"></i>
+    </strong>
+    
+</div>
+            </div>
+            <div class="col-sm-12">
+                <span>Copyright &copy;
+                    2022
+                    
+                </span> |
+                <span>
+                    Powered by <a href="//hexo.io" class="copyright-links" target="_blank" rel="nofollow">Hexo</a>
+                </span> |
+                <span>
+                    Theme by <a href="//github.com/shenliyang/hexo-theme-snippet.git" class="copyright-links" target="_blank" rel="nofollow">Snippet</a>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+<script src="/js/app.js?rev=@@hash.js"></script>
+
+</body>
+</html>
