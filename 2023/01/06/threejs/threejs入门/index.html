@@ -1,0 +1,318 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+<head>
+    <!--Setting-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta name="apple-mobile-web-app-capable" content="Hexo">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    <meta name="browsermode" content="application">
+    <meta name="screen-orientation" content="portrait">
+    <meta name="theme-version" content="1.0.0">
+    <meta name="root" content="/">
+    <link rel="dns-prefetch" href="https://cxx001.gitee.io">
+    <!--SEO-->
+
+<meta name="keywords" content="threejs,webGL" />
+
+
+<meta name="description" content="前言随着HTML5的发布，我们可以通过WebGL在浏览器上直接使用显卡资源来创建高性能的二维和三维图形，但是直接使用WebGL编程来创建三维场景十分复杂而且还容易出问题。而使用Three.js库..." />
+
+
+<meta name="robots" content="all" />
+<meta name="google" content="all" />
+<meta name="googlebot" content="all" />
+<meta name="verify" content="all" />
+    <!--Title-->
+
+<title>
+    
+    threejs入门 |
+    
+    Hexo
+</title>
+
+<link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+
+
+<link rel="icon" href="/favicon.ico">
+
+    
+
+
+<link rel="stylesheet" href="/css/bootstrap.min.css?rev=3.3.7.css">
+<link rel="stylesheet" href="/css/font-awesome.min.css?rev=4.7.0.css">
+<link rel="stylesheet" href="/css/style.css?rev=@@hash.css">
+
+    
+<div class="hide">
+    <script type="text/javascript">
+    var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+    document.write(unescape("%3Cspan class='cnzz_stat_icon_1263868967 hide' %3E%3Cscript%20src%3D%22https%3A%2F%2Fs95.cnzz.com%2Fz_stat.php%3Fweb_id%3D1272564536%22%3E%3C%2Fscript%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s19.cnzz.com/z_stat.php%3Fid%3D1263868967%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+    </script>
+</div>
+
+
+
+
+    
+
+<meta name="generator" content="Hexo 6.2.0"></head>
+<!--[if lte IE 8]>
+<style>
+    html{ font-size: 1em }
+</style>
+<![endif]-->
+<!--[if lte IE 9]>
+<div style="ie">你使用的浏览器版本过低，为了你更好的阅读体验，请更新浏览器的版本或者使用其他现代浏览器，比如Chrome、Firefox、Safari等。</div>
+<![endif]-->
+<body>
+    <header class="main-header"  style="background-image:url(
+    https://hexo-theme-snippet-1251680922.cos.ap-beijing.myqcloud.com/img/banner.jpg)"
+     >
+    <div class="main-header-box">
+        <a class="header-avatar" href="/" title='John Doe'>
+            <img src="/img/avatar.jpg" alt="logo头像" class="img-responsive center-block">
+        </a>
+        <div class="branding">
+            <!--<h2 class="text-hide">Snippet主题,从未如此简单有趣</h2>-->
+            
+            <img src="/img/branding.png" alt="Snippet 博客主题" class="img-responsive center-block">
+            
+        </div>
+    </div>
+</header>
+    <nav class="main-navigation">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="navbar-header"><span class="nav-toggle-button collapsed pull-right" data-toggle="collapse" data-target="#main-menu" id="mnav">
+                        <span class="sr-only"></span>
+                        <i class="fa fa-bars"></i>
+                    </span>
+                    <a class="navbar-brand" href="https://cxx001.gitee.io">
+                        Hexo</a>
+                </div>
+                <div class="collapse navbar-collapse" id="main-menu">
+                    <ul class="menu">
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/"><i class="fa "></i>
+                                首页</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/archives/"><i class="fa "></i>
+                                时间轴</a>
+                        </li>
+                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+    <section class="content-wrap">
+        <div class="container">
+            <div class="row">
+                <main class="col-md-8 main-content m-post">
+                    <p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id="threejs入门">
+            
+            threejs入门
+            
+        </h1>
+        <div class="post-meta">
+    
+    <span class="categories-meta fa-wrap">
+        <i class="fa fa-folder-open-o"></i>
+        <a class="category-link" href="/categories/threejs/">threejs</a>
+    </span>
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-tags"></i>
+        <span class="tags-meta">
+            
+            <a class="tag-none-link" href="/tags/threejs/" rel="tag">threejs</a> <a class="tag-none-link" href="/tags/webGL/" rel="tag">webGL</a>
+            
+        </span>
+    </span>
+    
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-clock-o"></i>
+        <span class="date-meta">
+            2023/01/06</span>
+    </span>
+    
+    <span class="fa-wrap">
+        <i class="fa fa-eye"></i>
+        <span id="busuanzi_value_page_pv"></span>
+    </span>
+    
+    
+</div>
+        
+        
+    </div>
+    
+    <div class="post-body post-content">
+        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>随着<code>HTML5</code>的发布，我们可以通过<code>WebGL</code>在浏览器上直接使用显卡资源来创建高性能的二维和三维图形，但是直接使用<code>WebGL</code>编程来创建三维场景十分复杂而且还容易出问题。而使用<code>Three.js</code>库可以简化这个过程，它对<code>WebGL</code>做了进一步封装，降低了使用门槛。</p>
+<blockquote>
+<p>注: WebGL整体原理其实和OpenGL差不多，只是运行平台不同而已。</p>
+</blockquote>
+<br/>
+
+<h1 id="环境搭建"><a href="#环境搭建" class="headerlink" title="环境搭建"></a>环境搭建</h1><p><code>three.js</code>是一个<code>javascript</code>库，所以环境搭建和我们web开发环境搭建一样。</p>
+<ol>
+<li><p>编码IDE，我用的vscode， <a target="_blank" rel="noopener" href="https://code.visualstudio.com/">下载地址</a>。</p>
+</li>
+<li><p>搭建web服务器。</p>
+<p>方式有很多，我用的nodejs的http-server模块。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 全局安装</span></span><br><span class="line">npm install -g http-server</span><br><span class="line"></span><br><span class="line"><span class="comment">// 启动服务</span></span><br><span class="line">http-server</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>访问示例程序。</p>
+<p>对应示例程序目录下启动<code>http-server</code>，默认端口是8080。浏览器访问url，如:</p>
+<p><code>localhost:8080/chapter-01.html</code></p>
+</li>
+</ol>
+<br/>
+
+<h1 id="入门示例程序"><a href="#入门示例程序" class="headerlink" title="入门示例程序"></a>入门示例程序</h1><p>入门示例我们将使用<code>three.js</code>库创建如下主要内容：</p>
+<ol>
+<li>html页面如何引入three.js库。</li>
+<li>使用three.js创建场景、摄像机、光源、渲染物体。</li>
+<li>给场景添加阴影和动画效果。</li>
+<li>添加辅助库dat.GUI和stats.js 创建用户控制界面(动态调渲染参数)和场景渲染时的帧数。</li>
+</ol>
+<p>本系列所有示例程序引用的外部库和资源下载地址：<a target="_blank" rel="noopener" href="https://github.com/cxx001/resources/raw/main/threejs%E7%A4%BA%E4%BE%8B%E7%A8%8B%E5%BA%8F%E8%B5%84%E6%BA%90.zip">示例程序资源下载</a></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- chapter-<span class="number">01</span>.<span class="property">html</span> --&gt;</span><br><span class="line">&lt;!<span class="variable constant_">DOCTYPE</span> html&gt;</span><br><span class="line"></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span></span><br><span class="line"><span class="language-xml"></span></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>入门示例<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">	<span class="comment">&lt;!-- 引入three.js等相关库，three.js库引入有两个版本，这里为了学习引入的是没有压缩的版本，还一个three.min.js是压缩过的，只有three.js的四分之一大小，一般用于发布版本 --&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">&quot;text/javascript&quot;</span> <span class="attr">src</span>=<span class="string">&quot;../libs/three.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">&quot;text/javascript&quot;</span> <span class="attr">src</span>=<span class="string">&quot;../libs/stats.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">&quot;text/javascript&quot;</span> <span class="attr">src</span>=<span class="string">&quot;../libs/dat.gui.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;<span class="name">style</span>&gt;</span><span class="language-css"></span></span></span><br><span class="line"><span class="language-css"><span class="language-xml">        <span class="selector-tag">body</span> &#123;</span></span></span><br><span class="line"><span class="language-css"><span class="language-xml">            <span class="attribute">margin</span>: <span class="number">0</span>;</span></span></span><br><span class="line"><span class="language-css"><span class="language-xml">            <span class="attribute">overflow</span>: hidden;</span></span></span><br><span class="line"><span class="language-css"><span class="language-xml">        &#125;</span></span></span><br><span class="line"><span class="language-css"><span class="language-xml">    </span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span></span><br><span class="line"><span class="language-xml"></span></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span></span><br><span class="line"><span class="language-xml"></span></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">&quot;Stats-output&quot;</span>&gt;</span></span></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="language-xml"></span></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">&quot;WebGL-output&quot;</span>&gt;</span></span></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="language-xml"></span></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">&quot;text/javascript&quot;</span>&gt;</span><span class="language-javascript"></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">    <span class="keyword">var</span> camera;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">    <span class="keyword">var</span> scene;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">    <span class="keyword">var</span> renderer;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">    <span class="keyword">function</span> <span class="title function_">init</span>(<span class="params"></span>) &#123;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">        <span class="comment">// 初始化fps显示</span></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">        <span class="keyword">var</span> stats = <span class="title function_">initStats</span>();</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">        <span class="comment">// 创建场景</span></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">        scene = <span class="keyword">new</span> <span class="variable constant_">THREE</span>.<span class="title class_">Scene</span>();</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">        <span class="comment">// 创建摄像机</span></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">        camera = <span class="keyword">new</span> <span class="variable constant_">THREE</span>.<span class="title class_">PerspectiveCamera</span>(<span class="number">45</span>, <span class="variable language_">window</span>.<span class="property">innerWidth</span> / <span class="variable language_">window</span>.<span class="property">innerHeight</span>, <span class="number">0.1</span>, <span class="number">1000</span>);</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">        <span class="comment">// 创建渲染器</span></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">        renderer = <span class="keyword">new</span> <span class="variable constant_">THREE</span>.<span class="title class_">WebGLRenderer</span>();</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">        renderer.<span class="title function_">setClearColor</span>(<span class="keyword">new</span> <span class="variable constant_">THREE</span>.<span class="title class_">Color</span>(<span class="number">0xEEEEEE</span>, <span class="number">1.0</span>)); <span class="comment">// 设置背景颜色</span></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">        renderer.<span class="title function_">setSize</span>(<span class="variable language_">window</span>.<span class="property">innerWidth</span>, <span class="variable language_">window</span>.<span class="property">innerHeight</span>);</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">        renderer.<span class="property">shadowMapEnabled</span> = <span class="literal">true</span>;  <span class="comment">// 开启阴影(默认是关闭的，因为它比较耗计算资源)</span></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">        <span class="comment">// 创建平面</span></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">        <span class="keyword">var</span> planeGeometry = <span class="keyword">new</span> <span class="variable constant_">THREE</span>.<span class="title class_">PlaneGeometry</span>(<span class="number">60</span>, <span class="number">20</span>, <span class="number">1</span>, <span class="number">1</span>);</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">        <span class="keyword">var</span> planeMaterial = <span class="keyword">new</span> <span class="variable constant_">THREE</span>.<span class="title class_">MeshLambertMaterial</span>(&#123;<span class="attr">color</span>: <span class="number">0xffffff</span>&#125;); <span class="comment">// 物体受光源影响和使用的材质有关系，如果是MeshBasicMaterial基本材质，不会对光源有任何反应，只会使用指定的颜色来渲染物体。MeshLambertMaterial和MeshPhongMaterial材质在渲染时会对光源产生反应，没有光它就是漆黑的。</span></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">        <span class="keyword">var</span> plane = <span class="keyword">new</span> <span class="variable constant_">THREE</span>.<span class="title class_">Mesh</span>(planeGeometry, planeMaterial);</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">        plane.<span class="property">receiveShadow</span> = <span class="literal">true</span>; <span class="comment">// 开启接受阴影</span></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">        <span class="comment">// 旋转和设置平面位置</span></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">        plane.<span class="property">rotation</span>.<span class="property">x</span> = -<span class="number">0.5</span> * <span class="title class_">Math</span>.<span class="property">PI</span>; <span class="comment">// 绕x轴旋转90度</span></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">        plane.<span class="property">position</span>.<span class="property">x</span> = <span class="number">15</span>;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">        plane.<span class="property">position</span>.<span class="property">y</span> = <span class="number">0</span>;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">        plane.<span class="property">position</span>.<span class="property">z</span> = <span class="number">0</span>;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">        <span class="comment">// 将平面添加到场景容器中</span></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">        scene.<span class="title function_">add</span>(plane);</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">        <span class="comment">// 创建立方体</span></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">        <span class="keyword">var</span> cubeGeometry = <span class="keyword">new</span> <span class="variable constant_">THREE</span>.<span class="title class_">BoxGeometry</span>(<span class="number">4</span>, <span class="number">4</span>, <span class="number">4</span>);</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">        <span class="keyword">var</span> cubeMaterial = <span class="keyword">new</span> <span class="variable constant_">THREE</span>.<span class="title class_">MeshLambertMaterial</span>(&#123;<span class="attr">color</span>: <span class="number">0xff0000</span>&#125;); </span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">        <span class="keyword">var</span> cube = <span class="keyword">new</span> <span class="variable constant_">THREE</span>.<span class="title class_">Mesh</span>(cubeGeometry, cubeMaterial);</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">        cube.<span class="property">castShadow</span> = <span class="literal">true</span>; <span class="comment">// 开启投射阴影</span></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">		</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">        <span class="comment">// 同上</span></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">        cube.<span class="property">position</span>.<span class="property">x</span> = -<span class="number">4</span>;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">        cube.<span class="property">position</span>.<span class="property">y</span> = <span class="number">3</span>;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">        cube.<span class="property">position</span>.<span class="property">z</span> = <span class="number">0</span>;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">        scene.<span class="title function_">add</span>(cube);</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">        <span class="comment">// 创建球体</span></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">        <span class="keyword">var</span> sphereGeometry = <span class="keyword">new</span> <span class="variable constant_">THREE</span>.<span class="title class_">SphereGeometry</span>(<span class="number">4</span>, <span class="number">20</span>, <span class="number">20</span>);</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">        <span class="keyword">var</span> sphereMaterial = <span class="keyword">new</span> <span class="variable constant_">THREE</span>.<span class="title class_">MeshLambertMaterial</span>(&#123;<span class="attr">color</span>: <span class="number">0x7777ff</span>&#125;);</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">        <span class="keyword">var</span> sphere = <span class="keyword">new</span> <span class="variable constant_">THREE</span>.<span class="title class_">Mesh</span>(sphereGeometry, sphereMaterial);</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">        sphere.<span class="property">castShadow</span> = <span class="literal">true</span>;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">        <span class="comment">// 同上</span></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">        sphere.<span class="property">position</span>.<span class="property">x</span> = <span class="number">20</span>;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">        sphere.<span class="property">position</span>.<span class="property">y</span> = <span class="number">0</span>;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">        sphere.<span class="property">position</span>.<span class="property">z</span> = <span class="number">2</span>;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">        scene.<span class="title function_">add</span>(sphere);</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">        <span class="comment">// 设置摄像机位置</span></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">        camera.<span class="property">position</span>.<span class="property">x</span> = -<span class="number">30</span>;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">        camera.<span class="property">position</span>.<span class="property">y</span> = <span class="number">40</span>;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">        camera.<span class="property">position</span>.<span class="property">z</span> = <span class="number">30</span>;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">        camera.<span class="title function_">lookAt</span>(scene.<span class="property">position</span>);</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">        <span class="comment">// 添加光源</span></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">        <span class="keyword">var</span> spotLight = <span class="keyword">new</span> <span class="variable constant_">THREE</span>.<span class="title class_">SpotLight</span>(<span class="number">0xffffff</span>);</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">        spotLight.<span class="property">position</span>.<span class="title function_">set</span>(-<span class="number">40</span>, <span class="number">60</span>, -<span class="number">10</span>);</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">        spotLight.<span class="property">castShadow</span> = <span class="literal">true</span>; <span class="comment">// 开启投射阴影</span></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">        scene.<span class="title function_">add</span>(spotLight);</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">        <span class="comment">// 把渲染器对象添加到div中显示</span></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">        <span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">&quot;WebGL-output&quot;</span>).<span class="title function_">appendChild</span>(renderer.<span class="property">domElement</span>);</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">        <span class="comment">// 设置需要动态调参的参数</span></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">        <span class="keyword">var</span> controls = <span class="keyword">new</span> <span class="keyword">function</span> (<span class="params"></span>) &#123;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">            <span class="variable language_">this</span>.<span class="property">rotationSpeed</span> = <span class="number">0.02</span>;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">            <span class="variable language_">this</span>.<span class="property">bouncingSpeed</span> = <span class="number">0.03</span>;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">        &#125;;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">		</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">        <span class="comment">// dat.GUI是Google员工开发的动态调参数的插件，这样就大大方便了我们调整相关渲染参数的操作了</span></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">        <span class="keyword">var</span> gui = <span class="keyword">new</span> dat.<span class="title function_">GUI</span>();</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">        gui.<span class="title function_">add</span>(controls, <span class="string">&#x27;rotationSpeed&#x27;</span>, <span class="number">0</span>, <span class="number">0.5</span>); <span class="comment">// 参数对象、参数名、参数的取值范围</span></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">        gui.<span class="title function_">add</span>(controls, <span class="string">&#x27;bouncingSpeed&#x27;</span>, <span class="number">0</span>, <span class="number">0.5</span>);</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">        <span class="title function_">render</span>();</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">        </span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">        <span class="comment">// 渲染场景</span></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">		<span class="keyword">var</span> step = <span class="number">0</span>;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">        <span class="keyword">function</span> <span class="title function_">render</span>(<span class="params"></span>) &#123;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">            <span class="comment">// 更新fps</span></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">            stats.<span class="title function_">update</span>();</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">            </span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">            <span class="comment">// 旋转立方体的各个面</span></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">            cube.<span class="property">rotation</span>.<span class="property">x</span> += controls.<span class="property">rotationSpeed</span>;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">            cube.<span class="property">rotation</span>.<span class="property">y</span> += controls.<span class="property">rotationSpeed</span>;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">            cube.<span class="property">rotation</span>.<span class="property">z</span> += controls.<span class="property">rotationSpeed</span>;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">            <span class="comment">// 球体跳动</span></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">            step += controls.<span class="property">bouncingSpeed</span>;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">            sphere.<span class="property">position</span>.<span class="property">x</span> = <span class="number">20</span> + ( <span class="number">10</span> * (<span class="title class_">Math</span>.<span class="title function_">cos</span>(step)));</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">            sphere.<span class="property">position</span>.<span class="property">y</span> = <span class="number">2</span> + ( <span class="number">10</span> * <span class="title class_">Math</span>.<span class="title function_">abs</span>(<span class="title class_">Math</span>.<span class="title function_">sin</span>(step)));</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">            <span class="comment">// 重新渲染场景</span></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">            <span class="title function_">requestAnimationFrame</span>(render);</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">            renderer.<span class="title function_">render</span>(scene, camera);</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">        &#125;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">		</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">        <span class="comment">// 初始化fps显示</span></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">        <span class="keyword">function</span> <span class="title function_">initStats</span>(<span class="params"></span>) &#123;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">            <span class="keyword">var</span> stats = <span class="keyword">new</span> <span class="title class_">Stats</span>();</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">            stats.<span class="title function_">setMode</span>(<span class="number">0</span>); <span class="comment">// 0: fps, 1: 渲染时间ms</span></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">            stats.<span class="property">domElement</span>.<span class="property">style</span>.<span class="property">position</span> = <span class="string">&#x27;absolute&#x27;</span>;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">            stats.<span class="property">domElement</span>.<span class="property">style</span>.<span class="property">left</span> = <span class="string">&#x27;0px&#x27;</span>;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">            stats.<span class="property">domElement</span>.<span class="property">style</span>.<span class="property">top</span> = <span class="string">&#x27;0px&#x27;</span>;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">            <span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">&quot;Stats-output&quot;</span>).<span class="title function_">appendChild</span>(stats.<span class="property">domElement</span>);</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">            <span class="keyword">return</span> stats;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">        &#125;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">    &#125;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">	</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">	<span class="comment">// 窗口大小发生变化后重新适配渲染场景</span></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">    <span class="keyword">function</span> <span class="title function_">onResize</span>(<span class="params"></span>) &#123;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">        camera.<span class="property">aspect</span> = <span class="variable language_">window</span>.<span class="property">innerWidth</span> / <span class="variable language_">window</span>.<span class="property">innerHeight</span>;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">        camera.<span class="title function_">updateProjectionMatrix</span>();</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">        renderer.<span class="title function_">setSize</span>(<span class="variable language_">window</span>.<span class="property">innerWidth</span>, <span class="variable language_">window</span>.<span class="property">innerHeight</span>);</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">    &#125;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">    <span class="comment">// 监听窗口大小发生变化事件</span></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">    <span class="variable language_">window</span>.<span class="title function_">addEventListener</span>(<span class="string">&#x27;resize&#x27;</span>, onResize, <span class="literal">false</span>);</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">	<span class="comment">// 页面加载完成后调用init方法</span></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">    <span class="variable language_">window</span>.<span class="property">onload</span> = init;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
+
+<p>显示效果：</p>
+<p><img src="https://s33.aconvert.com/convert/p3r68-cdx67/d4gl9-pbent.gif" alt="image"></p>
+
+    </div>
+    
+    <div class="post-footer">
+        <div>
+            
+            转载声明：
+            商业转载请联系作者获得授权,非商业转载请注明出处 © <a href="" target="_blank">cxx</a>
+            
+            
+        </div>
+        <div>
+            
+        </div>
+    </div>
+</article>
+<div class="article-nav prev-next-wrap clearfix">
+    
+    
+    <a href="/2022/12/21/notes/boost%E5%BA%93%E4%BD%BF%E7%94%A8/" class="next-post btn btn-default" title='boost库使用'>
+        <span class="hidden-lg">下一篇</span>
+        <span class="hidden-xs">
+            boost库使用</span><i class="fa fa-angle-right fa-fw"></i>
+    </a>
+    
+</div>
+
+<div id="comments">
+    
+    
+<div class="utteranc">
+  
+  <script
+    src='https://utteranc.es/client.js'
+    repo='cxx001/myblog-comment'
+    issue-term='pathname'
+    issue-number=''
+    theme='github-light'
+    label=''
+    crossorigin='anonymous'
+    async
+  ></script>
+</div>
+
+
+
+</div>
+
+                </main>
+                
+                    <aside id="article-toc" role="navigation" class="col-md-4">
+    <div class="widget">
+        <h3 class="title">
+            文章目录
+        </h3>
+        
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-text">前言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA"><span class="toc-text">环境搭建</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%85%A5%E9%97%A8%E7%A4%BA%E4%BE%8B%E7%A8%8B%E5%BA%8F"><span class="toc-text">入门示例程序</span></a></li></ol>
+        
+    </div>
+</aside>
+                
+            </div>
+        </div>
+    </section>
+    <footer class="main-footer">
+    <div class="container">
+        <div class="row">
+        </div>
+    </div>
+</footer>
+<a id="back-to-top" class="icon-btn hide">
+    <i class="fa fa-chevron-up"></i>
+</a>
+    <div class="copyright">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="busuanzi">
+    
+    访问量:
+    <strong id="busuanzi_value_site_pv">
+        <i class="fa fa-spinner fa-spin"></i>
+    </strong>
+    &nbsp; | &nbsp;
+    访客数:
+    <strong id="busuanzi_value_site_uv">
+        <i class="fa fa-spinner fa-spin"></i>
+    </strong>
+    
+</div>
+            </div>
+            <div class="col-sm-12">
+                <span>Copyright &copy;
+                    2022
+                    
+                </span> |
+                <span>
+                    Powered by <a href="//hexo.io" class="copyright-links" target="_blank" rel="nofollow">Hexo</a>
+                </span> |
+                <span>
+                    Theme by <a href="//github.com/shenliyang/hexo-theme-snippet.git" class="copyright-links" target="_blank" rel="nofollow">Snippet</a>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+<script src="/js/app.js?rev=@@hash.js"></script>
+
+</body>
+</html>
