@@ -196,7 +196,7 @@
 <ul>
 <li><p>方式二：windbg产生dmp文件</p>
 <p>首先商店直接下载，安装windbg工具</p>
-<p><img src="/2022/11/10/c++/c++%E5%B4%A9%E6%BA%83%E8%B0%83%E8%AF%95%E5%A4%A7%E5%85%A8/image-20221109224842515.png" alt="image-20221109224842515"></p>
+<p><img src="/2022/11/10/c++/c++%E5%B4%A9%E6%BA%83%E8%B0%83%E8%AF%95%E5%A4%A7%E5%85%A8/image-20221109224842515.png"></p>
 </li>
 </ul>
 <p>​    	</p>
@@ -205,23 +205,23 @@
 
 
 
-<p><img src="/2022/11/10/c++/c++%E5%B4%A9%E6%BA%83%E8%B0%83%E8%AF%95%E5%A4%A7%E5%85%A8/image-20221109233443023.png" alt="image-20221109233443023"></p>
-<p><img src="/2022/11/10/c++/c++%E5%B4%A9%E6%BA%83%E8%B0%83%E8%AF%95%E5%A4%A7%E5%85%A8/image-20221109235748102.png" alt="image-20221109235748102"></p>
+<p><img src="/2022/11/10/c++/c++%E5%B4%A9%E6%BA%83%E8%B0%83%E8%AF%95%E5%A4%A7%E5%85%A8/image-20221109233443023.png"></p>
+<p><img src="/2022/11/10/c++/c++%E5%B4%A9%E6%BA%83%E8%B0%83%E8%AF%95%E5%A4%A7%E5%85%A8/image-20221109235748102.png"></p>
 <h4 id="2-打开dump文件调试"><a href="#2-打开dump文件调试" class="headerlink" title="2. 打开dump文件调试"></a>2. <strong>打开dump文件调试</strong></h4><p>同样常用有两种方式，一种是通过<code>visual studio</code>直接打开<code>dmp</code>文件调试，一种是使用<code>windbg</code>工具打开调试。</p>
 <ul>
 <li><p>方式一：使用<code>visual studio</code>直接打开<code>dmp</code>文件。</p>
 <p>需要<code>dmp</code>文件和<code>exe</code>、<code>pdb</code>在同级目录，打开<code>dmp</code>文件运行调试时第一次会提示指定源代码路径，然后就可以断到崩溃的地方了。</p>
-<p><img src="/2022/11/10/c++/c++%E5%B4%A9%E6%BA%83%E8%B0%83%E8%AF%95%E5%A4%A7%E5%85%A8/image-20221109223343356.png" alt="image-20221109223343356"></p>
-<p><img src="/2022/11/10/c++/c++%E5%B4%A9%E6%BA%83%E8%B0%83%E8%AF%95%E5%A4%A7%E5%85%A8/image-20221109223443144.png" alt="image-20221109223443144"></p>
+<p><img src="/2022/11/10/c++/c++%E5%B4%A9%E6%BA%83%E8%B0%83%E8%AF%95%E5%A4%A7%E5%85%A8/image-20221109223343356.png"></p>
+<p><img src="/2022/11/10/c++/c++%E5%B4%A9%E6%BA%83%E8%B0%83%E8%AF%95%E5%A4%A7%E5%85%A8/image-20221109223443144.png"></p>
 </li>
 <li><p>方式二：使用<code>windbg</code>工具打开dmp文件</p>
 <p>打开windbg,设置源码路径和pdb文件路径</p>
-<p>​	    <img src="/2022/11/10/c++/c++%E5%B4%A9%E6%BA%83%E8%B0%83%E8%AF%95%E5%A4%A7%E5%85%A8/image-20221109232647684.png" alt="image-20221109232647684"></p>
+<p>​	    <img src="/2022/11/10/c++/c++%E5%B4%A9%E6%BA%83%E8%B0%83%E8%AF%95%E5%A4%A7%E5%85%A8/image-20221109232647684.png"></p>
 </li>
 </ul>
 <p>然后打开dmp文件(exe, pdb, dmp文件在同级目录)</p>
-<p><img src="/2022/11/10/c++/c++%E5%B4%A9%E6%BA%83%E8%B0%83%E8%AF%95%E5%A4%A7%E5%85%A8/image-20221110000200688.png" alt="image-20221110000200688"></p>
-<p><img src="/2022/11/10/c++/c++%E5%B4%A9%E6%BA%83%E8%B0%83%E8%AF%95%E5%A4%A7%E5%85%A8/image-20221110000415076.png" alt="image-20221110000415076"></p>
+<p><img src="/2022/11/10/c++/c++%E5%B4%A9%E6%BA%83%E8%B0%83%E8%AF%95%E5%A4%A7%E5%85%A8/image-20221110000200688.png"></p>
+<p><img src="/2022/11/10/c++/c++%E5%B4%A9%E6%BA%83%E8%B0%83%E8%AF%95%E5%A4%A7%E5%85%A8/image-20221110000415076.png"></p>
 <h2 id="场景3-没有源码dump调试"><a href="#场景3-没有源码dump调试" class="headerlink" title="场景3 没有源码dump调试"></a>场景3 没有源码dump调试</h2><h3 id="调试需求-2"><a href="#调试需求-2" class="headerlink" title="调试需求"></a>调试需求</h3><ul>
 <li>只需要pdb和dmp。</li>
 <li>注意release版本，项目属性-C&#x2F;C++-常规-调试信息格式，不能选择为空，一般选择”程序数据库 (&#x2F;Zi)”。不然的话，调试的堆栈信息看不到函数的代码行数。</li>
@@ -245,19 +245,19 @@
 <figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#-g调试版本</span></span><br><span class="line">gcc -o test -g test.c</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>执行<code>gdb test ./core.xxx</code>调试。</p>
-<p><img src="/2022/11/10/c++/c++%E5%B4%A9%E6%BA%83%E8%B0%83%E8%AF%95%E5%A4%A7%E5%85%A8/image-20221110004757043.png" alt="image-20221110004757043"></p>
+<p><img src="/2022/11/10/c++/c++%E5%B4%A9%E6%BA%83%E8%B0%83%E8%AF%95%E5%A4%A7%E5%85%A8/image-20221110004757043.png"></p>
 </li>
 </ol>
 <h3 id="设置core-dump文件目录和名称"><a href="#设置core-dump文件目录和名称" class="headerlink" title="设置core dump文件目录和名称"></a>设置core dump文件目录和名称</h3><ol>
 <li><p>临时修改</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">echo &quot;/home/corefile/core-%e-%p-%t&quot; &gt; /proc/sys/kernel/core_pattern</span><br></pre></td></tr></table></figure>
 
-<p><img src="/2022/11/10/c++/c++%E5%B4%A9%E6%BA%83%E8%B0%83%E8%AF%95%E5%A4%A7%E5%85%A8/image-20221110005814341.png" alt="image-20221110005814341"></p>
+<p><img src="/2022/11/10/c++/c++%E5%B4%A9%E6%BA%83%E8%B0%83%E8%AF%95%E5%A4%A7%E5%85%A8/image-20221110005814341.png"></p>
 </li>
 <li><p>永久修改</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sysctl -w kernel.core_pattern=/home/corefile/%e.core.%p</span><br></pre></td></tr></table></figure>
 
-<p><img src="/2022/11/10/c++/c++%E5%B4%A9%E6%BA%83%E8%B0%83%E8%AF%95%E5%A4%A7%E5%85%A8/image-20221110010224647.png" alt="image-20221110010224647"></p>
+<p><img src="/2022/11/10/c++/c++%E5%B4%A9%E6%BA%83%E8%B0%83%E8%AF%95%E5%A4%A7%E5%85%A8/image-20221110010224647.png"></p>
 </li>
 </ol>
 

@@ -185,7 +185,7 @@
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;boost/thread/thread.hpp&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;string&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">hello</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    std::cout &lt;&lt; <span class="string">&quot;Hello world, I&#x27;&#x27;m a thread!&quot;</span></span><br><span class="line">              &lt;&lt; std::endl;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="function">boost::thread <span class="title">thrd</span><span class="params">(&amp;hello)</span></span>;</span><br><span class="line">    thrd.<span class="built_in">join</span>();</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>程序正常运行：</p>
-<p><img src="/2022/12/21/notes/boost%E5%BA%93%E4%BD%BF%E7%94%A8/image-20221221094811619.png" alt="image-20221221094811619"></p>
+<p><img src="/2022/12/21/notes/boost%E5%BA%93%E4%BD%BF%E7%94%A8/image-20221221094811619.png"></p>
 <h2 id="4-b2编译命令说明"><a href="#4-b2编译命令说明" class="headerlink" title="4. b2编译命令说明"></a>4. b2编译命令说明</h2><p><code>b2.exe --show-libraries</code> 列出所有编译的库</p>
 <p><code>b2.exe --help</code> 查看所有参数使用</p>
 <p>综合使用：</p>
@@ -240,7 +240,7 @@
 
 <p><strong>ldconfig命令的作用：</strong>ldconfig是一个动态链接库管理命令。安装完成某个工程后生成许多动态库，为了让这些动态链接库为系统所共享，还需运行动态链接库的管理命令–ldconfig。</p>
 <p>执行结果：</p>
-<p><img src="/2022/12/21/notes/boost%E5%BA%93%E4%BD%BF%E7%94%A8/image-20221221111716760.png" alt="image-20221221111716760"></p>
+<p><img src="/2022/12/21/notes/boost%E5%BA%93%E4%BD%BF%E7%94%A8/image-20221221111716760.png"></p>
 
     </div>
     

@@ -256,10 +256,12 @@ find_package有两种搜索模式：</li>
 </blockquote>
 <p>vscode环境搭建步骤：</p>
 <ol>
-<li><p>安装cmake和vscode的cmake插件。</p>
+<li><p>安装QT4.8.7、vs2010、cmake(3.24.1)、vscode的cmake插件。</p>
+</li>
+<li><p>配置示例工程根目录的ninja到环境变量。</p>
 </li>
 <li><p><code>Ctrl+Shift+p</code>依次执行命令：</p>
-<p>a. CMake:Configure，只需要执行一次，第一次会提示选择编译器。</p>
+<p>a. CMake:Configure，只需要执行一次，第一次会提示选择编译器(VisualStudio.10.0-x86)。</p>
 <p>b. Cmake:Build，如果修改了代码重新Build不生效，可以先CMake:Clean，再CMake:Build。</p>
 <p>c. 编译完就可以F5调试运行了。</p>
 </li>
