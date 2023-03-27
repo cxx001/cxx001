@@ -1,0 +1,330 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+<head>
+    <!--Setting-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta name="apple-mobile-web-app-capable" content="Hexo">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    <meta name="browsermode" content="application">
+    <meta name="screen-orientation" content="portrait">
+    <meta name="theme-version" content="1.0.0">
+    <meta name="root" content="/">
+    <link rel="dns-prefetch" href="https://cxx001.gitee.io">
+    <!--SEO-->
+
+<meta name="keywords" content="仿真" />
+
+
+<meta name="description" content="前言介绍仿真引擎如何调度前，我们先回顾一些基本概念，什么是积分算法，导数？
+这篇文章介绍得很通俗: 微分、积分、微积分、导数之详细辨别
+就是用于计算曲线的，导数描述曲线变化率，求积分就是用导数来..." />
+
+
+<meta name="robots" content="all" />
+<meta name="google" content="all" />
+<meta name="googlebot" content="all" />
+<meta name="verify" content="all" />
+    <!--Title-->
+
+<title>
+    
+    飞行仿真引擎调度流程 |
+    
+    Hexo
+</title>
+
+<link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+
+
+<link rel="icon" href="/favicon.ico">
+
+    
+
+
+<link rel="stylesheet" href="/css/bootstrap.min.css?rev=3.3.7.css">
+<link rel="stylesheet" href="/css/font-awesome.min.css?rev=4.7.0.css">
+<link rel="stylesheet" href="/css/style.css?rev=@@hash.css">
+
+    
+<div class="hide">
+    <script type="text/javascript">
+    var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+    document.write(unescape("%3Cspan class='cnzz_stat_icon_1263868967 hide' %3E%3Cscript%20src%3D%22https%3A%2F%2Fs95.cnzz.com%2Fz_stat.php%3Fweb_id%3D1272564536%22%3E%3C%2Fscript%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s19.cnzz.com/z_stat.php%3Fid%3D1263868967%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+    </script>
+</div>
+
+
+
+
+    
+
+<meta name="generator" content="Hexo 6.2.0"></head>
+<!--[if lte IE 8]>
+<style>
+    html{ font-size: 1em }
+</style>
+<![endif]-->
+<!--[if lte IE 9]>
+<div style="ie">你使用的浏览器版本过低，为了你更好的阅读体验，请更新浏览器的版本或者使用其他现代浏览器，比如Chrome、Firefox、Safari等。</div>
+<![endif]-->
+<body>
+    <header class="main-header"  style="background-image:url(
+    https://hexo-theme-snippet-1251680922.cos.ap-beijing.myqcloud.com/img/banner.jpg)"
+     >
+    <div class="main-header-box">
+        <a class="header-avatar" href="/" title='John Doe'>
+            <img src="/img/avatar.jpg" alt="logo头像" class="img-responsive center-block">
+        </a>
+        <div class="branding">
+            <!--<h2 class="text-hide">Snippet主题,从未如此简单有趣</h2>-->
+            
+            <img src="/img/branding.png" alt="Snippet 博客主题" class="img-responsive center-block">
+            
+        </div>
+    </div>
+</header>
+    <nav class="main-navigation">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="navbar-header"><span class="nav-toggle-button collapsed pull-right" data-toggle="collapse" data-target="#main-menu" id="mnav">
+                        <span class="sr-only"></span>
+                        <i class="fa fa-bars"></i>
+                    </span>
+                    <a class="navbar-brand" href="https://cxx001.gitee.io">
+                        Hexo</a>
+                </div>
+                <div class="collapse navbar-collapse" id="main-menu">
+                    <ul class="menu">
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/"><i class="fa "></i>
+                                首页</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/archives/"><i class="fa "></i>
+                                时间轴</a>
+                        </li>
+                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+    <section class="content-wrap">
+        <div class="container">
+            <div class="row">
+                <main class="col-md-8 main-content m-post">
+                    <p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id="飞行仿真引擎调度流程">
+            
+            飞行仿真引擎调度流程
+            
+        </h1>
+        <div class="post-meta">
+    
+    <span class="categories-meta fa-wrap">
+        <i class="fa fa-folder-open-o"></i>
+        <a class="category-link" href="/categories/project/">project</a>
+    </span>
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-tags"></i>
+        <span class="tags-meta">
+            
+            <a class="tag-none-link" href="/tags/%E4%BB%BF%E7%9C%9F/" rel="tag">仿真</a>
+            
+        </span>
+    </span>
+    
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-clock-o"></i>
+        <span class="date-meta">
+            2023/03/27</span>
+    </span>
+    
+    <span class="fa-wrap">
+        <i class="fa fa-eye"></i>
+        <span id="busuanzi_value_page_pv"></span>
+    </span>
+    
+    
+</div>
+        
+        
+    </div>
+    
+    <div class="post-body post-content">
+        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>介绍仿真引擎如何调度前，我们先回顾一些基本概念，什么是积分算法，导数？</p>
+<p>这篇文章介绍得很通俗: <a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/38337248">微分、积分、微积分、导数之详细辨别</a></p>
+<p>就是用于计算曲线的，导数描述曲线变化率，求积分就是用导数来计算曲线轨迹的过程。</p>
+<p>下面是一些常见仿真引擎积分算法:</p>
+<ul>
+<li>定步长欧拉法</li>
+<li>定步长辛普森法</li>
+<li>二阶龙格库塔法</li>
+<li>三阶龙格库塔法</li>
+<li>四阶龙格库塔法</li>
+<li>四阶Adams-Bashford法</li>
+<li>离散似然法</li>
+</ul>
+<br/>
+
+<h1 id="调度逻辑"><a href="#调度逻辑" class="headerlink" title="调度逻辑"></a>调度逻辑</h1><h2 id="1-模块接口封装"><a href="#1-模块接口封装" class="headerlink" title="1. 模块接口封装"></a>1. 模块接口封装</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 1. 初始化</span></span><br><span class="line"><span class="function"><span class="type">int32_t</span> <span class="title">Class::init</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 2. 积分算法(小步长)  msg: 消息类型 t: 时间 x：状态变量 f：导数</span></span><br><span class="line"><span class="function"><span class="type">int32_t</span> <span class="title">Class::integral</span><span class="params">(<span class="type">int32_t</span> msg, <span class="type">double</span> t, <span class="type">double</span> *x, <span class="type">double</span> *f)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 3. 大步长推进</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">Class::run</span><span class="params">(<span class="type">void</span> *extra)</span></span>;</span><br><span class="line">    </span><br><span class="line"><span class="comment">// 4. 释放</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">Class::destroy</span><span class="params">()</span></span>;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="2-单次仿真调度流程"><a href="#2-单次仿真调度流程" class="headerlink" title="2. 单次仿真调度流程"></a>2. 单次仿真调度流程</h2><ol>
+<li><p>初始化阶段，先调所有模块的Initialize，然后所有模块的OUTPUT调一次，最后所有模块的WRITEDATA调一次。</p>
+</li>
+<li><p>步长推进阶段，根据选择的积分算法不同，先多次分别调用所有模块的Continue和OUTPUT，然后调一次WRITEDATA消息，依此循环推进。</p>
+</li>
+<li><p>最后停止，依次调所有模块的STOP消息释放。</p>
+</li>
+</ol>
+<p><img src="/2023/03/27/project/%E9%A3%9E%E8%A1%8C%E4%BB%BF%E7%9C%9F%E5%BC%95%E6%93%8E%E8%B0%83%E5%BA%A6%E6%B5%81%E7%A8%8B/image-20230327110028769.png"></p>
+<p>以步长为0.01s，积分算法为四阶龙格库塔法为例，平台消息根据积分算法由多个积分步组成，即4次。</p>
+<p><img src="/2023/03/27/project/%E9%A3%9E%E8%A1%8C%E4%BB%BF%E7%9C%9F%E5%BC%95%E6%93%8E%E8%B0%83%E5%BA%A6%E6%B5%81%E7%A8%8B/image-20230327111047571.png"></p>
+<h2 id="3-批量仿真调度流程"><a href="#3-批量仿真调度流程" class="headerlink" title="3. 批量仿真调度流程"></a>3. 批量仿真调度流程</h2><p>相比单次仿真，只是增加了所有模块单次仿真结束时的END消息处理和从第二次开始的Restart消息重新设置仿真模块参数信息。</p>
+<p>Restart时常见的大批量试验设计方法有：</p>
+<ul>
+<li>蒙特卡洛法</li>
+<li>均匀设计法</li>
+<li>正交设计法</li>
+<li>拉丁超立方法</li>
+<li>偏差管道法</li>
+<li>全析因设计法</li>
+</ul>
+<p><img src="/2023/03/27/project/%E9%A3%9E%E8%A1%8C%E4%BB%BF%E7%9C%9F%E5%BC%95%E6%93%8E%E8%B0%83%E5%BA%A6%E6%B5%81%E7%A8%8B/image-20230327112641488.png"></p>
+<p>对应的执行时序图如下：</p>
+<p><img src="/2023/03/27/project/%E9%A3%9E%E8%A1%8C%E4%BB%BF%E7%9C%9F%E5%BC%95%E6%93%8E%E8%B0%83%E5%BA%A6%E6%B5%81%E7%A8%8B/image-20230327114613486.png"></p>
+
+    </div>
+    
+    <div class="post-footer">
+        <div>
+            
+            转载声明：
+            商业转载请联系作者获得授权,非商业转载请注明出处 © <a href="" target="_blank">cxx</a>
+            
+            
+        </div>
+        <div>
+            
+        </div>
+    </div>
+</article>
+<div class="article-nav prev-next-wrap clearfix">
+    
+    
+    <a href="/2023/03/10/notes/cmake%E8%BF%9B%E9%98%B6/" class="next-post btn btn-default" title='CMake进阶'>
+        <span class="hidden-lg">下一篇</span>
+        <span class="hidden-xs">
+            CMake进阶</span><i class="fa fa-angle-right fa-fw"></i>
+    </a>
+    
+</div>
+
+<div id="comments">
+    
+    
+<div class="utteranc">
+  
+  <script
+    src='https://utteranc.es/client.js'
+    repo='cxx001/myblog-comment'
+    issue-term='pathname'
+    issue-number=''
+    theme='github-light'
+    label=''
+    crossorigin='anonymous'
+    async
+  ></script>
+</div>
+
+
+
+</div>
+
+                </main>
+                
+                    <aside id="article-toc" role="navigation" class="col-md-4">
+    <div class="widget">
+        <h3 class="title">
+            文章目录
+        </h3>
+        
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-text">前言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%B0%83%E5%BA%A6%E9%80%BB%E8%BE%91"><span class="toc-text">调度逻辑</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E6%A8%A1%E5%9D%97%E6%8E%A5%E5%8F%A3%E5%B0%81%E8%A3%85"><span class="toc-text">1. 模块接口封装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E5%8D%95%E6%AC%A1%E4%BB%BF%E7%9C%9F%E8%B0%83%E5%BA%A6%E6%B5%81%E7%A8%8B"><span class="toc-text">2. 单次仿真调度流程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E6%89%B9%E9%87%8F%E4%BB%BF%E7%9C%9F%E8%B0%83%E5%BA%A6%E6%B5%81%E7%A8%8B"><span class="toc-text">3. 批量仿真调度流程</span></a></li></ol></li></ol>
+        
+    </div>
+</aside>
+                
+            </div>
+        </div>
+    </section>
+    <footer class="main-footer">
+    <div class="container">
+        <div class="row">
+        </div>
+    </div>
+</footer>
+<a id="back-to-top" class="icon-btn hide">
+    <i class="fa fa-chevron-up"></i>
+</a>
+    <div class="copyright">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="busuanzi">
+    
+    访问量:
+    <strong id="busuanzi_value_site_pv">
+        <i class="fa fa-spinner fa-spin"></i>
+    </strong>
+    &nbsp; | &nbsp;
+    访客数:
+    <strong id="busuanzi_value_site_uv">
+        <i class="fa fa-spinner fa-spin"></i>
+    </strong>
+    
+</div>
+            </div>
+            <div class="col-sm-12">
+                <span>Copyright &copy;
+                    2022
+                    
+                </span> |
+                <span>
+                    Powered by <a href="//hexo.io" class="copyright-links" target="_blank" rel="nofollow">Hexo</a>
+                </span> |
+                <span>
+                    Theme by <a href="//github.com/shenliyang/hexo-theme-snippet.git" class="copyright-links" target="_blank" rel="nofollow">Snippet</a>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+<script src="/js/app.js?rev=@@hash.js"></script>
+
+</body>
+</html>
