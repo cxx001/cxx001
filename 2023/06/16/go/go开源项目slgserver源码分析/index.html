@@ -1,0 +1,389 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+<head>
+    <!--Setting-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta name="apple-mobile-web-app-capable" content="Hexo">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    <meta name="browsermode" content="application">
+    <meta name="screen-orientation" content="portrait">
+    <meta name="theme-version" content="1.0.0">
+    <meta name="root" content="/">
+    <link rel="dns-prefetch" href="https://cxx001.gitee.io">
+    <!--SEO-->
+
+<meta name="keywords" content="go,slgserver" />
+
+
+<meta name="description" content="前言项目开源地址：https://github.com/llr104/slgserver
+比较适合作为go语言入门学习项目或轻量级游戏项目，整体的项目结构和编码质量还是可以的。不过距离商业项目还..." />
+
+
+<meta name="robots" content="all" />
+<meta name="google" content="all" />
+<meta name="googlebot" content="all" />
+<meta name="verify" content="all" />
+    <!--Title-->
+
+<title>
+    
+    go开源项目slgserver源码分析 |
+    
+    Hexo
+</title>
+
+<link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+
+
+<link rel="icon" href="/favicon.ico">
+
+    
+
+
+<link rel="stylesheet" href="/css/bootstrap.min.css?rev=3.3.7.css">
+<link rel="stylesheet" href="/css/font-awesome.min.css?rev=4.7.0.css">
+<link rel="stylesheet" href="/css/style.css?rev=@@hash.css">
+
+    
+<div class="hide">
+    <script type="text/javascript">
+    var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+    document.write(unescape("%3Cspan class='cnzz_stat_icon_1263868967 hide' %3E%3Cscript%20src%3D%22https%3A%2F%2Fs95.cnzz.com%2Fz_stat.php%3Fweb_id%3D1272564536%22%3E%3C%2Fscript%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s19.cnzz.com/z_stat.php%3Fid%3D1263868967%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+    </script>
+</div>
+
+
+
+
+    
+
+<meta name="generator" content="Hexo 6.2.0"></head>
+<!--[if lte IE 8]>
+<style>
+    html{ font-size: 1em }
+</style>
+<![endif]-->
+<!--[if lte IE 9]>
+<div style="ie">你使用的浏览器版本过低，为了你更好的阅读体验，请更新浏览器的版本或者使用其他现代浏览器，比如Chrome、Firefox、Safari等。</div>
+<![endif]-->
+<body>
+    <header class="main-header"  style="background-image:url(
+    https://hexo-theme-snippet-1251680922.cos.ap-beijing.myqcloud.com/img/banner.jpg)"
+     >
+    <div class="main-header-box">
+        <a class="header-avatar" href="/" title='John Doe'>
+            <img src="/img/avatar.jpg" alt="logo头像" class="img-responsive center-block">
+        </a>
+        <div class="branding">
+            <!--<h2 class="text-hide">Snippet主题,从未如此简单有趣</h2>-->
+            
+            <img src="/img/branding.png" alt="Snippet 博客主题" class="img-responsive center-block">
+            
+        </div>
+    </div>
+</header>
+    <nav class="main-navigation">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="navbar-header"><span class="nav-toggle-button collapsed pull-right" data-toggle="collapse" data-target="#main-menu" id="mnav">
+                        <span class="sr-only"></span>
+                        <i class="fa fa-bars"></i>
+                    </span>
+                    <a class="navbar-brand" href="https://cxx001.gitee.io">
+                        Hexo</a>
+                </div>
+                <div class="collapse navbar-collapse" id="main-menu">
+                    <ul class="menu">
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/"><i class="fa "></i>
+                                首页</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/archives/"><i class="fa "></i>
+                                时间轴</a>
+                        </li>
+                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+    <section class="content-wrap">
+        <div class="container">
+            <div class="row">
+                <main class="col-md-8 main-content m-post">
+                    <p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id="go开源项目slgserver源码分析">
+            
+            go开源项目slgserver源码分析
+            
+        </h1>
+        <div class="post-meta">
+    
+    <span class="categories-meta fa-wrap">
+        <i class="fa fa-folder-open-o"></i>
+        <a class="category-link" href="/categories/go/">go</a>
+    </span>
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-tags"></i>
+        <span class="tags-meta">
+            
+            <a class="tag-none-link" href="/tags/go/" rel="tag">go</a> <a class="tag-none-link" href="/tags/slgserver/" rel="tag">slgserver</a>
+            
+        </span>
+    </span>
+    
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-clock-o"></i>
+        <span class="date-meta">
+            2023/06/16</span>
+    </span>
+    
+    <span class="fa-wrap">
+        <i class="fa fa-eye"></i>
+        <span id="busuanzi_value_page_pv"></span>
+    </span>
+    
+    
+</div>
+        
+        
+    </div>
+    
+    <div class="post-body post-content">
+        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>项目开源地址：<a target="_blank" rel="noopener" href="https://github.com/llr104/slgserver">https://github.com/llr104/slgserver</a></p>
+<p>比较适合作为go语言入门学习项目或轻量级游戏项目，整体的项目结构和编码质量还是可以的。不过距离商业项目还是差点意思，如服务负载、容灾这块还没有。</p>
+<p>项目总共有5个类型独立服务：</p>
+<ol>
+<li>gateserver  网关服</li>
+<li>loginserver 登录服</li>
+<li>chatserver  聊天服</li>
+<li>httpserver  http服</li>
+<li>slgserver    游戏服</li>
+</ol>
+<p>其中httpserver就是常规http服务，主要提供一些辅助操作，如账号注册、修改密码什么的。其它4类服务则是用websocket相互连接的。<strong>客户端只与网关服相连，网关服负责消息解析、前置处理，然后转发给对应的业务服处理，处理完后响应再原路返回给客户端。</strong></p>
+<p>下面我们就已gateserver网关服为例来分析整个项目框架，搞清楚各服务都从哪里启动、消息怎么流转的。如果你不想知道源码实现细节，可直接只看第4步结论。</p>
+<h1 id="1-服务入口"><a href="#1-服务入口" class="headerlink" title="1. 服务入口"></a>1. 服务入口</h1><p>go程序都是从main开始，下面是gateserver的main入口：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// gateserver.go</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">  fmt.Println(os.Getwd())</span><br><span class="line">    </span><br><span class="line">  <span class="comment">// 初始化路由(下面第2步) </span></span><br><span class="line">  gateserver.Init()</span><br><span class="line">    </span><br><span class="line">  <span class="comment">// 启动服务监听(下面第3步)</span></span><br><span class="line">  needSecret := config.File.MustBool(<span class="string">&quot;gateserver&quot;</span>, <span class="string">&quot;need_secret&quot;</span>, <span class="literal">false</span>)  <span class="comment">// 读取env.ini配置文件信息</span></span><br><span class="line">  s := net.NewServer(getGateServerAddr(), needSecret)  <span class="comment">// ip/port信息</span></span><br><span class="line">  s.Router(gateserver.MyRouter)  <span class="comment">// 路由信息</span></span><br><span class="line">  s.SetOnBeforeClose(controller.GHandle.OnServerConnClose) <span class="comment">// 连接关闭前回调</span></span><br><span class="line">  s.Start()  <span class="comment">// 开启监听，启动服务</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>接下来我们展开分析下里边具体实现细节。</p>
+<h1 id="2-初始化路由"><a href="#2-初始化路由" class="headerlink" title="2. 初始化路由"></a>2. 初始化路由</h1><p><code>gateserver.Init()</code>里边具体做了些什么？就只调用了下面这个方法：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(this*Handle)</span></span> InitRouter(r *net.Router) &#123;</span><br><span class="line">  this.init()</span><br><span class="line">  g := r.Group(<span class="string">&quot;*&quot;</span>).Use(middleware.ElapsedTime(), middleware.Log())</span><br><span class="line">  g.AddRouter(<span class="string">&quot;*&quot;</span>, this.all)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>先看里面的init，获取到了游戏服、聊天服、登录服连接地址信息。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(this*Handle)</span></span> init() &#123;</span><br><span class="line">  this.slgProxy = config.File.MustValue(<span class="string">&quot;gateserver&quot;</span>, <span class="string">&quot;slg_proxy&quot;</span>, <span class="string">&quot;ws://127.0.0.1:8001&quot;</span>)</span><br><span class="line">  this.chatProxy = config.File.MustValue(<span class="string">&quot;gateserver&quot;</span>, <span class="string">&quot;chat_proxy&quot;</span>, <span class="string">&quot;ws://127.0.0.1:8002&quot;</span>)</span><br><span class="line">  this.loginProxy = config.File.MustValue(<span class="string">&quot;gateserver&quot;</span>, <span class="string">&quot;login_proxy&quot;</span>, <span class="string">&quot;ws://127.0.0.1:8003&quot;</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>接下来这句我们来看看做了什么，<code>g := r.Group(&quot;*&quot;).Use(middleware.ElapsedTime(), middleware.Log())</code></p>
+<p>首先调用路由对象<code>Router</code>里的<code>Group</code>方法，参数传的<code>*</code>，返回一个<code>Group</code>对象指针，这个<code>Router</code>对象是在gateserver的init.go里创建，通过上面<code>InitRouter</code>方法传递进来的。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(this*Router)</span></span> Group(prefix <span class="type">string</span>) *Group&#123;</span><br><span class="line">  g := &amp;Group&#123;prefix: prefix,</span><br><span class="line">    hMap: <span class="built_in">make</span>(<span class="keyword">map</span>[<span class="type">string</span>]HandlerFunc),</span><br><span class="line">    hMapMidd: <span class="built_in">make</span>(<span class="keyword">map</span>[<span class="type">string</span>][]MiddlewareFunc),</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  this.groups = <span class="built_in">append</span>(this.groups, g)</span><br><span class="line">  <span class="keyword">return</span> g</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这个方法创建了一个Group对象，然后把这个对象添加到了Router对象里groups数组里。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> HandlerFunc <span class="function"><span class="keyword">func</span><span class="params">(req *WsMsgReq, rsp *WsMsgRsp)</span></span></span><br><span class="line"><span class="keyword">type</span> MiddlewareFunc <span class="function"><span class="keyword">func</span><span class="params">(HandlerFunc)</span></span> HandlerFunc</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> Group <span class="keyword">struct</span> &#123;</span><br><span class="line">  prefix     	<span class="type">string</span>    <span class="comment">// 前缀(*)</span></span><br><span class="line">  hMap       	<span class="keyword">map</span>[<span class="type">string</span>]HandlerFunc   <span class="comment">// 消息存储的map容器</span></span><br><span class="line">  hMapMidd	<span class="keyword">map</span>[<span class="type">string</span>][]MiddlewareFunc  <span class="comment">// 中间件map容器</span></span><br><span class="line">  middleware 	[]MiddlewareFunc  <span class="comment">// 中间件数组容器</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>然后接着调用Group对象里的Use方法，传递了两个中间件函数middleware.ElapsedTime(), middleware.Log()。把这两个函数添加到了上面Group对象里的middleware数组里。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(this* Group)</span></span> Use(middleware ...MiddlewareFunc) *Group&#123;</span><br><span class="line">  this.middleware = <span class="built_in">append</span>(this.middleware, middleware...)</span><br><span class="line">  <span class="keyword">return</span> this</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>至此：g :&#x3D; r.Group(“*”).Use(middleware.ElapsedTime(), middleware.Log())干的事情就是，返回了一个<code>Group</code>指针对象，并对这个对象里的<code>prefix</code>字段和<code>middleware</code>字段赋了值。一个赋值字符串<code>*</code>，一个插入了两个中间件函数。</strong></p>
+<p>接下来调用<code>g.AddRouter(&quot;*&quot;, this.all)</code>，首先我们来看传递的参数this.all它是一个方法，参数是消息请求&#x2F;响应体：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(this*Handle)</span></span> all(req *net.WsMsgReq, rsp *net.WsMsgRsp) &#123;</span><br><span class="line">  log.DefaultLog.Info(<span class="string">&quot;gateserver handle all begin&quot;</span>,</span><br><span class="line">  zap.String(<span class="string">&quot;proxyStr&quot;</span>, req.Body.Proxy),</span><br><span class="line">  zap.String(<span class="string">&quot;msgName&quot;</span>, req.Body.Name))</span><br><span class="line">  this.deal(req, rsp)</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> req.Body.Name == <span class="string">&quot;role.enterServer&quot;</span> &amp;&amp; rsp.Body.Code == constant.OK  &#123;</span><br><span class="line">    <span class="comment">//登录聊天服</span></span><br><span class="line">    rspObj := &amp;proto.EnterServerRsp&#123;&#125;</span><br><span class="line">    mapstructure.Decode(rsp.Body.Msg, rspObj)</span><br><span class="line">    r := &amp;chat_proto.LoginReq&#123;RId: rspObj.Role.RId, NickName: rspObj.Role.NickName, Token: rspObj.Token&#125;</span><br><span class="line">    reqBody := &amp;net.ReqBody&#123;Seq: <span class="number">0</span>, Name: <span class="string">&quot;chat.login&quot;</span>, Msg: r, Proxy: <span class="string">&quot;&quot;</span>&#125;</span><br><span class="line">    rspBody := &amp;net.RspBody&#123;Seq: <span class="number">0</span>, Name: <span class="string">&quot;chat.login&quot;</span>, Msg: r, Code: <span class="number">0</span>&#125;</span><br><span class="line">    this.deal(&amp;net.WsMsgReq&#123;Body: reqBody, Conn:req.Conn&#125;, &amp;net.WsMsgRsp&#123;Body: rspBody&#125;)</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  log.DefaultLog.Info(<span class="string">&quot;gateserver handle all end&quot;</span>,</span><br><span class="line">  zap.String(<span class="string">&quot;proxyStr&quot;</span>, req.Body.Proxy),</span><br><span class="line">  zap.String(<span class="string">&quot;msgName&quot;</span>, req.Body.Name))</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>再来看调用的<code>AddRouter</code>方法：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(this*Group)</span></span> AddRouter(name <span class="type">string</span>, handlerFunc HandlerFunc, middleware ...MiddlewareFunc) &#123;</span><br><span class="line">  this.hMap[name] = handlerFunc</span><br><span class="line">  this.hMapMidd[name] = middleware</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这里对于网关服，没有传递中间件函数，只传递了上面的this.all消息体函数给到了Group对象里的<code>hMap</code>，key&#x3D;*，value&#x3D;this.all;</p>
+<p><strong>最后，我们再来回答最开始的疑问<code>gateserver.Init()</code>做了什么？我们总结下：</strong></p>
+<p><strong>在server&#x2F;gateserver&#x2F;controller&#x2F;handle.go Handle对象里创建了一个Group对象指针，并给这个对象赋了值：</strong></p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> Group <span class="keyword">struct</span> &#123;</span><br><span class="line">  prefix     	<span class="type">string</span>    <span class="comment">// *</span></span><br><span class="line">  hMap       	<span class="keyword">map</span>[<span class="type">string</span>]HandlerFunc   <span class="comment">// key:&quot;*&quot; value: this.all</span></span><br><span class="line">  hMapMidd	  <span class="keyword">map</span>[<span class="type">string</span>][]MiddlewareFunc  <span class="comment">// 空</span></span><br><span class="line">  middleware 	[]MiddlewareFunc  <span class="comment">// middleware.ElapsedTime(), middleware.Log()</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>然后把这个Group对象放到上面初始化传递进来的Router对象里的groups数组里了。</strong></p>
+<h1 id="3-启动服务监听"><a href="#3-启动服务监听" class="headerlink" title="3. 启动服务监听"></a>3. 启动服务监听</h1><p>启动网关服务由下面几句代码完成：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">needSecret := config.File.MustBool(<span class="string">&quot;gateserver&quot;</span>, <span class="string">&quot;need_secret&quot;</span>, <span class="literal">false</span>)  <span class="comment">// 从data/conf/env.ini中读取need_secret字段的值，就是对网络传输数据是否加密标志</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 下面就是创建server对象，并调用它的一些方法启动服务</span></span><br><span class="line">s := net.NewServer(getGateServerAddr(), needSecret)</span><br><span class="line">s.Router(gateserver.MyRouter)</span><br><span class="line">s.SetOnBeforeClose(controller.GHandle.OnServerConnClose)</span><br><span class="line">s.Start()</span><br></pre></td></tr></table></figure>
+
+<p>s :&#x3D; net.NewServer(getGateServerAddr(), needSecret) 返回server对象，并对里边addr(网关服的ip:port)、needSecret赋值。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> server <span class="keyword">struct</span> &#123;</span><br><span class="line">  addr        <span class="type">string</span>      <span class="comment">// &quot;:8004&quot;</span></span><br><span class="line">  router      *Router</span><br><span class="line">  needSecret  <span class="type">bool</span>        <span class="comment">// true</span></span><br><span class="line">  beforeClose <span class="function"><span class="keyword">func</span> <span class="params">(WSConn)</span></span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">NewServer</span><span class="params">(addr <span class="type">string</span>, needSecret <span class="type">bool</span>)</span></span> *server &#123;</span><br><span class="line">  s := server&#123;</span><br><span class="line">    addr: addr,</span><br><span class="line">    needSecret: needSecret,</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> &amp;s</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>s.Router(gateserver.MyRouter)，就是把第二步创建的路由对象赋值给了server对象里的router字段。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(this*server)</span></span> Router(router *Router) &#123;</span><br><span class="line">  this.router = router</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>s.SetOnBeforeClose(controller.GHandle.OnServerConnClose)</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(this*server)</span></span> SetOnBeforeClose(hookFunc <span class="function"><span class="keyword">func</span> <span class="params">(WSConn)</span></span>)  &#123;</span><br><span class="line">  this.beforeClose = hookFunc</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>把业务控制的server&#x2F;gateserver&#x2F;controller&#x2F;handle.go Handle对象里OnServerConnClose方法赋值给了server对象的beforeClose字段，即用来在网络关闭前做些事情。即释放this.proxy，然后关闭网络。proxy是在上面all方法里的deal里赋值的，this.proxy <code>[</code>ip:port<code>]</code>[<code>cid</code>]&#96; &#x3D; proxyClient(与业务服务连接的客户端对象)</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(this*Handle)</span></span> OnServerConnClose (conn net.WSConn)&#123;</span><br><span class="line">  c, err := conn.GetProperty(<span class="string">&quot;cid&quot;</span>)</span><br><span class="line">  arr := <span class="built_in">make</span>([]*net.ProxyClient, <span class="number">0</span>)</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> err == <span class="literal">nil</span>&#123;</span><br><span class="line">    cid := c.(<span class="type">int64</span>)</span><br><span class="line">    this.proxyMutex.Lock()</span><br><span class="line">    <span class="keyword">for</span> _, m := <span class="keyword">range</span> this.proxys &#123;</span><br><span class="line">      proxy, ok := m[cid]</span><br><span class="line">      <span class="keyword">if</span> ok &#123;</span><br><span class="line">        arr = <span class="built_in">append</span>(arr, proxy)</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="built_in">delete</span>(m, cid)</span><br><span class="line">    &#125;</span><br><span class="line">    this.proxyMutex.Unlock()</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">for</span> _, client := <span class="keyword">range</span> arr &#123;</span><br><span class="line">    client.Close()</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>至此，创建的server对象的4个数据字段都已经赋了值。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> server <span class="keyword">struct</span> &#123;</span><br><span class="line">  addr        <span class="type">string</span>        <span class="comment">// :8004</span></span><br><span class="line">  router      *Router       <span class="comment">// 第二步的Router</span></span><br><span class="line">  needSecret  <span class="type">bool</span>          <span class="comment">// true</span></span><br><span class="line">  beforeClose <span class="function"><span class="keyword">func</span> <span class="params">(WSConn)</span></span> <span class="comment">// 业务控制里的OnServerConnClose</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>最后调用s.Start()启动服务</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(this*server)</span></span> Start()  &#123;</span><br><span class="line">  log.DefaultLog.Info(<span class="string">&quot;server starting&quot;</span>)</span><br><span class="line">  <span class="comment">// 使用的是go内置的http模块</span></span><br><span class="line">  http.HandleFunc(<span class="string">&quot;/&quot;</span>, this.wsHandler)  <span class="comment">// 客户端连接请求时，会调用wsHandler</span></span><br><span class="line">  http.ListenAndServe(this.addr, <span class="literal">nil</span>)   <span class="comment">// 开启服务监听</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>我们重点看看this.wsHandler，创建websocket对象并初始化事件循环。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(this*server)</span></span> wsHandler(resp http.ResponseWriter, req *http.Request) &#123;</span><br><span class="line">  <span class="comment">// 创建websocket对象</span></span><br><span class="line">  wsSocket, err := wsUpgrader.Upgrade(resp, req, <span class="literal">nil</span>)  </span><br><span class="line">  <span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">    <span class="keyword">return</span></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// websocket用ServerConn对象再包装一层</span></span><br><span class="line">  conn := ConnMgr.NewConn(wsSocket, this.needSecret)</span><br><span class="line">  log.DefaultLog.Info(<span class="string">&quot;client connect&quot;</span>, zap.String(<span class="string">&quot;addr&quot;</span>, wsSocket.RemoteAddr().String()))</span><br><span class="line">  conn.SetRouter(this.router)</span><br><span class="line">  conn.SetOnClose(ConnMgr.RemoveConn)</span><br><span class="line">  conn.SetOnBeforeClose(this.beforeClose)</span><br><span class="line">  conn.Start()</span><br><span class="line">  conn.Handshake()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>conn.Start()，异步开启两个线程循环，分别处理消息读取和写入。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(this *ServerConn)</span></span> Start() &#123;</span><br><span class="line">  <span class="keyword">go</span> this.wsReadLoop()</span><br><span class="line">  <span class="keyword">go</span> this.wsWriteLoop()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>先来看看接收客户端消息：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(this *ServerConn)</span></span> wsReadLoop() &#123;</span><br><span class="line">  <span class="comment">// defer延迟调用，在wsReadLoop返回前最后调用</span></span><br><span class="line">  <span class="keyword">defer</span> <span class="function"><span class="keyword">func</span><span class="params">()</span></span> &#123;</span><br><span class="line">    <span class="comment">// recover 是go内置函数，防止宕机，尝试恢复，这个函数只能在defer函数里使用</span></span><br><span class="line">    <span class="keyword">if</span> err := <span class="built_in">recover</span>(); err != <span class="literal">nil</span> &#123;</span><br><span class="line">      e := fmt.Sprintf(<span class="string">&quot;%v&quot;</span>, err)</span><br><span class="line">      log.DefaultLog.Error(<span class="string">&quot;wsReadLoop error&quot;</span>, zap.String(<span class="string">&quot;err&quot;</span>, e))</span><br><span class="line">      this.Close()</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;()</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 消息接收循环</span></span><br><span class="line">  <span class="keyword">for</span> &#123;</span><br><span class="line">    <span class="comment">// 读一个message</span></span><br><span class="line">    _, data, err := this.wsSocket.ReadMessage()</span><br><span class="line">    <span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">      <span class="keyword">break</span></span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    data, err = util.UnZip(data)</span><br><span class="line">    <span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">      log.DefaultLog.Error(<span class="string">&quot;wsReadLoop UnZip error&quot;</span>, zap.Error(err))</span><br><span class="line">      <span class="keyword">continue</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    body := &amp;ReqBody&#123;&#125;</span><br><span class="line">    <span class="keyword">if</span> this.needSecret &#123;</span><br><span class="line">      <span class="comment">//检测是否有加密，没有加密发起Handshake,与客户端同步密钥</span></span><br><span class="line">      <span class="keyword">if</span> secretKey, err:= this.GetProperty(<span class="string">&quot;secretKey&quot;</span>); err == <span class="literal">nil</span> &#123;</span><br><span class="line">        key := secretKey.(<span class="type">string</span>)</span><br><span class="line">        d, err := util.AesCBCDecrypt(data, []<span class="type">byte</span>(key), []<span class="type">byte</span>(key), openssl.ZEROS_PADDING)</span><br><span class="line">        <span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">          log.DefaultLog.Error(<span class="string">&quot;AesDecrypt error&quot;</span>, zap.Error(err))</span><br><span class="line">          this.Handshake()</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">          data = d</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        log.DefaultLog.Info(<span class="string">&quot;secretKey not found client need handshake&quot;</span>, zap.Error(err))</span><br><span class="line">        this.Handshake()</span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> err := util.Unmarshal(data, body); err == <span class="literal">nil</span> &#123;</span><br><span class="line">      req := &amp;WsMsgReq&#123;Conn: this, Body: body&#125;</span><br><span class="line">      rsp := &amp;WsMsgRsp&#123;Body: &amp;RspBody&#123;Name: body.Name, Seq: req.Body.Seq&#125;&#125;</span><br><span class="line">      </span><br><span class="line">      <span class="keyword">if</span> req.Body.Name == HeartbeatMsg &#123;</span><br><span class="line">        <span class="comment">// 心跳信息</span></span><br><span class="line">        h := &amp;Heartbeat&#123;&#125;</span><br><span class="line">        mapstructure.Decode(body.Msg, h)</span><br><span class="line">        h.STime = time.Now().UnixNano()/<span class="number">1e6</span></span><br><span class="line">        rsp.Body.Msg = h</span><br><span class="line">      &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        <span class="keyword">if</span> this.router != <span class="literal">nil</span> &#123;</span><br><span class="line">          this.router.Run(req, rsp)  <span class="comment">// 将解析出来的消息转发出去</span></span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">      this.outChan &lt;- rsp  <span class="comment">// 响应消息放入通道，消息请求到响应是同步的</span></span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">      log.DefaultLog.Error(<span class="string">&quot;wsReadLoop Unmarshal error&quot;</span>, zap.Error(err))</span><br><span class="line">      this.Handshake()</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  this.Close()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>再来看看发送给客户端的响应消息，这里流程是先收到客户端请求，然后转发到对应的业务服务器，返回后再把回复消息插入通道，最后发给客户端。这里websocket是用的阻塞模式，所以消息都是这么个流程。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(this *ServerConn)</span></span> wsWriteLoop() &#123;</span><br><span class="line">  <span class="keyword">defer</span> <span class="function"><span class="keyword">func</span><span class="params">()</span></span> &#123;</span><br><span class="line">    <span class="keyword">if</span> err := <span class="built_in">recover</span>(); err != <span class="literal">nil</span> &#123;</span><br><span class="line">      log.DefaultLog.Error(<span class="string">&quot;wsWriteLoop error&quot;</span>)</span><br><span class="line">      this.Close()</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;()</span><br><span class="line"></span><br><span class="line">  <span class="keyword">for</span> &#123;</span><br><span class="line">    <span class="keyword">select</span> &#123;</span><br><span class="line">    <span class="comment">// 取一个消息</span></span><br><span class="line">    <span class="keyword">case</span> msg := &lt;- this.outChan:</span><br><span class="line">      <span class="comment">// 写给websocket</span></span><br><span class="line">      this.write(msg.Body)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 将响应消息加密、打包后发送</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(this *ServerConn)</span></span> write(msg <span class="keyword">interface</span>&#123;&#125;) <span class="type">error</span>&#123;</span><br><span class="line">  data, err := util.Marshal(msg)</span><br><span class="line">  <span class="keyword">if</span> err == <span class="literal">nil</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> this.needSecret &#123;</span><br><span class="line">      <span class="keyword">if</span> secretKey, err:= this.GetProperty(<span class="string">&quot;secretKey&quot;</span>); err == <span class="literal">nil</span> &#123;</span><br><span class="line">        key := secretKey.(<span class="type">string</span>)</span><br><span class="line">        data, _ = util.AesCBCEncrypt(data, []<span class="type">byte</span>(key), []<span class="type">byte</span>(key), openssl.ZEROS_PADDING)</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">    log.DefaultLog.Error(<span class="string">&quot;wsWriteLoop Marshal body error&quot;</span>, zap.Error(err))</span><br><span class="line">    <span class="keyword">return</span> err</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> data, err := util.Zip(data); err == <span class="literal">nil</span>&#123;</span><br><span class="line">    <span class="keyword">if</span> err := this.wsSocket.WriteMessage(websocket.BinaryMessage, data); err != <span class="literal">nil</span> &#123;</span><br><span class="line">      this.Close()</span><br><span class="line">      <span class="keyword">return</span> err</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> err</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> <span class="literal">nil</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>总结一下，这一步主要做了<strong>创建websocket对象，开启监听端口和消息的读取&#x2F;发送循环。</strong></p>
+<h1 id="4-客户端与网关及各业务服通信过程"><a href="#4-客户端与网关及各业务服通信过程" class="headerlink" title="4. 客户端与网关及各业务服通信过程"></a>4. 客户端与网关及各业务服通信过程</h1><p>如果你认真跟了前面每一步分析的话，其实整个框架的消息结构已经清晰了。</p>
+<p>最后我们来做个总结，总体回顾下：</p>
+<p><img src="/2023/06/16/go/go%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AEslgserver%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/image-20230615221408340.png"></p>
+<p>客户端只与网关服相连，网关服负责消息解析、前置处理，然后转发给对应的业务服处理，处理完后响应再原路返回给客户端。它们之间的连接方式都是websocket。</p>
+<p><strong>下面是一条完整请求响应链的流程：</strong></p>
+<ol>
+<li><p>客户端连接网关服，发起消息请求</p>
+</li>
+<li><p>网关服消息读取循环(<code>wsReadLoop</code>)接收到消息，解析解包后转发消息<code>this.router.Run(req, rsp)</code></p>
+</li>
+<li><p>网关消息转发最终实际就是依次调用了<code>middleware.ElapsedTime()</code>  , <code>middleware.Log()</code> , <code>gateserver.all()</code> </p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(this*Group)</span></span> applyMiddleware(name <span class="type">string</span>) HandlerFunc &#123;</span><br><span class="line">  h, ok := this.hMap[name]</span><br><span class="line">  <span class="keyword">if</span> ok == <span class="literal">false</span>&#123;</span><br><span class="line">    h, ok = this.hMap[<span class="string">&quot;*&quot;</span>]</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> ok &#123;</span><br><span class="line">    <span class="comment">// this.middleware存的就是第2步的两个中间件函数，然后h就是来自this.hMap[&quot;*&quot;]，即前面的all函数。</span></span><br><span class="line">    <span class="comment">// 从这里可以看出消息在中间件之间流转，其实就是用了go函数的闭包实现的。</span></span><br><span class="line">    <span class="comment">// 函数嵌套，依次调用ElapsedTime、Log、all</span></span><br><span class="line">    <span class="keyword">for</span> i := <span class="built_in">len</span>(this.middleware) - <span class="number">1</span>; i &gt;= <span class="number">0</span>; i-- &#123;</span><br><span class="line">      h = this.middleware[i](h)  </span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> i := <span class="built_in">len</span>(this.hMapMidd[name]) - <span class="number">1</span>; i &gt;= <span class="number">0</span>; i-- &#123;</span><br><span class="line">      h = this.hMapMidd[name][i](h)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> h</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line">h(req, rsp)   <span class="comment">// 外部调用返回的h</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>gateserver.deal()</code>将消息发送到对应的业务服务器(登录服、聊天服、游戏服)，并返回响应数据消息体</p>
+</li>
+<li><p>最后网关的写消息循环<code>wsWriteLoop</code>将响应消息发给客户端</p>
+</li>
+</ol>
+<p>这就是一个常规的req&#x2F;resp消息的流程。</p>
+<p><strong>最后我们看看服务端怎么主动给客户端推送消息</strong>：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// connMgr.go</span></span><br><span class="line"><span class="comment">// 给具体某个玩家推送</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(this *Mgr)</span></span> PushByRoleId(rid <span class="type">int</span>, msgName <span class="type">string</span>, data <span class="keyword">interface</span>&#123;&#125;) <span class="type">bool</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 给所有玩家推送</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(this *Mgr)</span></span> pushAll(msgName <span class="type">string</span>, data <span class="keyword">interface</span>&#123;&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 使用方式</span></span><br><span class="line">net.ConnMgr.PushByRoleId(user.rid, <span class="string">&quot;chat.push&quot;</span>, data)</span><br></pre></td></tr></table></figure>
+
+
+    </div>
+    
+    <div class="post-footer">
+        <div>
+            
+            转载声明：
+            商业转载请联系作者获得授权,非商业转载请注明出处 © <a href="" target="_blank">cxx</a>
+            
+            
+        </div>
+        <div>
+            
+        </div>
+    </div>
+</article>
+<div class="article-nav prev-next-wrap clearfix">
+    
+    
+    <a href="/2023/05/29/notes/Qt5.9%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" class="next-post btn btn-default" title='Qt5.9读书笔记'>
+        <span class="hidden-lg">下一篇</span>
+        <span class="hidden-xs">
+            Qt5.9读书笔记</span><i class="fa fa-angle-right fa-fw"></i>
+    </a>
+    
+</div>
+
+<div id="comments">
+    
+    
+<div class="utteranc">
+  
+  <script
+    src='https://utteranc.es/client.js'
+    repo='cxx001/myblog-comment'
+    issue-term='pathname'
+    issue-number=''
+    theme='github-light'
+    label=''
+    crossorigin='anonymous'
+    async
+  ></script>
+</div>
+
+
+
+</div>
+
+                </main>
+                
+                    <aside id="article-toc" role="navigation" class="col-md-4">
+    <div class="widget">
+        <h3 class="title">
+            文章目录
+        </h3>
+        
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-text">前言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#1-%E6%9C%8D%E5%8A%A1%E5%85%A5%E5%8F%A3"><span class="toc-text">1. 服务入口</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#2-%E5%88%9D%E5%A7%8B%E5%8C%96%E8%B7%AF%E7%94%B1"><span class="toc-text">2. 初始化路由</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#3-%E5%90%AF%E5%8A%A8%E6%9C%8D%E5%8A%A1%E7%9B%91%E5%90%AC"><span class="toc-text">3. 启动服务监听</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#4-%E5%AE%A2%E6%88%B7%E7%AB%AF%E4%B8%8E%E7%BD%91%E5%85%B3%E5%8F%8A%E5%90%84%E4%B8%9A%E5%8A%A1%E6%9C%8D%E9%80%9A%E4%BF%A1%E8%BF%87%E7%A8%8B"><span class="toc-text">4. 客户端与网关及各业务服通信过程</span></a></li></ol>
+        
+    </div>
+</aside>
+                
+            </div>
+        </div>
+    </section>
+    <footer class="main-footer">
+    <div class="container">
+        <div class="row">
+        </div>
+    </div>
+</footer>
+<a id="back-to-top" class="icon-btn hide">
+    <i class="fa fa-chevron-up"></i>
+</a>
+    <div class="copyright">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="busuanzi">
+    
+    访问量:
+    <strong id="busuanzi_value_site_pv">
+        <i class="fa fa-spinner fa-spin"></i>
+    </strong>
+    &nbsp; | &nbsp;
+    访客数:
+    <strong id="busuanzi_value_site_uv">
+        <i class="fa fa-spinner fa-spin"></i>
+    </strong>
+    
+</div>
+            </div>
+            <div class="col-sm-12">
+                <span>Copyright &copy;
+                    2022
+                    
+                </span> |
+                <span>
+                    Powered by <a href="//hexo.io" class="copyright-links" target="_blank" rel="nofollow">Hexo</a>
+                </span> |
+                <span>
+                    Theme by <a href="//github.com/shenliyang/hexo-theme-snippet.git" class="copyright-links" target="_blank" rel="nofollow">Snippet</a>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+<script src="/js/app.js?rev=@@hash.js"></script>
+
+</body>
+</html>
