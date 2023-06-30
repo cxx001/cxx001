@@ -205,10 +205,10 @@
 <p>可以看到<code>Auto_ptr3</code>实现了移动构造函数与移动赋值操作符的重载，进而实现了移动语义，但是同时禁用了复制构造函数与复制赋值运算符，因此这个类的变量仅可以通过仅可以传递右值，但是不能传递左值。但是你可以将右值传递给函数的const左值引用参数。当你传递右值时，那么明显地你已经知道要转移指针所有权了，那么当前变量将不再有效。在<code>C++11</code>中有类似的实现，那就是<code>std::unique_ptr</code>，当然更智能了。</p>
 <p><strong>相比<code>std::auto_ptr</code>，就是限制了复制函数外部访问。</strong></p>
 <p><code>C++11</code>标准库中含有四种智能指针：<code>std::auto_ptr</code>（不要使用）, <code>std::unique_ptr</code>, <code>std::shared_ptr</code>和 <code>std::weak_ptr</code>。下面我们逐个介绍后面三个智能指针。</p>
-<br/>
+<br>
 
 <h1 id="std-atuo-ptr"><a href="#std-atuo-ptr" class="headerlink" title="std::atuo_ptr"></a>std::atuo_ptr</h1><p>不要使用，已经被弃用。</p>
-<br/>
+<br>
 
 
 
@@ -221,7 +221,7 @@
 
 <p><code>std::unique_ptr</code>还有几个常用的方法： 1. release()：返回该对象所管理的指针，同时释放其所有权； 2. reset()：析构其管理的内存，同时也可以传递进来一个新的指针对象； 3. swap()：交换所管理的对象； 4. get()：返回对象所管理的指针； 5. get_deleter()：返回析构其管理指针的调用函数。</p>
 <p>使用上面的方法还是要小心，如不要将其它对象所管理的指针传给另外一个对象的reset()方法，这会造成一块内存释放多次。更多详情可以参考<a href="https://link.zhihu.com/?target=http://en.cppreference.com/w/cpp/memory/unique_ptr">这里</a>。</p>
-<br/>
+<br>
 
 
 
@@ -230,7 +230,7 @@
 
 <p>可以看到，通过拷贝构造函数或者赋值来共享内存，每次引用计数加1，析构时引用计数减1。</p>
 <p><code>std::shared_ptr</code>还有其他方法，更多的信息在<a href="https://link.zhihu.com/?target=http://en.cppreference.com/w/cpp/memory/shared_ptr">这里</a>。</p>
-<br/>
+<br>
 
 
 

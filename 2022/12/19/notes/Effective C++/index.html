@@ -22,9 +22,8 @@
 <meta name="keywords" content="c++,effective c++" />
 
 
-<meta name="description" content="
-本文阅读说明孔子云：“取乎其上，得乎其中；取乎其中，得乎其下；取乎其下，则无所得矣”。
-对于读书求知而言，这句古训教我们去读好书，最好是好书中的上品—-经典书。《Effective C++》就..." />
+<meta name="description" content="![image-20220820124847894](Effective C++&#x2F;image-20220820124847894.png)
+本文阅读说明孔子云：“取乎其上，得乎其中；取..." />
 
 
 <meta name="robots" content="all" />
@@ -169,12 +168,12 @@
     </div>
     
     <div class="post-body post-content">
-        <p><img src="/2022/12/19/notes/Effective%20C++/image-20220820124847894.png" alt="image-20220820124847894"></p>
+        <p>![image-20220820124847894](Effective C++&#x2F;image-20220820124847894.png)</p>
 <h1 id="本文阅读说明"><a href="#本文阅读说明" class="headerlink" title="本文阅读说明"></a>本文阅读说明</h1><p>孔子云：“取乎其上，得乎其中；取乎其中，得乎其下；取乎其下，则无所得矣”。</p>
 <p>对于读书求知而言，这句古训教我们去读好书，最好是好书中的上品—-经典书。《Effective C++》就是这类经典书，值得反复去读，每次都能有不一样的收获。</p>
 <p>有人说C++程序员可以分为两类，读过Effective C++的和没读过的。近段再次精读记录下全书纲领，每小节最后都有<code>请记住</code>精炼总结，便于日后据此回顾。</p>
 <p><a target="_blank" rel="noopener" href="https://github.com/cxx001/resources/raw/main/Effective%20C%2B%2B%E4%B8%AD%E6%96%87%E7%89%88(%E7%AC%AC%E4%B8%89%E7%89%88).pdf">本书电子版</a></p>
-<br/>
+<br>
 
 <h1 id="一、让自己习惯C"><a href="#一、让自己习惯C" class="headerlink" title="一、让自己习惯C++"></a>一、让自己习惯C++</h1><h2 id="1-视C-为一个语言联邦"><a href="#1-视C-为一个语言联邦" class="headerlink" title="1.  视C++为一个语言联邦"></a>1.  视C++为一个语言联邦</h2><p>C++可以看成是相关语言组成的一个集合而非单一语言，在其某个次语言中，各种守则与示例都倾向于简单、直观易懂、并且容易记住。然而当你从一个次语言移往另一个次语言，守则可能改变。每个次语言都有自己的规约。</p>
 <p>为了深刻理解C++，你必须认识其主要的次语言。幸运的是总共只有4个：</p>
@@ -272,7 +271,7 @@
 <li>为避免”跨编译单元的初始化顺序”问题，请用函数包装替换全局对象。</li>
 </ul>
 </blockquote>
-<br/>
+<br>
 
 <h1 id="二、构造-x2F-析构-x2F-赋值运算"><a href="#二、构造-x2F-析构-x2F-赋值运算" class="headerlink" title="二、构造&#x2F;析构&#x2F;赋值运算"></a>二、构造&#x2F;析构&#x2F;赋值运算</h1><h2 id="5-了解C-默默编写并调用哪些函数"><a href="#5-了解C-默默编写并调用哪些函数" class="headerlink" title="5. 了解C++默默编写并调用哪些函数"></a>5. 了解C++默默编写并调用哪些函数</h2><p>当编写了一个空类，C++编译器会自动(<strong>如果它们被使用的话</strong>)给这个空类生成<strong>一个默认构造函数、一个拷贝构造函数、一个赋值操作符重载函数和一个析构函数</strong>。</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 如果你写下这么个空类</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Empty</span> &#123;&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 这就好像你写下这样的代码</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Empty</span> &#123;</span><br><span class="line">    <span class="built_in">Empty</span>() &#123;...&#125;</span><br><span class="line">    <span class="built_in">Empty</span>(<span class="type">const</span> Empty&amp; rhs) &#123;...&#125;</span><br><span class="line">    ~<span class="built_in">Empty</span>() &#123;...&#125;</span><br><span class="line">    </span><br><span class="line">    Empty&amp; <span class="keyword">operator</span>=(<span class="type">const</span> Empty&amp; rhs) &#123;...&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -412,7 +411,7 @@
 <li>不要尝试以某个复制函数实现另一个复制函数。应该将共同部分放进第三个函数中，并由两个复制函数共同调用。</li>
 </ul>
 </blockquote>
-<br/>
+<br>
 
 <h1 id="三、资源管理"><a href="#三、资源管理" class="headerlink" title="三、资源管理"></a>三、资源管理</h1><h2 id="13-以对象管理资源"><a href="#13-以对象管理资源" class="headerlink" title="13. 以对象管理资源"></a>13. 以对象管理资源</h2><p>为了防止资源泄漏，我们管理资源的释放一般不人为维护，而是<strong>通过对象构造时引用资源，析构时释放资源来管理。</strong>这样管理资源的对象我们称之为<code>RAII</code>(Resource Acquisition Is Initialization)对象。如：<strong>智能指针</strong>就是这样的思路。</p>
 <p><strong>请记住</strong></p>
@@ -478,7 +477,7 @@
 <blockquote>
 <p>以独立语句将new对象置入智能指针内。如果不这样做，一旦异常被抛出，有可能导致难以察觉的资源泄漏。</p>
 </blockquote>
-<br/>
+<br>
 
 <h1 id="四、-设计与声明"><a href="#四、-设计与声明" class="headerlink" title="四、 设计与声明"></a>四、 设计与声明</h1><h2 id="18-让接口容易被正确使用，不易被误用"><a href="#18-让接口容易被正确使用，不易被误用" class="headerlink" title="18. 让接口容易被正确使用，不易被误用"></a>18. 让接口容易被正确使用，不易被误用</h2><p><strong>理想上，如果客户企图使用某个接口而却没有获得他所预期的行为，这个代码就不该通过编译；如果代码通过了编译，它的行为就该是客户所想要的。</strong>尽量不要在运行期才发现问题。</p>
 <p>示例一 日期的class设计构造函数</p>
@@ -588,7 +587,7 @@
 <li>为自定义类型进行std::swap定制是好的，但是往std中新增templates是不允许的。</li>
 </ul>
 </blockquote>
-<br/>
+<br>
 
 <h1 id="五、实现"><a href="#五、实现" class="headerlink" title="五、实现"></a>五、实现</h1><h2 id="26-变量尽可能在使用时定义"><a href="#26-变量尽可能在使用时定义" class="headerlink" title="26. 变量尽可能在使用时定义"></a>26. 变量尽可能在使用时定义</h2><p>提前定义变量，有可能导致变量并没有使用(如中间抛异常了)，而平白多了一个构造和析构成本。</p>
 <p>但是循环怎么办？</p>
@@ -609,13 +608,13 @@
 
 <p>C++新式转换，提倡统一都用新式风格，职能分类，更安全，更清晰。</p>
 <ul>
-<li><p>const_cast<T>(expression)  用于将对象的常量性移除。也是唯一有此能力的C++-style转型操作符。</p>
+<li><p>const_cast<T>(expression)  用于将对象的常量性移除。也是唯一有此能力的C++-style转型操作符。</T></p>
 </li>
-<li><p>dynamic_cast<T>(expression)  一般用于安全向下转型，如基类到派生类。要谨慎，可能效率低下。</p>
+<li><p>dynamic_cast<T>(expression)  一般用于安全向下转型，如基类到派生类。要谨慎，可能效率低下。</T></p>
 </li>
-<li><p>static_cast<T>(expression)  用来强制隐式转换，一般用于相关联类型转换，没有类型检测。如将int转double，派生类转基类(安全)，基类转派生类(不安全)等。</p>
+<li><p>static_cast<T>(expression)  用来强制隐式转换，一般用于相关联类型转换，没有类型检测。如将int转double，派生类转基类(安全)，基类转派生类(不安全)等。</T></p>
 </li>
-<li><p>reinterpret_cast<T>(expression)  一般用于不相干类型转换，没有限制。如int* 转int，int转函数指针等。常用于转换函数指针，即可以将一种类型的函数指针转换为另一种类型的函数指针。</p>
+<li><p>reinterpret_cast<T>(expression)  一般用于不相干类型转换，没有限制。如int* 转int，int转函数指针等。常用于转换函数指针，即可以将一种类型的函数指针转换为另一种类型的函数指针。</T></p>
 </li>
 </ul>
 <p>转型破环了类型系统。那可能导致任何种类的麻烦，有些容易识别，有些非常隐晦。所以尽量少做转型操作。</p>
@@ -697,7 +696,7 @@
 <li>程序库头文件应该以“完全且仅有声明式的形式存在。就是include的类都是声明式的类，其真实实现在另一个类中。</li>
 </ul>
 </blockquote>
-<br/>
+<br>
 
 <h1 id="六、继承与面向对象设计"><a href="#六、继承与面向对象设计" class="headerlink" title="六、继承与面向对象设计"></a>六、继承与面向对象设计</h1><h2 id="32-公有继承"><a href="#32-公有继承" class="headerlink" title="32. 公有继承"></a>32. 公有继承</h2><p>公有继承：继承过来的基类成员访问属性不变。</p>
 <p>保护继承：继承过来的基类中的私有成员访问属性不变，公有成员和保护成员变为保护成员。</p>
@@ -802,7 +801,7 @@
 <li>多重继承的确有正当用途。其中一个场景涉及public继承某个Interface class和private继承某个协助实现的class的两相组合。</li>
 </ul>
 </blockquote>
-<br />
+<br>
 
 
 
@@ -821,8 +820,8 @@
 </blockquote>
 <h2 id="42-了解typename的双重意义"><a href="#42-了解typename的双重意义" class="headerlink" title="42. 了解typename的双重意义"></a>42. 了解typename的双重意义</h2><p>模版声明有两种形式：</p>
 <ol>
-<li>template<class T></li>
-<li>template<typename T></li>
+<li>template<class t></class></li>
+<li>template<typename t></typename></li>
 </ol>
 <p>这里声明模版参数时，它们的意义完全相同。</p>
 <p>不过对于typename在模版中除了声明模版参数外还有几处特别的用处要注意！</p>
@@ -967,7 +966,7 @@
 <li>当你声明new和delete，请确定不要无意识地(非故意)遮掩了它们的正常版本。</li>
 </ul>
 </blockquote>
-<br/>
+<br>
 
 
 
@@ -1013,7 +1012,7 @@
 <li>Boost提供了许多TR1组件的实现，以及其他许多程序库。</li>
 </ul>
 </blockquote>
-<br/>
+<br>
 
 
 

@@ -172,26 +172,26 @@
 <ul>
 <li><strong>OpenCL架构</strong></li>
 </ul>
-<p><img src="/2023/05/12/opencl/OpenCL%E5%85%A5%E9%97%A8/image-20230512143730714.png"></p>
+<p><img src="image-20230512143730714.png"></p>
 <p>代码由两部分构成：</p>
 <ol>
 <li>Host: 主程序，main入口代码，在CPU上运行。</li>
 <li>Devices: 各个设备(GPU)上运行的<code>kernel</code>程序，类似opengl的shader程序。</li>
 </ol>
 <p>很像OpenGL的渲染管线，在主程序创建上下文环境，分配共享内存(CPU&#x2F;GPU之间交互数据)，加载cl程序，发送到GPU设备上执行，然后主程序取出结果数据，大体就这么个流程。</p>
-<br/>
+<br>
 
 <h1 id="OpenCL编译环境配置-VS-Intel"><a href="#OpenCL编译环境配置-VS-Intel" class="headerlink" title="OpenCL编译环境配置(VS+Intel)"></a>OpenCL编译环境配置(VS+Intel)</h1><ol>
 <li><p>安装对应显卡的opencl的sdk，我测试的是intel显卡(<a target="_blank" rel="noopener" href="https://www.intel.com/content/www/us/en/developer/tools/opencl-sdk/choose-download.html">下载</a>)，一路点下一步安装没啥特别的，记住安装位置。</p>
-<p><img src="/2023/05/12/opencl/OpenCL%E5%85%A5%E9%97%A8/image-20230512151705531.png"></p>
+<p><img src="image-20230512151705531.png"></p>
 </li>
 <li><p>在vs创建空项目，然后属性页包含sdk头文件和链接OpenCL.lib库。</p>
-<p><img src="/2023/05/12/opencl/OpenCL%E5%85%A5%E9%97%A8/image-20230512152041723.png"></p>
-<p><img src="/2023/05/12/opencl/OpenCL%E5%85%A5%E9%97%A8/image-20230512152209312.png"></p>
-<p><img src="/2023/05/12/opencl/OpenCL%E5%85%A5%E9%97%A8/image-20230512152245815.png"></p>
+<p><img src="image-20230512152041723.png"></p>
+<p><img src="image-20230512152209312.png"></p>
+<p><img src="image-20230512152245815.png"></p>
 </li>
 </ol>
-<br/>
+<br>
 
 <h1 id="示例程序"><a href="#示例程序" class="headerlink" title="示例程序"></a>示例程序</h1><p>下面是两个数组相加的示例程序。</p>
 <ul>
@@ -204,7 +204,7 @@
 </ul>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">__kernel <span class="type">void</span> <span class="title function_">hello_kernel</span><span class="params">(__global <span class="type">const</span> <span class="type">float</span> *a,</span></span><br><span class="line"><span class="params">	__global <span class="type">const</span> <span class="type">float</span> *b,</span></span><br><span class="line"><span class="params">	__global <span class="type">float</span> *result)</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="type">int</span> gid = get_global_id(<span class="number">0</span>);</span><br><span class="line"> </span><br><span class="line">	result[gid] = a[gid] + b[gid];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p><img src="/2023/05/12/opencl/OpenCL%E5%85%A5%E9%97%A8/image-20230512153115818.png"></p>
+<p><img src="image-20230512153115818.png"></p>
 
     </div>
     
