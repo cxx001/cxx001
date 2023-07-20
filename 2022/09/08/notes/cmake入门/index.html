@@ -169,11 +169,11 @@
     <div class="post-body post-content">
         <h1 id="概叙"><a href="#概叙" class="headerlink" title="概叙"></a>概叙</h1><p>你或许听过好几种 Make 工具，例如 GNU Make ，QT 的 qmake ，微软的 MS nmake，BSD Make（pmake），Makepp，等等。这些 Make 工具遵循着不同的规范和标准，所执行的 Makefile 格式也千差万别。这样就带来了一个严峻的问题：如果软件想跨平台，必须要保证能够在不同平台编译。而如果使用上面的 Make 工具，就得为每一种标准写一次 Makefile ，这将是一件让人抓狂的工作。</p>
 <p><strong>CMake就是针对上面问题所设计的工具：它首先允许开发者编写一种平台无关的 CMakeLists.txt 文件来定制整个编译流程，然后再根据目标用户的平台进一步生成所需的本地化 Makefile 和工程文件，如 Unix 的 Makefile 或 Windows 的 Visual Studio 工程。</strong></p>
-<p><img src="image-20220907105955163.png"></p>
+<p><img src="https://cxx001.gitee.io/2022/09/08/notes/cmake%E5%85%A5%E9%97%A8/image-20220907105955163.png"></p>
 <br>
 
 <h1 id="入门示例"><a href="#入门示例" class="headerlink" title="入门示例"></a>入门示例</h1><p>这是一个对输入的数求平方根的示例，用编译配置开关控制是调用系统数学函数(sqrt)还是自定义函数(mysqrt)。主要包含设置版本号、配置头文件(可选项开关)、添加静态库的使用。</p>
-<h2 id="1-目录结构"><a href="#1-目录结构" class="headerlink" title="1. 目录结构"></a>1. 目录结构</h2><p><img src="image-20220908135808148.png"></p>
+<h2 id="1-目录结构"><a href="#1-目录结构" class="headerlink" title="1. 目录结构"></a>1. 目录结构</h2><p><img src="https://cxx001.gitee.io/2022/09/08/notes/cmake%E5%85%A5%E9%97%A8/image-20220908135808148.png"></p>
 <ul>
 <li>build目录自己创建，内容执行cmake命令自动生成</li>
 <li>MathFunctions目录是自定义的数学函数库(会编译成静态库)</li>
@@ -223,7 +223,7 @@
 
 
 
-<h2 id="4-执行结果"><a href="#4-执行结果" class="headerlink" title="4. 执行结果"></a>4. 执行结果</h2><p><img src="image-20220908144828889.png"></p>
+<h2 id="4-执行结果"><a href="#4-执行结果" class="headerlink" title="4. 执行结果"></a>4. 执行结果</h2><p><img src="https://cxx001.gitee.io/2022/09/08/notes/cmake%E5%85%A5%E9%97%A8/image-20220908144828889.png"></p>
 <br>
 
 <h1 id="进阶"><a href="#进阶" class="headerlink" title="进阶"></a>进阶</h1><h2 id="1-安装程序"><a href="#1-安装程序" class="headerlink" title="1. 安装程序"></a>1. 安装程序</h2><blockquote>
@@ -236,8 +236,8 @@
 
 <p>执行命令：</p>
 <p><code>cmake --install . --prefix &quot;C:\Users\KL179\Desktop\cmake_test\install&quot;</code></p>
-<p><img src="image-20220908154211000.png"></p>
-<p><img src="image-20220908154339433.png"></p>
+<p><img src="https://cxx001.gitee.io/2022/09/08/notes/cmake%E5%85%A5%E9%97%A8/image-20220908154211000.png"></p>
+<p><img src="https://cxx001.gitee.io/2022/09/08/notes/cmake%E5%85%A5%E9%97%A8/image-20220908154339433.png"></p>
 <h2 id="2-测试程序"><a href="#2-测试程序" class="headerlink" title="2. 测试程序"></a>2. 测试程序</h2><blockquote>
 <p>在根目录的CMakeLists.txt(主)最后添加测试用例。</p>
 <p>测试用例主要就是两个接口：</p>
@@ -247,7 +247,7 @@
 <figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 启用测试</span></span><br><span class="line"><span class="keyword">enable_testing</span>()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 测试程序是否成功运行</span></span><br><span class="line"><span class="keyword">add_test</span> (test_run Tutorial <span class="number">8</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 测试帮助信息是否可以正常提示</span></span><br><span class="line"><span class="keyword">add_test</span> (test_usage Tutorial)</span><br><span class="line"></span><br><span class="line"><span class="comment"># PASS_REGULAR_EXPRESSION 用来测试上面输出是否包含后面跟着的字符串（即测试结果验证）</span></span><br><span class="line"><span class="keyword">set_tests_properties</span> (test_usage PROPERTIES PASS_REGULAR_EXPRESSION <span class="string">&quot;Usage: .* base exponent&quot;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 定义一个宏，用来简化测试工作</span></span><br><span class="line"><span class="keyword">macro</span> (do_test arg1 result)</span><br><span class="line"><span class="keyword">add_test</span> (test_<span class="variable">$&#123;arg1&#125;</span> Tutorial <span class="variable">$&#123;arg1&#125;</span>)</span><br><span class="line"><span class="keyword">set_tests_properties</span> (test_<span class="variable">$&#123;arg1&#125;</span> PROPERTIES PASS_REGULAR_EXPRESSION <span class="variable">$&#123;result&#125;</span>)</span><br><span class="line"><span class="keyword">endmacro</span> (do_test)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用该宏进行一系列的数据测试</span></span><br><span class="line">do_test (<span class="number">1</span> <span class="string">&quot;is 1&quot;</span>)</span><br><span class="line">do_test (<span class="number">4</span> <span class="string">&quot;is 2&quot;</span>)</span><br><span class="line">do_test (<span class="number">16</span> <span class="string">&quot;is 4&quot;</span>)</span><br></pre></td></tr></table></figure>
 
 <p>运行ctest执行(或者make test)</p>
-<p><img src="image-20220908161424126.png"></p>
+<p><img src="https://cxx001.gitee.io/2022/09/08/notes/cmake%E5%85%A5%E9%97%A8/image-20220908161424126.png"></p>
 <h2 id="3-支持gdb配置"><a href="#3-支持gdb配置" class="headerlink" title="3. 支持gdb配置"></a>3. 支持gdb配置</h2><p>让 CMake 支持 gdb 的设置也很容易，只需要指定 <code>Debug</code> 模式下开启 <code>-g</code> 选项：</p>
 <figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">set</span>(CMAKE_BUILD_TYPE <span class="string">&quot;Debug&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">set</span>(CMAKE_CXX_FLAGS_DEBUG <span class="string">&quot;$ENV&#123;CXXFLAGS&#125; -O0 -Wall -g -ggdb&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">set</span>(CMAKE_CXX_FLAGS_RELEASE <span class="string">&quot;$ENV&#123;CXXFLAGS&#125; -O3 -Wall&quot;</span>)</span><br></pre></td></tr></table></figure>
 
@@ -263,7 +263,7 @@
 <p>最后就可以使用<code>HAVE_SQRT</code>来判断了。</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// tutorial.cpp里添加测试示例</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">ifdef</span> HAVE_SQRT</span></span><br><span class="line">    std::cout &lt;&lt; <span class="string">&quot;check_function_exists sqrt is exist&quot;</span> &lt;&lt; std::endl;</span><br><span class="line"><span class="meta">#<span class="keyword">else</span></span></span><br><span class="line">    std::cout &lt;&lt; <span class="string">&quot;check_function_exists sqrt is noexist&quot;</span> &lt;&lt; std::endl;</span><br><span class="line"><span class="meta">#<span class="keyword">endif</span></span></span><br></pre></td></tr></table></figure>
 
-<p><img src="image-20220908165425617.png"></p>
+<p><img src="https://cxx001.gitee.io/2022/09/08/notes/cmake%E5%85%A5%E9%97%A8/image-20220908165425617.png"></p>
 <h2 id="5-生成安装包"><a href="#5-生成安装包" class="headerlink" title="5. 生成安装包"></a>5. 生成安装包</h2><p>生成各种平台上的安装包，包括二进制安装包和源码安装包。为了完成这个任务，我们需要用到 CPack ，它同样也是由 CMake 提供的一个工具，专门用于打包。</p>
 <p>注意：CPack打包依赖 <a href="https://link.zhihu.com/?target=https://nsis.sourceforge.io/Main_Page">NSIS</a> 需要安装。</p>
 <p>只需要在顶层的 CMakeLists.txt 文件尾部添加下面几行：</p>
@@ -280,9 +280,9 @@
 </ul>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cpack -C CPackSourceConfig.cmake</span><br></pre></td></tr></table></figure>
 
-<p><img src="image-20220908172937544.png"></p>
+<p><img src="https://cxx001.gitee.io/2022/09/08/notes/cmake%E5%85%A5%E9%97%A8/image-20220908172937544.png"></p>
 <p>生成的安装包，双击安装执行截图如下：</p>
-<p><img src="image-20220908172739455.png"></p>
+<p><img src="https://cxx001.gitee.io/2022/09/08/notes/cmake%E5%85%A5%E9%97%A8/image-20220908172739455.png"></p>
 
     </div>
     

@@ -19,7 +19,7 @@
     <link rel="dns-prefetch" href="https://cxx001.gitee.io">
     <!--SEO-->
 
-<meta name="keywords" content="仿真,nodejs,服务器架构" />
+<meta name="keywords" content="nodejs,服务器架构,仿真" />
 
 
 <meta name="description" content="
@@ -219,7 +219,7 @@ Mess..." />
 <ul>
 <li>使用简单、方便。不需要预先定义表结构, 和写json配置一样自然。</li>
 </ul>
-<h2 id="整体架构"><a href="#整体架构" class="headerlink" title="整体架构"></a>整体架构</h2><p><img src="project.jpg"></p>
+<h2 id="整体架构"><a href="#整体架构" class="headerlink" title="整体架构"></a>整体架构</h2><p><img src="https://cxx001.gitee.io/2022/08/01/project/%E9%A3%9E%E8%A1%8C%E4%BB%BF%E7%9C%9F%E9%A1%B9%E7%9B%AE%E6%9C%8D%E5%8A%A1%E7%AB%AF%E8%AE%BE%E8%AE%A1/project.jpg"></p>
 <p>注： 上图中的方块表示进程， 定义上等同于“服务器“</p>
 <blockquote>
 <p>运行架构说明：</p>
@@ -236,12 +236,12 @@ Mess..." />
 <p>基于tcp&#x2F;websocket方式通信, 底层使用的是二进制协议。协议包含两层编码: package和message。message层主要实现route压缩和protobuf压缩，message层的编码结果将传递给package层。package层主要实现应用基于二进制协议的握手过程，心跳和数据传输编码，package层的编码结果可以通过tcp，websocket等协议以二进制数据的形式进行传输。message层编码可选，也可替换成其他二进制编码格式，都不影响package层编码和发送。</p>
 </blockquote>
 <p>协议层的结构如下图所示：</p>
-<p><img src="protol.jpg"></p>
+<p><img src="https://cxx001.gitee.io/2022/08/01/project/%E9%A3%9E%E8%A1%8C%E4%BB%BF%E7%9C%9F%E9%A1%B9%E7%9B%AE%E6%9C%8D%E5%8A%A1%E7%AB%AF%E8%AE%BE%E8%AE%A1/protol.jpg"></p>
 <h3 id="Package层"><a href="#Package层" class="headerlink" title="Package层"></a>Package层</h3><blockquote>
 <p>package格式</p>
 </blockquote>
 <p>package分为header和body两部分。header描述package包的类型和包的长度，body则是需要传输的数据内容。具体格式如下：</p>
-<p><img src="package.jpg"></p>
+<p><img src="https://cxx001.gitee.io/2022/08/01/project/%E9%A3%9E%E8%A1%8C%E4%BB%BF%E7%9C%9F%E9%A1%B9%E7%9B%AE%E6%9C%8D%E5%8A%A1%E7%AB%AF%E8%AE%BE%E8%AE%A1/package.jpg"></p>
 <ul>
 <li><p>type - package类型，1个byte，取值如下。</p>
 <ul>
@@ -266,14 +266,14 @@ Mess..." />
 <p>握手响应:</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="string">&quot;code&quot;</span>: <span class="number">200</span>,             <span class="comment">// response code</span></span><br><span class="line">  <span class="string">&quot;sys&quot;</span>: &#123;</span><br><span class="line">    <span class="string">&quot;heartbeat&quot;</span>: <span class="number">3</span>,     <span class="comment">// heartbeat interval in second</span></span><br><span class="line">    <span class="string">&quot;dict&quot;</span>: &#123;&#125;,         <span class="comment">// route dictionary</span></span><br><span class="line">    <span class="string">&quot;protos&quot;</span>: &#123;&#125;        <span class="comment">// protobuf definition data</span></span><br><span class="line">  &#125;, </span><br><span class="line">  <span class="string">&quot;user&quot;</span>: &#123;</span><br><span class="line">      <span class="comment">// any customized response data</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>握手流程如下:</p>
-<p><img src="handshake.jpg"></p>
+<p><img src="https://cxx001.gitee.io/2022/08/01/project/%E9%A3%9E%E8%A1%8C%E4%BB%BF%E7%9C%9F%E9%A1%B9%E7%9B%AE%E6%9C%8D%E5%8A%A1%E7%AB%AF%E8%AE%BE%E8%AE%A1/handshake.jpg"></p>
 <p>当底层连接建立后，客户端向服务器发起握手请求，并附带必要的数据。服务器检验握手数据后，返回握手响应。如果握手成功，客户端向服务器发送一个握手ack，握手阶段至此成功结束。</p>
 <blockquote>
 <p>心跳</p>
 </blockquote>
 <p>心跳包的length字段为0，body为空。</p>
 <p>心跳的流程如下：</p>
-<p><img src="heatbeat.jpg"></p>
+<p><img src="https://cxx001.gitee.io/2022/08/01/project/%E9%A3%9E%E8%A1%8C%E4%BB%BF%E7%9C%9F%E9%A1%B9%E7%9B%AE%E6%9C%8D%E5%8A%A1%E7%AB%AF%E8%AE%BE%E8%AE%A1/heatbeat.jpg"></p>
 <p>服务器可以配置心跳时间间隔。当握手结束后，客户端发起第一个心跳。服务器和客户端收到心跳包后，延迟心跳间隔的时间后再向对方发送一个心跳包。</p>
 <p>心跳超时时间为2倍的心跳间隔时间。服务器检测到心跳超时并不会主动断开客户端的连接。客户端检测到心跳超时，可以根据策略选择是否要主动断开连接。</p>
 <blockquote>
@@ -286,7 +286,7 @@ Mess..." />
 <p>当服务器主动断开客户端连接时（如：踢掉某个在线用户），会先向客户端发送一个控制消息，然后再断开连接。客户端可以通过这个消息来判断是否是服务器主动断开连接的。</p>
 <h3 id="Message层"><a href="#Message层" class="headerlink" title="Message层"></a>Message层</h3><p>message协议的主要作用是封装消息头，包括route和消息类型两部分，不同的消息类型有着不同的消息头，在消息头里面可能要打入message id(即requestId)和route信息。由于可能会有route压缩，而且对于服务端push的消息，message id为空，对于客户端请求的响应，route为空，因此message的头格式比较复杂。</p>
 <p>消息头分为三部分，flag，message id，route。如下图所示：</p>
-<p><img src="message-head.jpg"></p>
+<p><img src="https://cxx001.gitee.io/2022/08/01/project/%E9%A3%9E%E8%A1%8C%E4%BB%BF%E7%9C%9F%E9%A1%B9%E7%9B%AE%E6%9C%8D%E5%8A%A1%E7%AB%AF%E8%AE%BE%E8%AE%A1/message-head.jpg"></p>
 <p>从上图可以看出，消息头是可变的，会根据具体的消息类型和内容而改变。其中：</p>
 <ul>
 <li>flag位是必须的，占用一个byte，它决定了后面的消息类型和内容的格式;</li>
@@ -296,7 +296,7 @@ Mess..." />
 <p>标志位flag</p>
 </blockquote>
 <p>flag占用message头的第一个byte，其内容如下:</p>
-<p><img src="mesage-flag.jpg"></p>
+<p><img src="https://cxx001.gitee.io/2022/08/01/project/%E9%A3%9E%E8%A1%8C%E4%BB%BF%E7%9C%9F%E9%A1%B9%E7%9B%AE%E6%9C%8D%E5%8A%A1%E7%AB%AF%E8%AE%BE%E8%AE%A1/mesage-flag.jpg"></p>
 <p>现在只用到了其中的4个bit，这四个bit包括两部分，占用3个bit的message type字段和占用1个bit的route标识，其中：</p>
 <ul>
 <li>message type用来标识消息类型,范围为0～7，现在消息共有四类，request，notify，response，push，值的范围是0～3。不同的消息类型有着不同的消息内容，下面会有详细分析。</li>
@@ -306,12 +306,12 @@ Mess..." />
 <p>消息类型</p>
 </blockquote>
 <p>不同类型的消息，对应不同消息头，消息类型通过flag字段的第2-4位来确定，其对应关系以及相应的消息头如下图：</p>
-<p><img src="message-type.jpg"></p>
+<p><img src="https://cxx001.gitee.io/2022/08/01/project/%E9%A3%9E%E8%A1%8C%E4%BB%BF%E7%9C%9F%E9%A1%B9%E7%9B%AE%E6%9C%8D%E5%8A%A1%E7%AB%AF%E8%AE%BE%E8%AE%A1/message-type.jpg"></p>
 <blockquote>
 <p>route压缩标志位</p>
 </blockquote>
 <p>route主要分为压缩和未压缩两种，由flag的最后一位（route压缩标志位）指定，当flag中的route标志为0时，表示未压缩的route，为1则表示是压缩route。route字段的编码会依赖flag的这一位，其格式如下图:</p>
-<p><img src="message-route.jpg"></p>
+<p><img src="https://cxx001.gitee.io/2022/08/01/project/%E9%A3%9E%E8%A1%8C%E4%BB%BF%E7%9C%9F%E9%A1%B9%E7%9B%AE%E6%9C%8D%E5%8A%A1%E7%AB%AF%E8%AE%BE%E8%AE%A1/message-route.jpg"></p>
 <p>上图是不同的flag标志对应的route字段的内容：</p>
 <ul>
 <li>flag的最后一位为1时，后面跟的是一个uInt16表示的route字典编号，需要通过查询字典来获取route;</li>
@@ -321,14 +321,14 @@ Mess..." />
 <blockquote>
 <p>服务端向下位机引擎发送消息:</p>
 </blockquote>
-<p><img src="engine-send.jpg"></p>
+<p><img src="https://cxx001.gitee.io/2022/08/01/project/%E9%A3%9E%E8%A1%8C%E4%BB%BF%E7%9C%9F%E9%A1%B9%E7%9B%AE%E6%9C%8D%E5%8A%A1%E7%AB%AF%E8%AE%BE%E8%AE%A1/engine-send.jpg"></p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Publisher模式:</span></span><br><span class="line"><span class="comment">// 下位机引擎建立连接时，注册以uid为key的管道</span></span><br><span class="line">sock.<span class="title function_">connect</span>(<span class="string">&quot;tcp://127.0.0.1:25150&quot;</span>)</span><br><span class="line">sock.<span class="title function_">subscribe</span>(<span class="string">&quot;uid&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 服务端向下位机引擎发送消息</span></span><br><span class="line">sock.<span class="title function_">send</span>([<span class="string">&quot;uid&quot;</span>, <span class="string">&quot;message&quot;</span>])</span><br></pre></td></tr></table></figure>
 
 <blockquote>
 <p>下位机引擎向服务端发送消息：</p>
 </blockquote>
-<p><img src="engine-rsv.jpg"></p>
-<h1 id="三-用户Gra4工程导入"><a href="#三-用户Gra4工程导入" class="headerlink" title="三 用户Gra4工程导入"></a>三 用户Gra4工程导入</h1><h2 id="Gra4格式"><a href="#Gra4格式" class="headerlink" title="Gra4格式"></a>Gra4格式</h2><p><img src="gra4.jpg"></p>
+<p><img src="https://cxx001.gitee.io/2022/08/01/project/%E9%A3%9E%E8%A1%8C%E4%BB%BF%E7%9C%9F%E9%A1%B9%E7%9B%AE%E6%9C%8D%E5%8A%A1%E7%AB%AF%E8%AE%BE%E8%AE%A1/engine-rsv.jpg"></p>
+<h1 id="三-用户Gra4工程导入"><a href="#三-用户Gra4工程导入" class="headerlink" title="三 用户Gra4工程导入"></a>三 用户Gra4工程导入</h1><h2 id="Gra4格式"><a href="#Gra4格式" class="headerlink" title="Gra4格式"></a>Gra4格式</h2><p><img src="https://cxx001.gitee.io/2022/08/01/project/%E9%A3%9E%E8%A1%8C%E4%BB%BF%E7%9C%9F%E9%A1%B9%E7%9B%AE%E6%9C%8D%E5%8A%A1%E7%AB%AF%E8%AE%BE%E8%AE%A1/gra4.jpg"></p>
 <p>主要的几个字段：</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="title class_">UnitGroup</span>: 当前画板模型列表</span><br><span class="line"><span class="title class_">IoportGroup</span>: 输入/输出模块列表</span><br><span class="line"><span class="title class_">LineGroup</span>: 连线列表</span><br></pre></td></tr></table></figure>
 
@@ -342,7 +342,7 @@ Mess..." />
 <li>从顶层画板开始递归遍历。</li>
 <li>首先确定当前遍历画板的中间模块和连线关系(不考虑Ioport相关模块与连线), 即下图圈起来部分:</li>
 </ol>
-<p><img src="demo2.jpg"></p>
+<p><img src="https://cxx001.gitee.io/2022/08/01/project/%E9%A3%9E%E8%A1%8C%E4%BB%BF%E7%9C%9F%E9%A1%B9%E7%9B%AE%E6%9C%8D%E5%8A%A1%E7%AB%AF%E8%AE%BE%E8%AE%A1/demo2.jpg"></p>
 <ol start="4">
 <li>然后确定当前遍历画板的IO模块和连线关系：</li>
 </ol>
@@ -359,9 +359,9 @@ Mess..." />
 <p> 转换后的示意图:</p>
 </li>
 </ul>
-<p><img src="panel1.jpg"></p>
-<p><img src="panel2.jpg"></p>
-<p><img src="panel3.jpg"></p>
+<p><img src="https://cxx001.gitee.io/2022/08/01/project/%E9%A3%9E%E8%A1%8C%E4%BB%BF%E7%9C%9F%E9%A1%B9%E7%9B%AE%E6%9C%8D%E5%8A%A1%E7%AB%AF%E8%AE%BE%E8%AE%A1/panel1.jpg"></p>
+<p><img src="https://cxx001.gitee.io/2022/08/01/project/%E9%A3%9E%E8%A1%8C%E4%BB%BF%E7%9C%9F%E9%A1%B9%E7%9B%AE%E6%9C%8D%E5%8A%A1%E7%AB%AF%E8%AE%BE%E8%AE%A1/panel2.jpg"></p>
+<p><img src="https://cxx001.gitee.io/2022/08/01/project/%E9%A3%9E%E8%A1%8C%E4%BB%BF%E7%9C%9F%E9%A1%B9%E7%9B%AE%E6%9C%8D%E5%8A%A1%E7%AB%AF%E8%AE%BE%E8%AE%A1/panel3.jpg"></p>
 <h2 id="下位机引擎生成代码平铺后的格式"><a href="#下位机引擎生成代码平铺后的格式" class="headerlink" title="下位机引擎生成代码平铺后的格式"></a>下位机引擎生成代码平铺后的格式</h2><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;PartitionGroup&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">        <span class="punctuation">&#123;</span></span><br><span class="line">            <span class="attr">&quot;Id&quot;</span><span class="punctuation">:</span> <span class="number">0</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;CpuId&quot;</span><span class="punctuation">:</span> <span class="number">0</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;Name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;动力仿真子模型&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;BlockGroup&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">                <span class="punctuation">&#123;</span></span><br><span class="line">                    <span class="attr">&quot;Id&quot;</span><span class="punctuation">:</span> <span class="number">0</span><span class="punctuation">,</span></span><br><span class="line">                    <span class="attr">&quot;Name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;发动机1&quot;</span><span class="punctuation">,</span></span><br><span class="line">                    <span class="attr">&quot;Model&quot;</span><span class="punctuation">:</span> <span class="string">&quot;Engine/EngineClass.json&quot;</span><span class="punctuation">,</span></span><br><span class="line">                    <span class="attr">&quot;Order&quot;</span><span class="punctuation">:</span> <span class="number">0</span></span><br><span class="line">                <span class="punctuation">&#125;</span></span><br><span class="line">            <span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;BlcokCount&quot;</span><span class="punctuation">:</span> <span class="number">5</span></span><br><span class="line">        <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="punctuation">&#123;</span></span><br><span class="line">            <span class="attr">&quot;Id&quot;</span><span class="punctuation">:</span> <span class="number">1</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;CpuId&quot;</span><span class="punctuation">:</span> <span class="number">1</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;Name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;弹道&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;BlockGroup&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">                <span class="punctuation">&#123;</span></span><br><span class="line">                    <span class="attr">&quot;Id&quot;</span><span class="punctuation">:</span> <span class="number">5</span><span class="punctuation">,</span></span><br><span class="line">                    <span class="attr">&quot;Name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;部段1&quot;</span><span class="punctuation">,</span></span><br><span class="line">                    <span class="attr">&quot;Model&quot;</span><span class="punctuation">:</span> <span class="string">&quot;Mass/SegmentFunction.json&quot;</span><span class="punctuation">,</span></span><br><span class="line">                    <span class="attr">&quot;Order&quot;</span><span class="punctuation">:</span> <span class="number">5</span></span><br><span class="line">                <span class="punctuation">&#125;</span></span><br><span class="line">            <span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;BlcokCount&quot;</span><span class="punctuation">:</span> <span class="number">4</span></span><br><span class="line">        <span class="punctuation">&#125;</span></span><br><span class="line">    <span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;LineGroup&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">        <span class="punctuation">&#123;</span></span><br><span class="line">            <span class="attr">&quot;Src&quot;</span><span class="punctuation">:</span> <span class="number">0</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;Dst&quot;</span><span class="punctuation">:</span> <span class="number">1</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;SrcPort&quot;</span><span class="punctuation">:</span> <span class="number">1</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;DstPort&quot;</span><span class="punctuation">:</span> <span class="number">0</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;SrcName&quot;</span><span class="punctuation">:</span> <span class="string">&quot;发动机1&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;DstName&quot;</span><span class="punctuation">:</span> <span class="string">&quot;贮箱1&quot;</span></span><br><span class="line">        <span class="punctuation">&#125;</span></span><br><span class="line">    <span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;IP&quot;</span><span class="punctuation">:</span> <span class="string">&quot;192.168.0.100&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;PartitionTotal&quot;</span><span class="punctuation">:</span> <span class="number">2</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;BlockTotal&quot;</span><span class="punctuation">:</span> <span class="number">9</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;LineTotal&quot;</span><span class="punctuation">:</span> <span class="number">12</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
 <blockquote>
 <p>DB转换engine平铺格式整体思路：</p>

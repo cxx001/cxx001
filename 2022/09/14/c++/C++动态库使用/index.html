@@ -193,23 +193,23 @@
 </blockquote>
 <p>（1）新建一个空项目或者是使用DLL模板都可以。(个人习惯用干净的空项目)</p>
 <p>（2）修改项目属性输出类型改为dll。</p>
-<p><img src="image-20220914112138143.png"></p>
+<p><img src="https://cxx001.gitee.io/2022/09/14/c++/C++%E5%8A%A8%E6%80%81%E5%BA%93%E4%BD%BF%E7%94%A8/image-20220914112138143.png"></p>
 <p>（3）正常添加.h与.cpp文件，.h中要导出的函数前添加<code>_declspec(dllexport)</code>声明即可。</p>
-<p><img src="image-20220914112426652.png"></p>
-<p><img src="image-20220914112447125.png"></p>
+<p><img src="https://cxx001.gitee.io/2022/09/14/c++/C++%E5%8A%A8%E6%80%81%E5%BA%93%E4%BD%BF%E7%94%A8/image-20220914112426652.png"></p>
+<p><img src="https://cxx001.gitee.io/2022/09/14/c++/C++%E5%8A%A8%E6%80%81%E5%BA%93%E4%BD%BF%E7%94%A8/image-20220914112447125.png"></p>
 <p>（4）重新生成，在工程目录即可生成对应的<code>dllapi.lib</code>与<code>dllapi.dll</code>文件。</p>
-<p><img src="image-20220914112910035.png"></p>
+<p><img src="https://cxx001.gitee.io/2022/09/14/c++/C++%E5%8A%A8%E6%80%81%E5%BA%93%E4%BD%BF%E7%94%A8/image-20220914112910035.png"></p>
 <blockquote>
 <p>再来看看使用def文件声明导出的方式：</p>
 </blockquote>
 <p>（1）添加def文件</p>
-<p><img src="image-20220914144810392.png"></p>
+<p><img src="https://cxx001.gitee.io/2022/09/14/c++/C++%E5%8A%A8%E6%80%81%E5%BA%93%E4%BD%BF%E7%94%A8/image-20220914144810392.png"></p>
 <p>（2）def文件中声明要导出的函数</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">LIBRARY</span><br><span class="line">EXPORTS</span><br><span class="line">	add</span><br></pre></td></tr></table></figure>
 
 <p>（3）重新生成，和第一种显示声明方式一样生成了.lib和.dll2个文件。</p>
-<p><img src="image-20220914145244170.png"></p>
-<p><img src="image-20220914145315233.png"></p>
+<p><img src="https://cxx001.gitee.io/2022/09/14/c++/C++%E5%8A%A8%E6%80%81%E5%BA%93%E4%BD%BF%E7%94%A8/image-20220914145244170.png"></p>
+<p><img src="https://cxx001.gitee.io/2022/09/14/c++/C++%E5%8A%A8%E6%80%81%E5%BA%93%E4%BD%BF%E7%94%A8/image-20220914145315233.png"></p>
 <h2 id="2-使用动态库"><a href="#2-使用动态库" class="headerlink" title="2. 使用动态库"></a>2. 使用动态库</h2><p>windows上使用动态库一般有2种方式：</p>
 <ul>
 <li>隐式调用(IDE上设置)</li>
@@ -220,7 +220,7 @@
 <p>隐式调用使用流程</p>
 </blockquote>
 <p>（1）创建控制台测试工程，并建立一个依赖目录，将动态库的<code>.h</code>和<code>.lib</code>放在这个目录下，同时将<code>.dll</code>放在exe可执行程序同级目录。</p>
-<p><img src="image-20220914134244370.png"></p>
+<p><img src="https://cxx001.gitee.io/2022/09/14/c++/C++%E5%8A%A8%E6%80%81%E5%BA%93%E4%BD%BF%E7%94%A8/image-20220914134244370.png"></p>
 <p>（2）配置</p>
 <ol>
 <li><p>项目-&gt;属性-&gt;配置属性-&gt;VC++ 目录-&gt; 在“包含目录”里添加头文件<code>DllAPI.h</code><strong>所在的目录</strong> 。</p>
@@ -228,12 +228,12 @@
 <li><p>项目-&gt;属性-&gt;配置属性-&gt;VC++ 目录-&gt; 在“库目录”里添加依赖文件<code>dllapi.lib</code><strong>所在的目录</strong>。 </p>
 </li>
 <li><p>项目-&gt;属性-&gt;配置属性-&gt;链接器-&gt;输入-&gt; 在“附加依赖项”里添加<code>dllapi.lib</code> 。 你也可以在代码中添加一行设置库的链接，<code>#pragma comment(lib, &quot;dllapi.lib&quot;)</code>，这样就不需要2、3配置了。</p>
-<p><img src="image-20220914135324901.png"></p>
-<p><img src="image-20220914135407082.png"></p>
+<p><img src="https://cxx001.gitee.io/2022/09/14/c++/C++%E5%8A%A8%E6%80%81%E5%BA%93%E4%BD%BF%E7%94%A8/image-20220914135324901.png"></p>
+<p><img src="https://cxx001.gitee.io/2022/09/14/c++/C++%E5%8A%A8%E6%80%81%E5%BA%93%E4%BD%BF%E7%94%A8/image-20220914135407082.png"></p>
 </li>
 </ol>
 <p> （3）测试运行</p>
-<p><img src="image-20220914135507421.png"></p>
+<p><img src="https://cxx001.gitee.io/2022/09/14/c++/C++%E5%8A%A8%E6%80%81%E5%BA%93%E4%BD%BF%E7%94%A8/image-20220914135507421.png"></p>
 <blockquote>
 <p>显示调用使用流程</p>
 </blockquote>
@@ -298,7 +298,7 @@
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">export LD_LIBRARY_PATH=$&#123;pwd&#125;:$&#123;LD_LIBRARY_PATH&#125;</span><br></pre></td></tr></table></figure>
 
 <p>然后直接执行<code>./a.out</code>也可以运行了。</p>
-<h2 id="2-库文件加载使用流程"><a href="#2-库文件加载使用流程" class="headerlink" title="2. 库文件加载使用流程"></a>2. 库文件加载使用流程</h2><p>像window调用库文件一样，在linux下，也有相应的API因为加载库文件而存在。它们主要是以下几个函数：<br><img src="image-20220914174012815.png"></p>
+<h2 id="2-库文件加载使用流程"><a href="#2-库文件加载使用流程" class="headerlink" title="2. 库文件加载使用流程"></a>2. 库文件加载使用流程</h2><p>像window调用库文件一样，在linux下，也有相应的API因为加载库文件而存在。它们主要是以下几个函数：<br><img src="https://cxx001.gitee.io/2022/09/14/c++/C++%E5%8A%A8%E6%80%81%E5%BA%93%E4%BD%BF%E7%94%A8/image-20220914174012815.png"></p>
 <p>使用源码如下：</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// test2.c</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;dlfcn.h&gt;</span></span></span><br><span class="line"> </span><br><span class="line"> <span class="type">int</span> <span class="title function_">main</span><span class="params">(<span class="type">int</span> argc, <span class="type">char</span> *argv[])</span>&#123;</span><br><span class="line">     <span class="type">void</span> * libm_handle = <span class="literal">NULL</span>;</span><br><span class="line">     <span class="type">int</span> (*add_method)(<span class="type">int</span>, <span class="type">int</span>);</span><br><span class="line">     <span class="type">char</span> *errorInfo;</span><br><span class="line">     <span class="type">int</span> result;</span><br><span class="line">      </span><br><span class="line">    <span class="comment">// dlopen 函数还会自动解析共享库中的依赖项。这样，如果您打开了一个依赖于其他共享库的对象，它就会自动加载它们。</span></span><br><span class="line">    <span class="comment">// 函数返回一个句柄，该句柄用于后续的 API 调用</span></span><br><span class="line">    libm_handle = dlopen(<span class="string">&quot;libadd.so&quot;</span>, RTLD_LAZY );</span><br><span class="line">	<span class="comment">// 如果返回 NULL 句柄，表示无法找到对象文件，过程结束。否则的话，将会得到对象的一个句柄，可以进一步询问对象</span></span><br><span class="line">    <span class="keyword">if</span> (!libm_handle)&#123;</span><br><span class="line">        <span class="comment">// 如果返回 NULL 句柄,通过dlerror方法可以取得无法访问对象的原因</span></span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;Open Error:%s.\n&quot;</span>,dlerror());</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 使用 dlsym 函数，尝试解析新打开的对象文件中的符号。您将会得到一个有效的指向该符号的指针，或者是得到一个 NULL 并返回一个错误</span></span><br><span class="line">    add_method = dlsym(libm_handle,<span class="string">&quot;add&quot;</span>);</span><br><span class="line">    errorInfo = dlerror();<span class="comment">// 它会在发生前面的错误时返回一个字符串，同时将其从内存中清空； 在没有错误发生时返回 NULL</span></span><br><span class="line">	<span class="keyword">if</span> (errorInfo != <span class="literal">NULL</span>)&#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;Dlsym Error:%s.\n&quot;</span>,errorInfo);</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    <span class="comment">// 执行“cosf”方法</span></span><br><span class="line">    result = (*add_method)(<span class="number">1</span>, <span class="number">2</span>);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;result = %d.\n&quot;</span>,result);</span><br><span class="line">     </span><br><span class="line">    <span class="comment">// 调用 ELF 对象中的目标函数后，通过调用 dlclose 来关闭对它的访问</span></span><br><span class="line">    dlclose(libm_handle);</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
