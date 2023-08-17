@@ -1,0 +1,375 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+<head>
+    <!--Setting-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta name="apple-mobile-web-app-capable" content="Hexo">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    <meta name="browsermode" content="application">
+    <meta name="screen-orientation" content="portrait">
+    <meta name="theme-version" content="1.0.0">
+    <meta name="root" content="/">
+    <link rel="dns-prefetch" href="https://cxx001.gitee.io">
+    <!--SEO-->
+
+<meta name="keywords" content="c++14" />
+
+
+<meta name="description" content="1. 函数返回值类型推导C++14新增函数返回值也可以使用auto自动推导了。
+12345678910// 普通函数auto func(int i) &#123;    return i;&#1..." />
+
+
+<meta name="robots" content="all" />
+<meta name="google" content="all" />
+<meta name="googlebot" content="all" />
+<meta name="verify" content="all" />
+    <!--Title-->
+
+<title>
+    
+    c++14新特性 |
+    
+    Hexo
+</title>
+
+<link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+
+
+<link rel="icon" href="/favicon.ico">
+
+    
+
+
+<link rel="stylesheet" href="/css/bootstrap.min.css?rev=3.3.7.css">
+<link rel="stylesheet" href="/css/font-awesome.min.css?rev=4.7.0.css">
+<link rel="stylesheet" href="/css/style.css?rev=@@hash.css">
+
+    
+<div class="hide">
+    <script type="text/javascript">
+    var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+    document.write(unescape("%3Cspan class='cnzz_stat_icon_1263868967 hide' %3E%3Cscript%20src%3D%22https%3A%2F%2Fs95.cnzz.com%2Fz_stat.php%3Fweb_id%3D1272564536%22%3E%3C%2Fscript%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s19.cnzz.com/z_stat.php%3Fid%3D1263868967%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+    </script>
+</div>
+
+
+
+
+    
+
+<meta name="generator" content="Hexo 6.2.0"></head>
+<!--[if lte IE 8]>
+<style>
+    html{ font-size: 1em }
+</style>
+<![endif]-->
+<!--[if lte IE 9]>
+<div style="ie">你使用的浏览器版本过低，为了你更好的阅读体验，请更新浏览器的版本或者使用其他现代浏览器，比如Chrome、Firefox、Safari等。</div>
+<![endif]-->
+<body>
+    <header class="main-header"  style="background-image:url(
+    https://hexo-theme-snippet-1251680922.cos.ap-beijing.myqcloud.com/img/banner.jpg)"
+     >
+    <div class="main-header-box">
+        <a class="header-avatar" href="/" title='John Doe'>
+            <img src="/img/avatar.jpg" alt="logo头像" class="img-responsive center-block">
+        </a>
+        <div class="branding">
+            <!--<h2 class="text-hide">Snippet主题,从未如此简单有趣</h2>-->
+            
+            <img src="/img/branding.png" alt="Snippet 博客主题" class="img-responsive center-block">
+            
+        </div>
+    </div>
+</header>
+    <nav class="main-navigation">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="navbar-header"><span class="nav-toggle-button collapsed pull-right" data-toggle="collapse" data-target="#main-menu" id="mnav">
+                        <span class="sr-only"></span>
+                        <i class="fa fa-bars"></i>
+                    </span>
+                    <a class="navbar-brand" href="https://cxx001.gitee.io">
+                        Hexo</a>
+                </div>
+                <div class="collapse navbar-collapse" id="main-menu">
+                    <ul class="menu">
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/"><i class="fa "></i>
+                                首页</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/archives/"><i class="fa "></i>
+                                时间轴</a>
+                        </li>
+                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+    <section class="content-wrap">
+        <div class="container">
+            <div class="row">
+                <main class="col-md-8 main-content m-post">
+                    <p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id="c++14新特性">
+            
+            c++14新特性
+            
+        </h1>
+        <div class="post-meta">
+    
+    <span class="categories-meta fa-wrap">
+        <i class="fa fa-folder-open-o"></i>
+        <a class="category-link" href="/categories/c/">c++</a>
+    </span>
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-tags"></i>
+        <span class="tags-meta">
+            
+            <a class="tag-none-link" href="/tags/c-14/" rel="tag">c++14</a>
+            
+        </span>
+    </span>
+    
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-clock-o"></i>
+        <span class="date-meta">
+            2023/08/17</span>
+    </span>
+    
+    <span class="fa-wrap">
+        <i class="fa fa-eye"></i>
+        <span id="busuanzi_value_page_pv"></span>
+    </span>
+    
+    
+</div>
+        
+        
+    </div>
+    
+    <div class="post-body post-content">
+        <h1 id="1-函数返回值类型推导"><a href="#1-函数返回值类型推导" class="headerlink" title="1. 函数返回值类型推导"></a>1. 函数返回值类型推导</h1><p>C++14新增函数返回值也可以使用<code>auto</code>自动推导了。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 普通函数</span></span><br><span class="line"><span class="function"><span class="keyword">auto</span> <span class="title">func</span><span class="params">(<span class="type">int</span> i)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> i;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 模板函数</span></span><br><span class="line"><span class="function"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</span></span><br><span class="line"><span class="function"><span class="keyword">auto</span> <span class="title">func</span><span class="params">(T i)</span> </span>&#123; </span><br><span class="line">    <span class="keyword">return</span> i; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>但是注意下面特殊场景：</p>
+<ol>
+<li><p>函数内如果有多个return语句，它们必须返回相同的类型，否则编译失败。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">auto</span> <span class="title">func</span><span class="params">(<span class="type">bool</span> flag)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (flag) <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">return</span> <span class="number">2.3</span>; <span class="comment">// error</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// inconsistent deduction for auto return type: ‘int’ and then ‘double’</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>如果return语句返回初始化列表，返回值类型推导也会失败。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">auto</span> <span class="title">func</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> &#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>&#125;; <span class="comment">// error returning initializer list</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>如果函数是虚函数，不能使用返回值类型推导。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">struct</span> <span class="title class_">A</span> &#123;</span><br><span class="line">    <span class="comment">// error: virtual function cannot have deduced return type</span></span><br><span class="line">    <span class="function"><span class="keyword">virtual</span> <span class="keyword">auto</span> <span class="title">func</span><span class="params">()</span> </span>&#123; <span class="keyword">return</span> <span class="number">1</span>; &#125; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>返回类型推导可以用在前置声明中，但是在使用它们之前，翻译单元中必须能够得到函数定义。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">auto</span> <span class="title">f</span><span class="params">()</span></span>;               <span class="comment">// declared, not yet defined</span></span><br><span class="line"><span class="function"><span class="keyword">auto</span> <span class="title">f</span><span class="params">()</span> </span>&#123; <span class="keyword">return</span> <span class="number">42</span>; &#125; <span class="comment">// defined, return type is int</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    cout &lt;&lt; <span class="built_in">f</span>() &lt;&lt; endl;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>返回类型推导可以用在递归函数中，但是递归调用必须以至少一个返回语句作为先导，以便编译器推导出返回类型。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">auto</span> <span class="title">sum</span><span class="params">(<span class="type">int</span> i)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (i == <span class="number">1</span>)</span><br><span class="line">        <span class="keyword">return</span> i;              <span class="comment">// return int</span></span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">sum</span>(i - <span class="number">1</span>) + i; <span class="comment">// ok</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h1 id="2-lambda匿名函数参数使用auto"><a href="#2-lambda匿名函数参数使用auto" class="headerlink" title="2. lambda匿名函数参数使用auto"></a>2. lambda匿名函数参数使用auto</h1><p>在C++11中，lambda表达式参数需要使用具体的类型声明。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">auto</span> f = [] (<span class="type">int</span> a) &#123; <span class="keyword">return</span> a; &#125;</span><br></pre></td></tr></table></figure>
+
+<p>在C++14中，对此进行优化，lambda表达式参数可以直接是auto。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">auto</span> f = [] (<span class="keyword">auto</span> a) &#123; <span class="keyword">return</span> a; &#125;;</span><br><span class="line">cout &lt;&lt; <span class="built_in">f</span>(<span class="number">1</span>) &lt;&lt; endl;</span><br><span class="line">cout &lt;&lt; <span class="built_in">f</span>(<span class="number">2.3f</span>) &lt;&lt; endl;</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="3-变量模板"><a href="#3-变量模板" class="headerlink" title="3. 变量模板"></a>3. 变量模板</h1><p>C++14之前，模板有函数模板和类模板，C++14新增了变量模板。本质是用变量模板的默认值在实例化时进行强转，如果成功则成功，否则报错。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">class</span> <span class="title class_">T</span>&gt;</span><br><span class="line"><span class="keyword">constexpr</span> T pi = <span class="built_in">T</span>(<span class="number">3.1415926535897932385L</span>); <span class="comment">// 变量模板</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    cout &lt;&lt; pi&lt;<span class="type">int</span>&gt; &lt;&lt; endl;    <span class="comment">// 3</span></span><br><span class="line">    cout &lt;&lt; pi&lt;<span class="type">double</span>&gt; &lt;&lt; endl; <span class="comment">// 3.14159</span></span><br><span class="line">    <span class="comment">//cout &lt;&lt; pi&lt;string&gt; &lt;&lt; endl; // 无法从“long double”转换为“std::string”</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="4-别名模板"><a href="#4-别名模板" class="headerlink" title="4. 别名模板"></a>4. 别名模板</h1><p>C++14支持别名模板。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T, <span class="keyword">typename</span> U&gt;</span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">A</span> &#123;</span><br><span class="line">    T t;</span><br><span class="line">    U u;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</span><br><span class="line"><span class="keyword">using</span> B = A&lt;T, <span class="type">int</span>&gt;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    B&lt;<span class="type">double</span>&gt; b;</span><br><span class="line">    b.t = <span class="number">10.24</span>;</span><br><span class="line">    b.u = <span class="number">20</span>;</span><br><span class="line">    cout &lt;&lt; b.t &lt;&lt; endl;   <span class="comment">// 10.24</span></span><br><span class="line">    cout &lt;&lt; b.u &lt;&lt; endl;   <span class="comment">// 20</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="5-减少constexpr的限制"><a href="#5-减少constexpr的限制" class="headerlink" title="5. 减少constexpr的限制"></a>5. 减少constexpr的限制</h1><ol>
+<li>C++11中constexpr修饰的函数，函数体不可以使用局部变量，而C++14后可以。</li>
+</ol>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">constexpr</span> <span class="type">int</span> <span class="title">factorial</span><span class="params">(<span class="type">int</span> n)</span> </span>&#123; <span class="comment">// C++11中不可，C++14中可以</span></span><br><span class="line">    <span class="type">int</span> ret = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; n; ++i) &#123;</span><br><span class="line">        ret += i;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> ret;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>C++11中constexpr修饰的函数只能有一个return语句，而C++14可以有多个。</li>
+</ol>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">constexpr</span> <span class="type">int</span> <span class="title">func</span><span class="params">(<span class="type">bool</span> flag)</span> </span>&#123; <span class="comment">// C++11中不可，C++14中可以</span></span><br><span class="line">    <span class="keyword">if</span> (flag) <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="6-增加-deprecated-标记"><a href="#6-增加-deprecated-标记" class="headerlink" title="6. 增加[[deprecated]]标记"></a>6. 增加[[deprecated]]标记</h1><p>C++14中增加了deprecated标记，修饰类、变量、函数等，编译时会产生警告，提示开发者该标记修饰的内容将来可能会被丢弃，尽量不要使用。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">struct</span> [[deprecated]] A &#123; &#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    A a;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>当编译时，会出现如下警告：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">~/test$ g++ test.cc -std=c++14</span><br><span class="line">test.cc: In function ‘int main()’:</span><br><span class="line">test.cc:11:7: warning: ‘A’ is deprecated [-Wdeprecated-declarations]</span><br><span class="line">     A a;</span><br><span class="line">       ^</span><br><span class="line">test.cc:6:23: note: declared here</span><br><span class="line"> struct [[deprecated]] A &#123;</span><br></pre></td></tr></table></figure>
+
+<p>注：在vs2022上测试编译会报错，不是警告！</p>
+<h1 id="7-二进制字面量与整形字面量分隔符"><a href="#7-二进制字面量与整形字面量分隔符" class="headerlink" title="7. 二进制字面量与整形字面量分隔符"></a>7. 二进制字面量与整形字面量分隔符</h1><p>C++14引入了二进制字面量，也引入了分隔符。(防止看起来眼花)</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="type">int</span> a = <span class="number">0b0000&#x27;0000&#x27;0011</span>;</span><br><span class="line">    <span class="type">double</span> b = <span class="number">3.14&#x27;1234&#x27;1234&#x27;1234</span>;</span><br><span class="line">    std::cout &lt;&lt; a &lt;&lt; <span class="string">&quot;\n&quot;</span> &lt;&lt; b;   <span class="comment">// 3, 3.14123</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="8-std-make-unique"><a href="#8-std-make-unique" class="headerlink" title="8. std::make_unique"></a>8. std::make_unique</h1><p>C++11中有<code>std::make_shared</code>，却没有<code>std::make_unique</code>，在C++14已经加入了。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">struct</span> <span class="title class_">A</span> &#123;&#125;;</span><br><span class="line">std::unique_ptr&lt;A&gt; ptr = std::<span class="built_in">make_unique</span>&lt;A&gt;();</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="9-std-shared-timed-mutex与std-shared-lock"><a href="#9-std-shared-timed-mutex与std-shared-lock" class="headerlink" title="9. std::shared_timed_mutex与std::shared_lock"></a>9. std::shared_timed_mutex与std::shared_lock</h1><p>C++14通过<code>std::shared_timed_mutex</code>和<code>std::shared_lock</code>来实现<strong>读写锁</strong>，保证多个线程可以同时读，但是写线程必须独立运行，写操作不可以同时和读操作一起进行。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">struct</span> <span class="title class_">ThreadSafe</span> &#123;</span><br><span class="line">    <span class="keyword">mutable</span> std::shared_timed_mutex mutex_;  <span class="comment">// 互斥对象</span></span><br><span class="line">    <span class="type">int</span> value_;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">ThreadSafe</span>() &#123;</span><br><span class="line">        value_ = <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="type">int</span> <span class="title">read</span><span class="params">()</span> <span class="type">const</span> </span>&#123;</span><br><span class="line">        <span class="function">std::shared_lock&lt;std::shared_timed_mutex&gt; <span class="title">loc</span><span class="params">(mutex_)</span></span>; <span class="comment">// 共享锁</span></span><br><span class="line">        <span class="keyword">return</span> value_;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">write</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="function">std::unique_lock&lt;std::shared_timed_mutex&gt; <span class="title">lock</span><span class="params">(mutex_)</span></span>; <span class="comment">// 独占锁</span></span><br><span class="line">        value_ += <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p><code>shared_timed_mutex</code>这个比用<code>shared_mutex</code>多了超时时间设置。</p>
+<h1 id="10-std-integer-sequence"><a href="#10-std-integer-sequence" class="headerlink" title="10. std::integer_sequence"></a>10. std::integer_sequence</h1><p>是一个模板类，可以在编译期生成整数序列。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="comment">// 封装的提取整数序列的值接口</span></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">class</span> <span class="title class_">T</span>, T... Ints&gt;</span><br><span class="line"><span class="function"><span class="keyword">constexpr</span> T <span class="title">get</span><span class="params">(std::integer_sequence&lt;T, Ints...&gt;, std::<span class="type">size_t</span> i)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">constexpr</span> T arr[] = &#123; Ints... &#125;;</span><br><span class="line">    <span class="keyword">return</span> arr[i];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    std::integer_sequence&lt;<span class="type">int</span>, <span class="number">4</span>, <span class="number">6</span>, <span class="number">9</span>&gt; seq;</span><br><span class="line">    <span class="type">int</span> index0 = <span class="built_in">get</span>(seq, <span class="number">0</span>); <span class="comment">// index0 = 4</span></span><br><span class="line">    <span class="type">int</span> index2 = <span class="built_in">get</span>(seq, <span class="number">2</span>); <span class="comment">// index2 = 9 </span></span><br><span class="line">    std::cout &lt;&lt; index0 &lt;&lt; <span class="string">&quot;\n&quot;</span></span><br><span class="line">              &lt;&lt; index2;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="11-std-exchange"><a href="#11-std-exchange" class="headerlink" title="11. std::exchange"></a>11. std::exchange</h1><p>交换两个对象的值，<code>T old_value = std::exchange(obj, new_value);</code> 就是用<code>new_value</code>初始化<code>obj</code>，然后返回<code>obj</code>的旧值赋值给<code>old_value</code>。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> a = <span class="number">1</span>;</span><br><span class="line"><span class="type">int</span> b = <span class="number">2</span>;</span><br><span class="line"><span class="type">int</span> old_a = std::<span class="built_in">exchange</span>(a, b); <span class="comment">// now a = 2, b = 1</span></span><br></pre></td></tr></table></figure>
+
+<p>注意它与std::swap的区别，这个内部实现用的右值移动语义，避免了临时对象和拷贝操作。常使用的场景包括：</p>
+<ul>
+<li>交换智能指针,实现原子指针交换</li>
+<li>交换互斥锁的状态</li>
+<li>替换容器中的元素</li>
+<li>交换线程状态</li>
+</ul>
+<h1 id="12-std-quoted"><a href="#12-std-quoted" class="headerlink" title="12. std::quoted"></a>12. std::quoted</h1><p>C++14添加的一个字符串转义的工具类，避免手动添加转义字符的麻烦。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">std::string s1 = std::<span class="built_in">quoted</span>(<span class="string">&quot;Hello \&quot;World\&quot;&quot;</span>);</span><br><span class="line"><span class="comment">// s1 是 &quot;Hello \&quot;World\&quot;&quot;</span></span><br><span class="line"></span><br><span class="line">std::string s2 = std::<span class="built_in">quoted</span>(<span class="string">R&quot;(C:\Windows\System)&quot;</span>); </span><br><span class="line"><span class="comment">// s2 是 &quot;C:\\Windows\\System&quot;</span></span><br></pre></td></tr></table></figure>
+
+
+    </div>
+    
+    <div class="post-footer">
+        <div>
+            
+            转载声明：
+            商业转载请联系作者获得授权,非商业转载请注明出处 © <a href="" target="_blank">cxx</a>
+            
+            
+        </div>
+        <div>
+            
+        </div>
+    </div>
+</article>
+<div class="article-nav prev-next-wrap clearfix">
+    
+    
+    <a href="/2023/07/19/c++/c++11%E6%96%B0%E7%89%B9%E6%80%A7/" class="next-post btn btn-default" title='c++11新特性'>
+        <span class="hidden-lg">下一篇</span>
+        <span class="hidden-xs">
+            c++11新特性</span><i class="fa fa-angle-right fa-fw"></i>
+    </a>
+    
+</div>
+
+<div id="comments">
+    
+    
+<div class="utteranc">
+  
+  <script
+    src='https://utteranc.es/client.js'
+    repo='cxx001/myblog-comment'
+    issue-term='pathname'
+    issue-number=''
+    theme='github-light'
+    label=''
+    crossorigin='anonymous'
+    async
+  ></script>
+</div>
+
+
+
+</div>
+
+                </main>
+                
+                    <aside id="article-toc" role="navigation" class="col-md-4">
+    <div class="widget">
+        <h3 class="title">
+            文章目录
+        </h3>
+        
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#1-%E5%87%BD%E6%95%B0%E8%BF%94%E5%9B%9E%E5%80%BC%E7%B1%BB%E5%9E%8B%E6%8E%A8%E5%AF%BC"><span class="toc-text">1. 函数返回值类型推导</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#2-lambda%E5%8C%BF%E5%90%8D%E5%87%BD%E6%95%B0%E5%8F%82%E6%95%B0%E4%BD%BF%E7%94%A8auto"><span class="toc-text">2. lambda匿名函数参数使用auto</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#3-%E5%8F%98%E9%87%8F%E6%A8%A1%E6%9D%BF"><span class="toc-text">3. 变量模板</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#4-%E5%88%AB%E5%90%8D%E6%A8%A1%E6%9D%BF"><span class="toc-text">4. 别名模板</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#5-%E5%87%8F%E5%B0%91constexpr%E7%9A%84%E9%99%90%E5%88%B6"><span class="toc-text">5. 减少constexpr的限制</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#6-%E5%A2%9E%E5%8A%A0-deprecated-%E6%A0%87%E8%AE%B0"><span class="toc-text">6. 增加[[deprecated]]标记</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#7-%E4%BA%8C%E8%BF%9B%E5%88%B6%E5%AD%97%E9%9D%A2%E9%87%8F%E4%B8%8E%E6%95%B4%E5%BD%A2%E5%AD%97%E9%9D%A2%E9%87%8F%E5%88%86%E9%9A%94%E7%AC%A6"><span class="toc-text">7. 二进制字面量与整形字面量分隔符</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#8-std-make-unique"><span class="toc-text">8. std::make_unique</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#9-std-shared-timed-mutex%E4%B8%8Estd-shared-lock"><span class="toc-text">9. std::shared_timed_mutex与std::shared_lock</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#10-std-integer-sequence"><span class="toc-text">10. std::integer_sequence</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#11-std-exchange"><span class="toc-text">11. std::exchange</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#12-std-quoted"><span class="toc-text">12. std::quoted</span></a></li></ol>
+        
+    </div>
+</aside>
+                
+            </div>
+        </div>
+    </section>
+    <footer class="main-footer">
+    <div class="container">
+        <div class="row">
+        </div>
+    </div>
+</footer>
+<a id="back-to-top" class="icon-btn hide">
+    <i class="fa fa-chevron-up"></i>
+</a>
+    <div class="copyright">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="busuanzi">
+    
+    访问量:
+    <strong id="busuanzi_value_site_pv">
+        <i class="fa fa-spinner fa-spin"></i>
+    </strong>
+    &nbsp; | &nbsp;
+    访客数:
+    <strong id="busuanzi_value_site_uv">
+        <i class="fa fa-spinner fa-spin"></i>
+    </strong>
+    
+</div>
+            </div>
+            <div class="col-sm-12">
+                <span>Copyright &copy;
+                    2022
+                    
+                </span> |
+                <span>
+                    Powered by <a href="//hexo.io" class="copyright-links" target="_blank" rel="nofollow">Hexo</a>
+                </span> |
+                <span>
+                    Theme by <a href="//github.com/shenliyang/hexo-theme-snippet.git" class="copyright-links" target="_blank" rel="nofollow">Snippet</a>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+<script src="/js/app.js?rev=@@hash.js"></script>
+
+</body>
+</html>
