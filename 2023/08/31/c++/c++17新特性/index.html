@@ -1,0 +1,428 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+<head>
+    <!--Setting-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta name="apple-mobile-web-app-capable" content="Hexo">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    <meta name="browsermode" content="application">
+    <meta name="screen-orientation" content="portrait">
+    <meta name="theme-version" content="1.0.0">
+    <meta name="root" content="/">
+    <link rel="dns-prefetch" href="https://cxx001.gitee.io">
+    <!--SEO-->
+
+<meta name="keywords" content="c++17" />
+
+
+<meta name="description" content="1. 构造函数模板推导在C++17之前构造一个模板类对象需要指明类型：
+1pair&lt;int, double&gt; p(1, 2,2);
+
+从C++17开始，构造模板类对象可以根据值自行推..." />
+
+
+<meta name="robots" content="all" />
+<meta name="google" content="all" />
+<meta name="googlebot" content="all" />
+<meta name="verify" content="all" />
+    <!--Title-->
+
+<title>
+    
+    c++17新特性 |
+    
+    Hexo
+</title>
+
+<link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+
+
+<link rel="icon" href="/favicon.ico">
+
+    
+
+
+<link rel="stylesheet" href="/css/bootstrap.min.css?rev=3.3.7.css">
+<link rel="stylesheet" href="/css/font-awesome.min.css?rev=4.7.0.css">
+<link rel="stylesheet" href="/css/style.css?rev=@@hash.css">
+
+    
+<div class="hide">
+    <script type="text/javascript">
+    var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+    document.write(unescape("%3Cspan class='cnzz_stat_icon_1263868967 hide' %3E%3Cscript%20src%3D%22https%3A%2F%2Fs95.cnzz.com%2Fz_stat.php%3Fweb_id%3D1272564536%22%3E%3C%2Fscript%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s19.cnzz.com/z_stat.php%3Fid%3D1263868967%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+    </script>
+</div>
+
+
+
+
+    
+
+<meta name="generator" content="Hexo 6.2.0"></head>
+<!--[if lte IE 8]>
+<style>
+    html{ font-size: 1em }
+</style>
+<![endif]-->
+<!--[if lte IE 9]>
+<div style="ie">你使用的浏览器版本过低，为了你更好的阅读体验，请更新浏览器的版本或者使用其他现代浏览器，比如Chrome、Firefox、Safari等。</div>
+<![endif]-->
+<body>
+    <header class="main-header"  style="background-image:url(
+    https://hexo-theme-snippet-1251680922.cos.ap-beijing.myqcloud.com/img/banner.jpg)"
+     >
+    <div class="main-header-box">
+        <a class="header-avatar" href="/" title='John Doe'>
+            <img src="/img/avatar.jpg" alt="logo头像" class="img-responsive center-block">
+        </a>
+        <div class="branding">
+            <!--<h2 class="text-hide">Snippet主题,从未如此简单有趣</h2>-->
+            
+            <img src="/img/branding.png" alt="Snippet 博客主题" class="img-responsive center-block">
+            
+        </div>
+    </div>
+</header>
+    <nav class="main-navigation">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="navbar-header"><span class="nav-toggle-button collapsed pull-right" data-toggle="collapse" data-target="#main-menu" id="mnav">
+                        <span class="sr-only"></span>
+                        <i class="fa fa-bars"></i>
+                    </span>
+                    <a class="navbar-brand" href="https://cxx001.gitee.io">
+                        Hexo</a>
+                </div>
+                <div class="collapse navbar-collapse" id="main-menu">
+                    <ul class="menu">
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/"><i class="fa "></i>
+                                首页</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/archives/"><i class="fa "></i>
+                                时间轴</a>
+                        </li>
+                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+    <section class="content-wrap">
+        <div class="container">
+            <div class="row">
+                <main class="col-md-8 main-content m-post">
+                    <p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id="c++17新特性">
+            
+            c++17新特性
+            
+        </h1>
+        <div class="post-meta">
+    
+    <span class="categories-meta fa-wrap">
+        <i class="fa fa-folder-open-o"></i>
+        <a class="category-link" href="/categories/c/">c++</a>
+    </span>
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-tags"></i>
+        <span class="tags-meta">
+            
+            <a class="tag-none-link" href="/tags/c-17/" rel="tag">c++17</a>
+            
+        </span>
+    </span>
+    
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-clock-o"></i>
+        <span class="date-meta">
+            2023/08/31</span>
+    </span>
+    
+    <span class="fa-wrap">
+        <i class="fa fa-eye"></i>
+        <span id="busuanzi_value_page_pv"></span>
+    </span>
+    
+    
+</div>
+        
+        
+    </div>
+    
+    <div class="post-body post-content">
+        <h1 id="1-构造函数模板推导"><a href="#1-构造函数模板推导" class="headerlink" title="1. 构造函数模板推导"></a>1. 构造函数模板推导</h1><p>在C++17之前构造一个模板类对象需要指明类型：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">pair&lt;<span class="type">int</span>, <span class="type">double</span>&gt; <span class="title">p</span><span class="params">(<span class="number">1</span>, <span class="number">2</span>,<span class="number">2</span>)</span></span>;</span><br></pre></td></tr></table></figure>
+
+<p>从C++17开始，构造模板类对象可以根据值自行推导了，如下：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 在vs2022上实测还是不行，还是需要指明类型</span></span><br><span class="line"><span class="function">pair <span class="title">p</span><span class="params">(<span class="number">1</span>, <span class="number">2</span>,<span class="number">2</span>)</span></span>;</span><br><span class="line">vector v = &#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>&#125;;</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="2-结构化绑定"><a href="#2-结构化绑定" class="headerlink" title="2. 结构化绑定"></a>2. 结构化绑定</h1><p>对于<code>tuple</code>、<code>map</code>、<code>pair</code>、数组、结构体类型，获取相应的值更方便了。看示例：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="function">std::tuple&lt;<span class="type">int</span>, <span class="type">double</span>&gt; <span class="title">func</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> std::<span class="built_in">tuple</span>(<span class="number">1</span>, <span class="number">2.2</span>);   <span class="comment">// 构造函数模板推导</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">auto</span>[i, d] = <span class="built_in">func</span>();   <span class="comment">// 结构化绑定</span></span><br><span class="line">    cout &lt;&lt; i &lt;&lt; endl;     <span class="comment">// 1</span></span><br><span class="line">    cout &lt;&lt; d &lt;&lt; endl;     <span class="comment">// 2.2</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>结构化绑定不仅可以取对象值，还可以改变对象的值，使用<strong>引用</strong>即可。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">std::pair <span class="title">a</span><span class="params">(<span class="number">1</span>, <span class="number">2.3f</span>)</span></span>;</span><br><span class="line"><span class="keyword">auto</span>&amp; [i, f] = a;   <span class="comment">// auto&amp; 绑定可以改变对象的值</span></span><br><span class="line">i = <span class="number">2</span>;</span><br><span class="line">cout &lt;&lt; a.first &lt;&lt; endl; <span class="comment">// 2</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="3-if-switch语句初始化"><a href="#3-if-switch语句初始化" class="headerlink" title="3. if-switch语句初始化"></a>3. if-switch语句初始化</h1><p>C++17可以在if-switch语句中初始化变量，这样可以尽可能约束作用域，让代码更简洁，可能代码可读性略有下降，但是还好。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 格式：if(init; condition)</span></span><br><span class="line"><span class="keyword">if</span> (<span class="type">int</span> a = <span class="built_in">getValue</span>(); a &gt; <span class="number">0</span>) &#123;</span><br><span class="line">	cout &lt;&lt; a;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="4-内联变量"><a href="#4-内联变量" class="headerlink" title="4. 内联变量"></a>4. 内联变量</h1><p>C++17前只有内联函数，现在新加了内联变量(<strong>头文件中也可以定义变量了</strong>)，这样像以前静态成员变量必须在cpp中初始化的限制也没有了，成员变量可以直接在头文件也可以初始化了。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 头文件</span></span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">A</span> &#123;</span><br><span class="line">    <span class="type">static</span> <span class="type">const</span> <span class="type">int</span> value;  </span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">inline</span> <span class="type">int</span> <span class="type">const</span> A::value = <span class="number">10</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// ==========或者========</span></span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">A</span> &#123;</span><br><span class="line">    <span class="keyword">inline</span> <span class="keyword">constexpr</span> <span class="type">int</span> value = <span class="number">10</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>引入内联变量好处：</p>
+<ul>
+<li>简化代码，允许在头文件中定义变量，无需实现文件中进行定义，减少代码重复和简化项目结构。</li>
+<li>避免链接错误。</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 这个在链接时就会报重定义错误</span></span><br><span class="line"><span class="comment">// myvar.h</span></span><br><span class="line"><span class="keyword">extern</span> <span class="type">int</span> myVar;</span><br><span class="line"></span><br><span class="line"><span class="comment">// file1.cpp</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;myvar.h&quot;</span></span></span><br><span class="line"><span class="type">int</span> myVar = <span class="number">10</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// file2.cpp</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;myvar.h&quot;</span></span></span><br><span class="line"><span class="type">int</span> myVar = <span class="number">20</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 如果用内联变量就可以直接在公共头文件中定义了</span></span><br><span class="line"><span class="comment">// myvar.h</span></span><br><span class="line"><span class="keyword">inline</span> <span class="type">int</span> myVar = <span class="number">10</span>;  <span class="comment">// 内联变量的定义</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// file1.cpp</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;myvar.h&quot;</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">// file2.cpp</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;myvar.h&quot;</span></span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>提高编译时性能，就如上面的示例，变量定义在头文件中，编译器在编译时可以直接把定义插入到使用它的代码中，而不需要进行链接，减少链接开销。</li>
+</ul>
+<h1 id="5-折叠表达式"><a href="#5-折叠表达式" class="headerlink" title="5. 折叠表达式"></a>5. 折叠表达式</h1><p>C++17引入了折叠表达式，在使用可变参数模板中更加方便了：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 参数相加函数模板</span></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span>... Ts&gt;</span><br><span class="line"><span class="function"><span class="keyword">auto</span> <span class="title">sum</span><span class="params">(Ts... ts)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> (ts + ...);  <span class="comment">// 可变参数折叠起来了</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">//int a &#123; sum(1, 2, 3, 4, 5) &#125;;  // 15</span></span><br><span class="line">    </span><br><span class="line">    std::string a &#123; <span class="string">&quot;hello &quot;</span> &#125;;</span><br><span class="line">    std::string b &#123; <span class="string">&quot;world&quot;</span> &#125;;</span><br><span class="line">    cout &lt;&lt; <span class="built_in">sum</span>(a, b) &lt;&lt; endl;  <span class="comment">// hello world</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="6-constexpr-lambda表达式"><a href="#6-constexpr-lambda表达式" class="headerlink" title="6. constexpr lambda表达式"></a>6. constexpr lambda表达式</h1><p>C++17之前lambda表达式只能在运行时计算，C++17引入了constexpr lambda表达式，可以在编译期就进行计算，提高运行效率。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">constexpr</span> <span class="keyword">auto</span> lamb = [](<span class="type">int</span> n) &#123; <span class="keyword">return</span> n * n; &#125;;</span><br><span class="line">    <span class="keyword">if</span> (<span class="built_in">lamb</span>(<span class="number">3</span>) == <span class="number">9</span>) &#123; </span><br><span class="line">        cout &lt;&lt; <span class="string">&quot;true&quot;</span> &lt;&lt; endl;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>注意：constexpr函数有如下限制：</p>
+<p>函数体不能包含汇编语句、goto语句、label、try块、静态变量、线程局部存储、没有初始化的普通变量，不能动态分配内存，不能有new delete等，不能虚函数。</p>
+<h1 id="7-namespace嵌套"><a href="#7-namespace嵌套" class="headerlink" title="7. namespace嵌套"></a>7. namespace嵌套</h1><p>C++17开始标准化支持namespace嵌套的写法，更方便简洁了。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">namespace</span> A &#123;</span><br><span class="line">    <span class="keyword">namespace</span> B &#123;</span><br><span class="line">        <span class="keyword">namespace</span> C &#123;</span><br><span class="line">            <span class="function"><span class="type">void</span> <span class="title">func</span><span class="params">()</span></span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// c++17，更方便更舒适</span></span><br><span class="line"><span class="keyword">namespace</span> A::B::C &#123;</span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">func</span><span class="params">()</span></span>;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="8-has-include预处理表达式"><a href="#8-has-include预处理表达式" class="headerlink" title="8. __has_include预处理表达式"></a>8. __has_include预处理表达式</h1><p>C++17引入了<code>__has_include</code>，是一个预处理器指令，用于在编译时检查某个头文件是否存在。</p>
+<p>使用<code>__has_include</code>可以让我们在代码中动态地决定是否包含某个头文件，这对于跨平台开发和库的兼容性非常有用。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span>  </span></span><br><span class="line">  </span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;  </span><br><span class="line">    <span class="keyword">if</span> (__has_include(<span class="string">&quot;optional.h&quot;</span>)) &#123;  </span><br><span class="line">        <span class="comment">// 如果存在&quot;optional.h&quot;文件  </span></span><br><span class="line">        std::cout &lt;&lt; <span class="string">&quot;Optional header is available.&quot;</span> &lt;&lt; std::endl;  </span><br><span class="line">        <span class="comment">// 包含&quot;optional.h&quot;文件  </span></span><br><span class="line">        <span class="meta">#<span class="keyword">include</span> <span class="string">&quot;optional.h&quot;</span>  </span></span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;  </span><br><span class="line">        <span class="comment">// 如果不存在&quot;optional.h&quot;文件  </span></span><br><span class="line">        std::cout &lt;&lt; <span class="string">&quot;Optional header is not available.&quot;</span> &lt;&lt; std::endl;  </span><br><span class="line">    &#125;  </span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>注：在vs2022上，语言集也设置到了c++17，自测报：error C3861: “__has_include”: 找不到标识符！</p>
+<h1 id="9-支持lambda表达式用-this获取对象副本"><a href="#9-支持lambda表达式用-this获取对象副本" class="headerlink" title="9. 支持lambda表达式用*this获取对象副本"></a>9. 支持lambda表达式用*this获取对象副本</h1><p>C++17以前lambda只支持传递this引用，修改会导致本体也被修改。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">struct</span> <span class="title class_">A</span> &#123;</span><br><span class="line">    <span class="type">int</span> a;</span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">func</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">auto</span> f = [<span class="keyword">this</span>] &#123; <span class="comment">// 对象引用</span></span><br><span class="line">            cout &lt;&lt; a &lt;&lt; endl;</span><br><span class="line">        &#125;;</span><br><span class="line">        <span class="built_in">f</span>();</span><br><span class="line">    &#125;  </span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>所以现在扩展了，支持传递*this，传递的是对象的拷贝副本。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">struct</span> <span class="title class_">A</span> &#123;</span><br><span class="line">    <span class="type">int</span> a;</span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">func</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">auto</span> f = [*<span class="keyword">this</span>] &#123; <span class="comment">// 对象副本</span></span><br><span class="line">            cout &lt;&lt; a &lt;&lt; endl;</span><br><span class="line">        &#125;;</span><br><span class="line">        <span class="built_in">f</span>();</span><br><span class="line">    &#125;  </span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="10-新增Attribute"><a href="#10-新增Attribute" class="headerlink" title="10.新增Attribute"></a>10.新增Attribute</h1><p>C++17又新增了3个属性：</p>
+<ul>
+<li>[[fallthrough]] 用在switch语句中，显示表明接下执行下一个case，而不是break跳出。不写break其实是同样的效果，它只是增加可读性。</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="type">int</span> num = <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">switch</span> (num) &#123;</span><br><span class="line">    <span class="keyword">case</span> <span class="number">1</span>:</span><br><span class="line">        std::cout &lt;&lt; <span class="string">&quot;Number is 1.&quot;</span> &lt;&lt; std::endl;</span><br><span class="line">        [[fallthrough]]; <span class="comment">// 显式指示继续执行下一个case的代码</span></span><br><span class="line">    <span class="keyword">case</span> <span class="number">2</span>:</span><br><span class="line">        std::cout &lt;&lt; <span class="string">&quot;Number is 2.&quot;</span> &lt;&lt; std::endl;</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">    <span class="keyword">case</span> <span class="number">3</span>:</span><br><span class="line">        std::cout &lt;&lt; <span class="string">&quot;Number is 3.&quot;</span> &lt;&lt; std::endl;</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">    <span class="keyword">default</span>:</span><br><span class="line">        std::cout &lt;&lt; <span class="string">&quot;Number is not 1, 2, or 3.&quot;</span> &lt;&lt; std::endl;</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Number is 1.</span></span><br><span class="line"><span class="comment">// Number is 2.</span></span><br></pre></td></tr></table></figure>
+
+
+
+<ul>
+<li>[[nodiscard]] 修饰普通函数的返回值，用于向编译器发出警告，要求调用函数的返回值不被忽略。这个属性标记可以帮助开发人员避免忽略可能产生错误或潜在问题的函数返回值。只是一个编译警告，不会强制要求调用者使用函数的返回值。</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[[nodiscard]] <span class="function"><span class="type">int</span> <span class="title">calculateSum</span><span class="params">(<span class="type">int</span> a, <span class="type">int</span> b)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> a + b;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="built_in">calculateSum</span>(<span class="number">3</span>, <span class="number">4</span>); <span class="comment">// 警告：函数返回值被忽略</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<ul>
+<li>[[maybe_unused]] 用于告诉编译器可以忽略某个实体（如变量、函数、参数等）未使用的警告。这个属性标记可以用于减少编译器产生的未使用实体的警告信息。</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[[maybe_unused]] <span class="function"><span class="type">void</span> <span class="title">unusedFunction</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="comment">// 函数体</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  [[maybe_unused]] <span class="type">int</span> unusedVariable = <span class="number">5</span>;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="11-字符串与基本类型相互转换"><a href="#11-字符串与基本类型相互转换" class="headerlink" title="11. 字符串与基本类型相互转换"></a>11. 字符串与基本类型相互转换</h1><p>C++17新增了<code>from_chars</code>函数和<code>to_chars</code>函数，它们提供了一种高效的方式来解析字符串并将其转换为基本类型，或者将基本类型转换为字符序列。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 将字符串转换为整型</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;charconv&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="type">const</span> <span class="type">char</span>* str = <span class="string">&quot;12345&quot;</span>;</span><br><span class="line">    <span class="type">int</span> value = <span class="number">0</span>;</span><br><span class="line">    <span class="comment">// 参数1：待转换的字符串指针</span></span><br><span class="line">    <span class="comment">// 参数2：待转换字符串末尾指针</span></span><br><span class="line">    <span class="comment">// 参数3：目标变量的引用</span></span><br><span class="line">    <span class="keyword">auto</span> result = std::<span class="built_in">from_chars</span>(str, str + std::<span class="built_in">strlen</span>(str), value);</span><br><span class="line">    <span class="keyword">if</span> (result.ec == std::<span class="built_in">errc</span>()) &#123;</span><br><span class="line">        std::cout &lt;&lt; <span class="string">&quot;Parsed value: &quot;</span> &lt;&lt; value &lt;&lt; std::endl;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        std::cout &lt;&lt; <span class="string">&quot;Parsing failed.&quot;</span> &lt;&lt; std::endl;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 将整数转换为字符串</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;charconv&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="type">int</span> value = <span class="number">12345</span>;</span><br><span class="line">    <span class="type">char</span> buffer[<span class="number">20</span>];</span><br><span class="line">    <span class="comment">// 参数1：指向要写入转换结果的字符串的指针</span></span><br><span class="line">    <span class="comment">// 参数2：指向字符串末尾位置的指针</span></span><br><span class="line">    <span class="comment">// 参数3：要转换的数据类型的值</span></span><br><span class="line">    <span class="keyword">auto</span> result = std::<span class="built_in">to_chars</span>(buffer, buffer + <span class="built_in">sizeof</span>(buffer), value);</span><br><span class="line">    <span class="keyword">if</span> (result.ec == std::<span class="built_in">errc</span>()) &#123;</span><br><span class="line">        *result.ptr = <span class="string">&#x27;\0&#x27;</span>;  <span class="comment">// 添加字符串结尾的空字符</span></span><br><span class="line">        std::cout &lt;&lt; <span class="string">&quot;Converted value: &quot;</span> &lt;&lt; buffer &lt;&lt; std::endl;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        std::cout &lt;&lt; <span class="string">&quot;Conversion failed.&quot;</span> &lt;&lt; std::endl;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="12-std-variant"><a href="#12-std-variant" class="headerlink" title="12. std::variant"></a>12. std::variant</h1><p><code>std::variant</code>是C++17引入的标准库模板类，它提供了一种类型安全的、高效的联合类型的实现。相比传统C语言的<code>union</code>，它更灵活，更安全，支持的类型更多。</p>
+<p>使用<code>std::variant</code>时，需要在模板参数中指定可能的类型。例如，<code>std::variant&lt;int, double, std::string&gt;</code>表示一个可以容纳<code>int</code>、<code>double</code>和<code>std::string</code>类型中的一个值的<code>std::variant</code>对象。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;variant&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;string&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    std::variant&lt;<span class="type">int</span>, <span class="type">double</span>, std::string&gt; var;</span><br><span class="line"></span><br><span class="line">    var = <span class="number">42</span>;  <span class="comment">// 存储int类型的值</span></span><br><span class="line">    std::cout &lt;&lt; std::<span class="built_in">get</span>&lt;<span class="type">int</span>&gt;(var) &lt;&lt; std::endl;</span><br><span class="line"></span><br><span class="line">    var = <span class="number">3.14</span>;  <span class="comment">// 存储double类型的值</span></span><br><span class="line">    std::cout &lt;&lt; std::<span class="built_in">get</span>&lt;<span class="type">double</span>&gt;(var) &lt;&lt; std::endl;</span><br><span class="line"></span><br><span class="line">    var = <span class="string">&quot;Hello&quot;</span>;  <span class="comment">// 存储std::string类型的值</span></span><br><span class="line">    std::cout &lt;&lt; std::<span class="built_in">get</span>&lt;std::string&gt;(var) &lt;&lt; std::endl;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="13-std-optional"><a href="#13-std-optional" class="headerlink" title="13. std::optional"></a>13. std::optional</h1><p><code>std::optional</code>是C++17引入的标准库模板类，它提供了一种表示可能存在或不存在值的对象。在函数返回不存在的异常值情况时，配合<code>std::nullopt</code>使用。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;optional&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function">std::optional&lt;<span class="type">int</span>&gt; <span class="title">divide</span><span class="params">(<span class="type">int</span> a, <span class="type">int</span> b)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (b != <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> a / b;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> std::<span class="literal">nullopt</span>;  <span class="comment">// 表示没有值</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    std::optional&lt;<span class="type">int</span>&gt; result = <span class="built_in">divide</span>(<span class="number">10</span>, <span class="number">5</span>);</span><br><span class="line">    <span class="keyword">if</span> (result) &#123;</span><br><span class="line">        std::cout &lt;&lt; <span class="string">&quot;Result: &quot;</span> &lt;&lt; *result &lt;&lt; std::endl;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        std::cout &lt;&lt; <span class="string">&quot;Division by zero&quot;</span> &lt;&lt; std::endl;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="14-std-any"><a href="#14-std-any" class="headerlink" title="14. std::any"></a>14. std::any</h1><p><code>std::any</code>是C++17引入的标准库模板类，它提供了一种类型安全的机制来存储和访问任意类型的值。使用<code>std::any</code>时，可以将任意类型的值存储在<code>std::any</code>对象中。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;any&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;string&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    std::any value;</span><br><span class="line"></span><br><span class="line">    value = <span class="number">42</span>;  <span class="comment">// 存储整数</span></span><br><span class="line">    std::cout &lt;&lt; std::<span class="built_in">any_cast</span>&lt;<span class="type">int</span>&gt;(value) &lt;&lt; std::endl;  <span class="comment">// 输出: 42</span></span><br><span class="line"></span><br><span class="line">    value = <span class="number">3.14</span>;  <span class="comment">// 存储浮点数</span></span><br><span class="line">    std::cout &lt;&lt; std::<span class="built_in">any_cast</span>&lt;<span class="type">double</span>&gt;(value) &lt;&lt; std::endl;  <span class="comment">// 输出: 3.14</span></span><br><span class="line"></span><br><span class="line">    value = std::<span class="built_in">string</span>(<span class="string">&quot;Hello&quot;</span>);  <span class="comment">// 存储字符串</span></span><br><span class="line">    std::cout &lt;&lt; std::<span class="built_in">any_cast</span>&lt;std::string&gt;(value) &lt;&lt; std::endl;  <span class="comment">// 输出: Hello</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="15-std-apply"><a href="#15-std-apply" class="headerlink" title="15. std::apply"></a>15. std::apply</h1><p><code>std::apply</code>是C++17引入的标准库函数，用于将参数包展开并应用到函数中。它提供了一种方便的方式来调用函数，将参数包作为函数的参数传递，而不需要显式地编写参数列表。（使用std::tuple打包参数给普通函数传参）</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;tuple&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;functional&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">print_values</span><span class="params">(<span class="type">int</span> a, <span class="type">float</span> b, <span class="type">const</span> std::string&amp; c)</span> </span>&#123;</span><br><span class="line">    std::cout &lt;&lt; <span class="string">&quot;a: &quot;</span> &lt;&lt; a &lt;&lt; <span class="string">&quot;, b: &quot;</span> &lt;&lt; b &lt;&lt; <span class="string">&quot;, c: &quot;</span> &lt;&lt; c &lt;&lt; std::endl;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="function">std::tuple&lt;<span class="type">int</span>, <span class="type">float</span>, std::string&gt; <span class="title">values</span><span class="params">(<span class="number">42</span>, <span class="number">3.14</span>, <span class="string">&quot;Hello&quot;</span>)</span></span>;</span><br><span class="line"></span><br><span class="line">    std::<span class="built_in">apply</span>(print_values, values); <span class="comment">// apply会自动把values展开传递给print_values函数参数</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="16-std-make-from-tuple"><a href="#16-std-make-from-tuple" class="headerlink" title="16. std::make_from_tuple"></a>16. std::make_from_tuple</h1><p><code>std::make_from_tuple</code>是C++17引入的标准库函数，<code>std::make_from_tuple</code>会使用<code>std::tuple</code>中的元素作为某个类的构造函数的参数，构造这个对象并返回。（使用std::tuple打包参数给构造函数传参）</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;tuple&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;string&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">Person</span> &#123;</span><br><span class="line">    std::string name;</span><br><span class="line">    <span class="type">int</span> age;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">Person</span>(<span class="type">const</span> std::string&amp; name, <span class="type">int</span> age) : <span class="built_in">name</span>(name), <span class="built_in">age</span>(age) &#123;&#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">print_info</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        std::cout &lt;&lt; <span class="string">&quot;Name: &quot;</span> &lt;&lt; name &lt;&lt; <span class="string">&quot;, Age: &quot;</span> &lt;&lt; age &lt;&lt; std::endl;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="function">std::tuple&lt;std::string, <span class="type">int</span>&gt; <span class="title">person_info</span><span class="params">(<span class="string">&quot;Alice&quot;</span>, <span class="number">25</span>)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">auto</span> person = std::<span class="built_in">make_from_tuple</span>&lt;Person&gt;(person_info);</span><br><span class="line"></span><br><span class="line">    person.<span class="built_in">print_info</span>();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="17-std-string-veiw"><a href="#17-std-string-veiw" class="headerlink" title="17. std::string_veiw"></a>17. std::string_veiw</h1><p><code>std::string_view</code>是C++17引入的标准库类型，它提供了一种轻量级的方式来操作字符串数据，而无需复制字符串内容。它本质上是一个指向字符串数据的指针和长度的组合，它并不拥有字符串的存储空间。因此，它适用于需要对字符串进行读取操作而不需要修改字符串的场景。</p>
+<p>这样传递字符串参数使用string_view对象传递，就可以避免字符串拷贝操作了，提高运行效率。(其实和传递&amp;string引用差不多，只是另一种写法)</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;string_view&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">print_string_view</span><span class="params">(std::string_view str)</span> </span>&#123;</span><br><span class="line">    std::cout &lt;&lt; <span class="string">&quot;String view: &quot;</span> &lt;&lt; str &lt;&lt; std::endl;</span><br><span class="line">    std::cout &lt;&lt; <span class="string">&quot;Length: &quot;</span> &lt;&lt; str.<span class="built_in">length</span>() &lt;&lt; std::endl;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    std::string str = <span class="string">&quot;Hello, world!&quot;</span>;</span><br><span class="line">    <span class="function">std::string_view <span class="title">str_view</span><span class="params">(str)</span></span>;  <span class="comment">// 将string对象用string_view包装</span></span><br><span class="line"></span><br><span class="line">    <span class="built_in">print_string_view</span>(str_view);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="18-as-const"><a href="#18-as-const" class="headerlink" title="18. as_const"></a>18. as_const</h1><p><code>std::as_const</code>是一个 C++17 引入的函数模板，用于将一个对象转换为 <code>const</code> 引用。它的作用是确保无法通过该 <code>const</code> 引用对对象进行修改，即使原本对象是非 <code>const</code> 的。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">std::string str = <span class="string">&quot;hello world&quot;</span>;</span><br><span class="line"><span class="type">const</span> std::string&amp; constStr = std::<span class="built_in">as_const</span>(str);</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="19-file-system"><a href="#19-file-system" class="headerlink" title="19. file_system"></a>19. file_system</h1><p><code>std::filesystem</code> 是 C++17 引入的标准库，用于操作文件系统和文件路径。它提供了一组类和函数，用于处理文件、目录、路径等相关操作。</p>
+<p>要使用 <code>std::filesystem</code>，需要包含 <code>&lt;filesystem&gt;</code> 头文件，并使用 <code>std::filesystem</code> 命名空间。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;filesystem&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> fs = std::filesystem; <span class="comment">// 对命名空间取别名</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 检查文件是否存在</span></span><br><span class="line">    fs::path filePath = <span class="string">&quot;path/to/file.txt&quot;</span>;</span><br><span class="line">    <span class="keyword">if</span> (fs::<span class="built_in">exists</span>(filePath)) &#123;</span><br><span class="line">        std::cout &lt;&lt; <span class="string">&quot;File exists.&quot;</span> &lt;&lt; std::endl;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        std::cout &lt;&lt; <span class="string">&quot;File does not exist.&quot;</span> &lt;&lt; std::endl;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 创建目录</span></span><br><span class="line">    fs::path dirPath = <span class="string">&quot;path/to/directory&quot;</span>;</span><br><span class="line">    <span class="keyword">if</span> (fs::<span class="built_in">create_directory</span>(dirPath)) &#123;</span><br><span class="line">        std::cout &lt;&lt; <span class="string">&quot;Directory created.&quot;</span> &lt;&lt; std::endl;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        std::cout &lt;&lt; <span class="string">&quot;Failed to create directory.&quot;</span> &lt;&lt; std::endl;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 遍历目录中的文件</span></span><br><span class="line">    fs::path directory = <span class="string">&quot;path/to/directory&quot;</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">const</span> <span class="keyword">auto</span>&amp; entry : fs::<span class="built_in">directory_iterator</span>(directory)) &#123;</span><br><span class="line">        std::cout &lt;&lt; entry.<span class="built_in">path</span>() &lt;&lt; std::endl;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 获取文件大小</span></span><br><span class="line">    fs::path file = <span class="string">&quot;path/to/file.txt&quot;</span>;</span><br><span class="line">    <span class="keyword">if</span> (fs::<span class="built_in">exists</span>(file) &amp;&amp; fs::<span class="built_in">is_regular_file</span>(file)) &#123;</span><br><span class="line">        std::cout &lt;&lt; <span class="string">&quot;File size: &quot;</span> &lt;&lt; fs::<span class="built_in">file_size</span>(file) &lt;&lt; <span class="string">&quot; bytes.&quot;</span> &lt;&lt; std::endl;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 删除文件</span></span><br><span class="line">    fs::path fileToDelete = <span class="string">&quot;path/to/file.txt&quot;</span>;</span><br><span class="line">    <span class="keyword">if</span> (fs::<span class="built_in">exists</span>(fileToDelete) &amp;&amp; fs::<span class="built_in">is_regular_file</span>(fileToDelete)) &#123;</span><br><span class="line">        <span class="keyword">if</span> (fs::<span class="built_in">remove</span>(fileToDelete)) &#123;</span><br><span class="line">            std::cout &lt;&lt; <span class="string">&quot;File deleted.&quot;</span> &lt;&lt; std::endl;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            std::cout &lt;&lt; <span class="string">&quot;Failed to delete file.&quot;</span> &lt;&lt; std::endl;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="20-std-shared-mutex"><a href="#20-std-shared-mutex" class="headerlink" title="20. std::shared_mutex"></a>20. std::shared_mutex</h1><p><code>std::shared_mutex</code> 是 C++14 引入的标准库，用于实现读写锁（Read-Write Lock）的功能。它提供了一种机制，允许多个线程同时读取共享数据，但只允许一个线程写入共享数据。</p>
+<p>它和c++14的<code>std::shared_timed_mutex </code>一样，只是少了超时功能，更加简洁简单。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;shared_mutex&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;thread&gt;</span></span></span><br><span class="line"></span><br><span class="line">std::shared_mutex mutex;</span><br><span class="line"><span class="type">int</span> sharedData = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">writerThread</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; <span class="number">5</span>; ++i) &#123;</span><br><span class="line">        <span class="function">std::unique_lock&lt;std::shared_mutex&gt; <span class="title">lock</span><span class="params">(mutex)</span></span>;  <span class="comment">// 获取独占的写锁</span></span><br><span class="line">        ++sharedData;</span><br><span class="line">        std::cout &lt;&lt; <span class="string">&quot;Writer thread: wrote &quot;</span> &lt;&lt; sharedData &lt;&lt; std::endl;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">readerThread</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; <span class="number">5</span>; ++i) &#123;</span><br><span class="line">        <span class="function">std::shared_lock&lt;std::shared_mutex&gt; <span class="title">lock</span><span class="params">(mutex)</span></span>;  <span class="comment">// 获取共享的读锁</span></span><br><span class="line">        std::cout &lt;&lt; <span class="string">&quot;Reader thread: read &quot;</span> &lt;&lt; sharedData &lt;&lt; std::endl;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="function">std::thread <span class="title">writer</span><span class="params">(writerThread)</span></span>;</span><br><span class="line">    <span class="function">std::thread <span class="title">reader</span><span class="params">(readerThread)</span></span>;</span><br><span class="line"></span><br><span class="line">    writer.<span class="built_in">join</span>();</span><br><span class="line">    reader.<span class="built_in">join</span>();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">Writer thread: wrote 1</span><br><span class="line">Writer thread: wrote 2</span><br><span class="line">Writer thread: wrote 3</span><br><span class="line">Writer thread: wrote 4</span><br><span class="line">Writer thread: wrote 5</span><br><span class="line">Reader thread: read 5</span><br><span class="line">Reader thread: read 5</span><br><span class="line">Reader thread: read 5</span><br><span class="line">Reader thread: read 5</span><br><span class="line">Reader thread: read 5</span><br><span class="line">或者=======================</span><br><span class="line">Reader thread: read 0</span><br><span class="line">Reader thread: read 0</span><br><span class="line">Reader thread: read 0</span><br><span class="line">Reader thread: read 0</span><br><span class="line">Reader thread: read 0</span><br><span class="line">Writer thread: wrote 1</span><br><span class="line">Writer thread: wrote 2</span><br><span class="line">Writer thread: wrote 3</span><br><span class="line">Writer thread: wrote 4</span><br><span class="line">Writer thread: wrote 5</span><br></pre></td></tr></table></figure>
+
+
+    </div>
+    
+    <div class="post-footer">
+        <div>
+            
+            转载声明：
+            商业转载请联系作者获得授权,非商业转载请注明出处 © <a href="" target="_blank">cxx</a>
+            
+            
+        </div>
+        <div>
+            
+        </div>
+    </div>
+</article>
+<div class="article-nav prev-next-wrap clearfix">
+    
+    
+    <a href="/2023/08/17/c++/c++14%E6%96%B0%E7%89%B9%E6%80%A7/" class="next-post btn btn-default" title='c++14新特性'>
+        <span class="hidden-lg">下一篇</span>
+        <span class="hidden-xs">
+            c++14新特性</span><i class="fa fa-angle-right fa-fw"></i>
+    </a>
+    
+</div>
+
+<div id="comments">
+    
+    
+<div class="utteranc">
+  
+  <script
+    src='https://utteranc.es/client.js'
+    repo='cxx001/myblog-comment'
+    issue-term='pathname'
+    issue-number=''
+    theme='github-light'
+    label=''
+    crossorigin='anonymous'
+    async
+  ></script>
+</div>
+
+
+
+</div>
+
+                </main>
+                
+                    <aside id="article-toc" role="navigation" class="col-md-4">
+    <div class="widget">
+        <h3 class="title">
+            文章目录
+        </h3>
+        
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#1-%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0%E6%A8%A1%E6%9D%BF%E6%8E%A8%E5%AF%BC"><span class="toc-text">1. 构造函数模板推导</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#2-%E7%BB%93%E6%9E%84%E5%8C%96%E7%BB%91%E5%AE%9A"><span class="toc-text">2. 结构化绑定</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#3-if-switch%E8%AF%AD%E5%8F%A5%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="toc-text">3. if-switch语句初始化</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#4-%E5%86%85%E8%81%94%E5%8F%98%E9%87%8F"><span class="toc-text">4. 内联变量</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#5-%E6%8A%98%E5%8F%A0%E8%A1%A8%E8%BE%BE%E5%BC%8F"><span class="toc-text">5. 折叠表达式</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#6-constexpr-lambda%E8%A1%A8%E8%BE%BE%E5%BC%8F"><span class="toc-text">6. constexpr lambda表达式</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#7-namespace%E5%B5%8C%E5%A5%97"><span class="toc-text">7. namespace嵌套</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#8-has-include%E9%A2%84%E5%A4%84%E7%90%86%E8%A1%A8%E8%BE%BE%E5%BC%8F"><span class="toc-text">8. __has_include预处理表达式</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#9-%E6%94%AF%E6%8C%81lambda%E8%A1%A8%E8%BE%BE%E5%BC%8F%E7%94%A8-this%E8%8E%B7%E5%8F%96%E5%AF%B9%E8%B1%A1%E5%89%AF%E6%9C%AC"><span class="toc-text">9. 支持lambda表达式用*this获取对象副本</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#10-%E6%96%B0%E5%A2%9EAttribute"><span class="toc-text">10.新增Attribute</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#11-%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%8E%E5%9F%BA%E6%9C%AC%E7%B1%BB%E5%9E%8B%E7%9B%B8%E4%BA%92%E8%BD%AC%E6%8D%A2"><span class="toc-text">11. 字符串与基本类型相互转换</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#12-std-variant"><span class="toc-text">12. std::variant</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#13-std-optional"><span class="toc-text">13. std::optional</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#14-std-any"><span class="toc-text">14. std::any</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#15-std-apply"><span class="toc-text">15. std::apply</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#16-std-make-from-tuple"><span class="toc-text">16. std::make_from_tuple</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#17-std-string-veiw"><span class="toc-text">17. std::string_veiw</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#18-as-const"><span class="toc-text">18. as_const</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#19-file-system"><span class="toc-text">19. file_system</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#20-std-shared-mutex"><span class="toc-text">20. std::shared_mutex</span></a></li></ol>
+        
+    </div>
+</aside>
+                
+            </div>
+        </div>
+    </section>
+    <footer class="main-footer">
+    <div class="container">
+        <div class="row">
+        </div>
+    </div>
+</footer>
+<a id="back-to-top" class="icon-btn hide">
+    <i class="fa fa-chevron-up"></i>
+</a>
+    <div class="copyright">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="busuanzi">
+    
+    访问量:
+    <strong id="busuanzi_value_site_pv">
+        <i class="fa fa-spinner fa-spin"></i>
+    </strong>
+    &nbsp; | &nbsp;
+    访客数:
+    <strong id="busuanzi_value_site_uv">
+        <i class="fa fa-spinner fa-spin"></i>
+    </strong>
+    
+</div>
+            </div>
+            <div class="col-sm-12">
+                <span>Copyright &copy;
+                    2022
+                    
+                </span> |
+                <span>
+                    Powered by <a href="//hexo.io" class="copyright-links" target="_blank" rel="nofollow">Hexo</a>
+                </span> |
+                <span>
+                    Theme by <a href="//github.com/shenliyang/hexo-theme-snippet.git" class="copyright-links" target="_blank" rel="nofollow">Snippet</a>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+<script src="/js/app.js?rev=@@hash.js"></script>
+
+</body>
+</html>
