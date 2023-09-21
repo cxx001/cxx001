@@ -1605,4 +1605,7 @@ pre .javascript .function {
     content: "";
     margin-bottom: 10px;
   }
+  .trc_rbox_container {
+    display: none !important;
+  }
 }
