@@ -22,8 +22,8 @@
 <meta name="keywords" content="c++,Effective Modern C++" />
 
 
-<meta name="description" content="![image-20230927164228593](Effective Modern C++&#x2F;image-20230927164228593.png)
-前言C++程序员都应该是对性能..." />
+<meta name="description" content="
+前言C++程序员都应该是对性能执着的人，想要彻底理解C++11和C++14，不可止步于熟悉它们引入的语言特性（例如，auto型别推导、移动语义、lambda表达式，以及并发支持）。挑战在于高效..." />
 
 
 <meta name="robots" content="all" />
@@ -173,9 +173,11 @@
     </div>
     
     <div class="post-body post-content">
-        <p>![image-20230927164228593](Effective Modern C++&#x2F;image-20230927164228593.png)</p>
+        <p><img src="https://cxx001.gitee.io/2023/09/21/notes/Effective%20Modern%20C++/image-20230927164228593.png" alt="image-20230927164228593"></p>
 <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>C++程序员都应该是对性能执着的人，想要彻底理解C++11和C++14，不可止步于熟悉它们引入的语言特性（例如，auto型别推导、移动语义、lambda表达式，以及并发支持）。挑战在于高效地运用这些特性，从而使你的软件具备正确性、高效率、可维护性和可移植性。这正是本书意欲达成的定位，它不只是教我们应该怎么做，更多的是告诉我们背后发生了什么。</p>
 <p><a target="_blank" rel="noopener" href="https://cntransgroup.github.io/EffectiveModernCppChinese/Introduction.html">本书电子版</a></p>
+<br>
+
 <h1 id="一、类型推导"><a href="#一、类型推导" class="headerlink" title="一、类型推导"></a>一、类型推导</h1><p>C++98有一套类型推导的规则：用于<strong>函数模板</strong>的规则。C++11修改了其中的一些规则并增加了两套规则，一套用于<strong>auto</strong>，一套用于<strong>decltype</strong>。C++14扩展了<code>auto</code>和<code>decltype</code>可能使用的范围。</p>
 <h2 id="1-理解模板类型推导"><a href="#1-理解模板类型推导" class="headerlink" title="1. 理解模板类型推导"></a>1. 理解模板类型推导</h2><p>C++11的auto&#x2F;decltype类型推导其实就是基于模板类型推导实现的，模板类型推导分成三个情景，下面我们分别介绍：</p>
 <ol>
@@ -285,6 +287,8 @@
 <li>这些工具可能既不准确也无帮助，所以理解C++类型推导规则才是最重要的。</li>
 </ul>
 </blockquote>
+<br>
+
 <h1 id="二、auto"><a href="#二、auto" class="headerlink" title="二、auto"></a>二、auto</h1><p><code>auto</code>很简单，使用它可以存储类型，但是有时它也会犯一些错误，而且比之手动声明一些复杂类型也会存在一些性能问题。所以我们有必要知道<code>auto</code>的里里外外。</p>
 <h2 id="5-优先考虑auto而非显式类型声明"><a href="#5-优先考虑auto而非显式类型声明" class="headerlink" title="5. 优先考虑auto而非显式类型声明"></a>5. 优先考虑auto而非显式类型声明</h2><p>下面列举些优先使用auto的原因：</p>
 <ul>
@@ -335,6 +339,8 @@
 <li>显式类型初始器惯用法(static_cast)强制<code>auto</code>推导出你想要的结果。</li>
 </ul>
 </blockquote>
+<br>
+
 <h1 id="三、移步现代C"><a href="#三、移步现代C" class="headerlink" title="三、移步现代C++"></a>三、移步现代C++</h1><p>说起知名的特性，C++11&#x2F;14有一大堆可以吹的东西，<code>auto</code>，智能指针，移动语义，<em>lambda</em>，并发 。每个都是如此的重要，这章将覆盖这些内容。掌握这些特性是必要的，要想成为高效率的现代C++程序员需要小步迈进。</p>
 <h2 id="7-区别使用-和-创建对象"><a href="#7-区别使用-和-创建对象" class="headerlink" title="7. 区别使用()和{}创建对象"></a>7. 区别使用()和{}创建对象</h2><p>对于一个变量的初始化，有下面这么多的形式：</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">x</span><span class="params">(<span class="number">0</span>)</span></span>;               <span class="comment">//使用圆括号初始化</span></span><br><span class="line"><span class="type">int</span> y = <span class="number">0</span>;              <span class="comment">//使用&quot;=&quot;初始化</span></span><br><span class="line"><span class="type">int</span> z&#123; <span class="number">0</span> &#125;;             <span class="comment">//使用花括号初始化  等效 int z = &#123; 0 &#125;; </span></span><br></pre></td></tr></table></figure>
@@ -475,7 +481,105 @@
 <li>为重写函数显示加上<code>override</code>，防止想重写而实际没重写错误。</li>
 </ul>
 </blockquote>
+<h2 id="13-优先考虑const-iterator而非iterator"><a href="#13-优先考虑const-iterator而非iterator" class="headerlink" title="13. 优先考虑const_iterator而非iterator"></a>13. 优先考虑const_iterator而非iterator</h2><p><code>const_iterator</code> 和 <code>iterator</code> 是用于访问容器元素的两种不同类型的迭代器(其实就是指向容器元素的指针)。它们的主要区别在于是否允许修改容器中的元素。</p>
+<p>这里优先考虑<code>const_iterator</code>与<code>const</code>的使用目的是一样的，就是当你不需要修改容器元素时，你就应该用<code>const_iterator</code>，防止意外修改，这种做法有助于防止一些常见的编程错误，提高代码的可读性和可维护性。</p>
+<p><strong>请记住：</strong></p>
+<blockquote>
+<ul>
+<li>优先考虑<code>const_iterator</code>而非<code>iterator</code></li>
+</ul>
+</blockquote>
+<h2 id="14-如果函数不抛异常请使用noexcept"><a href="#14-如果函数不抛异常请使用noexcept" class="headerlink" title="14. 如果函数不抛异常请使用noexcept"></a>14. 如果函数不抛异常请使用noexcept</h2><p>如果你能明确函数不会抛异常，把它标记为<code>noexcept</code>，可以帮助编译器更好的生成优化的代码。</p>
+<p><strong>请记住：</strong></p>
+<blockquote>
+<ul>
+<li><code>noexcept</code>是函数接口的一部分，这意味着调用者可能会依赖它。</li>
+<li><code>noexcept</code>函数较之于non-<code>noexcept</code>函数更容易优化。</li>
+<li><code>noexcept</code>对于移动语义，<code>swap</code>，内存释放函数和析构函数非常有用(这些操作如果失败一般是不可逆的，所以要保证它们不抛异常)。</li>
+<li>大多数函数是可能抛也可能不抛异常，所以大部分函数一般不加<code>noexcept</code></li>
+</ul>
+</blockquote>
+<h2 id="15-尽可能的使用constexpr"><a href="#15-尽可能的使用constexpr" class="headerlink" title="15. 尽可能的使用constexpr"></a>15. 尽可能的使用constexpr</h2><p>关键就是它保证对象或函数返回值在编译期间求值或计算，提高了运行效率。</p>
+<p><strong>请记住：</strong></p>
+<blockquote>
+<ul>
+<li>所有<code>constexpr</code>对象都是<code>const</code>，但不是所有<code>const</code>对象都是<code>constexpr</code>，它被在编译期可知的值初始化。</li>
+<li>当传递编译期可知的值时，<code>constexpr</code>函数可以产出编译期可知的结果。</li>
+<li><code>constexpr</code>对象和函数可以使用的范围比non-<code>constexpr</code>对象和函数要大。</li>
+<li><code>constexpr</code>是对象和函数接口的一部分(这和上面noexcept一样)。</li>
+</ul>
+</blockquote>
+<h2 id="16-让const成员函数线程安全"><a href="#16-让const成员函数线程安全" class="headerlink" title="16. 让const成员函数线程安全"></a>16. 让const成员函数线程安全</h2><p>主要是讨论多线程环境下如何保证线程安全的话题，其实与const没太多关系。。。</p>
+<p>这里对于保证线程安全提供了两种思路：</p>
+<ol>
+<li>使用C++11引入的智能锁<code>std::lock_guard</code>，创建时上锁，离开创建的作用域后自动解锁。</li>
+</ol>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Polynomial</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="keyword">using</span> RootsType = std::vector&lt;<span class="type">double</span>&gt;;</span><br><span class="line">    </span><br><span class="line">    <span class="function">RootsType <span class="title">roots</span><span class="params">()</span> <span class="type">const</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="function">std::lock_guard&lt;std::mutex&gt; <span class="title">g</span><span class="params">(m)</span></span>;       <span class="comment">//锁定互斥量</span></span><br><span class="line">        </span><br><span class="line">        <span class="keyword">if</span> (!rootsAreValid) &#123;                   <span class="comment">//如果缓存无效</span></span><br><span class="line">            …                                   <span class="comment">//计算/存储根值</span></span><br><span class="line">            rootsAreValid = <span class="literal">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">return</span> rootsVals;</span><br><span class="line">    &#125;                                           <span class="comment">//解锁互斥量</span></span><br><span class="line">    </span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="keyword">mutable</span> std::mutex m;</span><br><span class="line">    <span class="keyword">mutable</span> <span class="type">bool</span> rootsAreValid &#123; <span class="literal">false</span> &#125;;</span><br><span class="line">    <span class="keyword">mutable</span> RootsType rootsVals &#123;&#125;;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 
+<ol start="2">
+<li>单一变量互斥使用<code>std::atomic</code>开销更小，性能更高。</li>
+</ol>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Point</span> &#123;                                   <span class="comment">//2D点</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    …</span><br><span class="line">    <span class="function"><span class="type">double</span> <span class="title">distanceFromOrigin</span><span class="params">()</span> <span class="type">const</span> <span class="keyword">noexcept</span>  <span class="comment">//noexcept的使用</span></span></span><br><span class="line"><span class="function">    </span>&#123;                                           <span class="comment">//参考条款14</span></span><br><span class="line">        ++callCount;                            <span class="comment">//atomic的递增</span></span><br><span class="line">        </span><br><span class="line">        <span class="keyword">return</span> std::<span class="built_in">sqrt</span>((x * x) + (y * y));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="keyword">mutable</span> std::atomic&lt;<span class="type">unsigned</span>&gt; callCount&#123; <span class="number">0</span> &#125;;</span><br><span class="line">    <span class="type">double</span> x, y;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p><strong>请记住：</strong></p>
+<blockquote>
+<ul>
+<li>确保<code>const</code>成员函数线程安全，除非你<strong>确定</strong>它们永远不会在并发上下文（<em>concurrent context</em>）中使用。</li>
+<li>使用<code>std::atomic</code>变量可能比互斥量提供更好的性能，但是它只适合操作单个变量或内存位置。</li>
+</ul>
+</blockquote>
+<h2 id="17-理解特殊成员函数的生成"><a href="#17-理解特殊成员函数的生成" class="headerlink" title="17. 理解特殊成员函数的生成"></a>17. 理解特殊成员函数的生成</h2><p>特殊成员函数是指C++自己生成的函数。C++98有四个：<strong>默认构造函数，析构函数，拷贝构造函数，拷贝赋值运算符。</strong>C++11新增了两个：<strong>移动构造函数和移动赋值运算符。</strong></p>
+<p>这些函数仅在需要的时候才会生成，生成的特殊成员函数是隐式public且<code>inline</code>。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Widget</span> &#123;</span><br><span class="line">    <span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">Widget</span>();                              <span class="comment">// 用户声明的构造函数</span></span><br><span class="line">    ~<span class="built_in">Widget</span>();                             <span class="comment">// 用户声明的析构函数                        </span></span><br><span class="line">    <span class="built_in">Widget</span>(<span class="type">const</span> Widget&amp;) = <span class="keyword">default</span>;       <span class="comment">// 显示告诉编译器生成默认拷贝构造函数</span></span><br><span class="line">    Widget&amp; <span class="keyword">operator</span>=(<span class="type">const</span> Widget&amp;) = <span class="keyword">default</span>; <span class="comment">//显示告诉编译器生成默认拷贝赋值运算符</span></span><br><span class="line">    </span><br><span class="line">    <span class="built_in">Widget</span>(Widget&amp;&amp; rhs);               <span class="comment">//移动构造函数</span></span><br><span class="line">    Widget&amp; <span class="keyword">operator</span>=(Widget&amp;&amp; rhs);    <span class="comment">//移动赋值运算符</span></span><br><span class="line">&#125;;</span><br><span class="line"><span class="comment">// = default 避开C++11特殊函数生成的规则，显示告诉编译器生成默认的。</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>请记住：</strong></p>
+<blockquote>
+<ul>
+<li><strong>特殊成员函数</strong>是编译器可能自动生成的函数：默认构造函数，析构函数，拷贝操作，移动操作。</li>
+<li><strong>移动操作</strong>仅当类没有显式声明移动操作，拷贝操作，析构函数时才自动生成。</li>
+<li><strong>拷贝构造函数</strong>仅当类没有显式声明拷贝构造函数时才自动生成，并且如果用户声明了移动操作，拷贝构造就是<em>delete</em>。<strong>拷贝赋值运算符</strong>仅当类没有显式声明拷贝赋值运算符时才自动生成，并且如果用户声明了移动操作，拷贝赋值运算符就是<em>delete</em>。当用户声明了<strong>析构函数</strong>，拷贝操作的自动生成会被废弃。</li>
+<li><strong>成员函数模板</strong>不抑制特殊成员函数的生成。</li>
+</ul>
+</blockquote>
+<br>
+
+<h1 id="四、智能指针"><a href="#四、智能指针" class="headerlink" title="四、智能指针"></a>四、智能指针</h1><p>原始指针是强大的工具，当然，另一方面几十年的经验证明，只要注意力稍有疏忽，这个强大的工具就会攻击它的主人。</p>
+<p>智能指针是解决这些问题的一种办法。智能指针包裹原始指针，它们的行为看起来像被包裹的原始指针，但避免了原始指针的很多陷阱。你应该更倾向于智能指针而不是原始指针。几乎原始指针能做的所有事情智能指针都能做，而且出错的机会更少。</p>
+<p>在C++11中存在四种智能指针：<code>std::auto_ptr</code>，<code>std::unique_ptr</code>，<code>std::shared_ptr</code>，<code> std::weak_ptr</code>。</p>
+<p><code>std::auto_ptr</code>是来自C++98的已废弃遗留物，它是一次标准化的尝试，后来变成了C++11的<code>std::unique_ptr</code>。要正确的模拟原生指针需要移动语义，但是C++98没有这个东西。取而代之，<code>std::auto_ptr</code>拉拢拷贝操作来达到自己的移动意图。这导致了令人奇怪的代码（拷贝一个<code>std::auto_ptr</code>会将它本身设置为null！）和令人沮丧的使用限制（比如不能将<code>std::auto_ptr</code>放入容器）。</p>
+<p><code>std::unique_ptr</code>能做<code>std::auto_ptr</code>可以做的所有事情以及更多。它能高效完成任务，而且不会扭曲自己的原本含义而变成拷贝对象。在所有方面它都比<code>std::auto_ptr</code>好。现在<code>std::auto_ptr</code>唯一合法的使用场景就是代码使用C++98编译器编译。除非你有上述限制，否则你就该把<code>std::auto_ptr</code>替换为<code>std::unique_ptr</code>而且绝不回头。</p>
+<h2 id="18-对于独占资源使用std-unique-ptr"><a href="#18-对于独占资源使用std-unique-ptr" class="headerlink" title="18. 对于独占资源使用std::unique_ptr"></a>18. 对于独占资源使用std::unique_ptr</h2><p><code>std::unique_ptr</code>智能指针没有拷贝操作，独占资源，它很轻量级，大小等同于原始指针。在工厂函数返回指针对象的场景中常用，它可以很方便的转换为<code>std::shared_ptr</code>共享指针。</p>
+<p><strong>请记住：</strong></p>
+<blockquote>
+<ul>
+<li><code>std::unique_ptr</code>是轻量级、快速的、只可移动的管理专有资源的智能指针。</li>
+<li>将<code>std::unique_ptr</code>转化为<code>std::shared_ptr</code>非常简单。</li>
+</ul>
+</blockquote>
+<h2 id="19-对于共享资源使用std-shared-ptr"><a href="#19-对于共享资源使用std-shared-ptr" class="headerlink" title="19. 对于共享资源使用std::shared_ptr"></a>19. 对于共享资源使用std::shared_ptr</h2><p><code>std::shared_ptr</code>共享智能指针允许多个<code>std::shared_ptr</code>对象指向同一块内存资源。</p>
+<p><code>std::shared_ptr</code>通过<strong>引用计数</strong>来确保它是否是最后一个指向某种资源的指针，引用计数关联资源并跟踪有多少<code>std::shared_ptr</code>指向该资源。<code>std::shared_ptr</code>通常是构造函数递增引用计数值，析构函数递减值，拷贝赋值运算符做前面这两个工作。（如<code>sp1</code>和<code>sp2</code>是<code>std::shared_ptr</code>并且指向不同对象，赋值“<code>sp1 = sp2;</code>”会使<code>sp1</code>指向<code>sp2</code>指向的对象。直接效果就是<code>sp1</code>引用计数减1，<code>sp2</code>引用计数加1。）如果<code>std::shared_ptr</code>在计数值递减后发现引用计数值为零，没有其他<code>std::shared_ptr</code>指向该资源，它就会销毁资源。</p>
+<p><code>std::shared_ptr</code>相对<code>std::unique_ptr</code><strong>更耗性能</strong>，它大小更大，内部多了引用计数对象，并且计数的增减必须保证是原子性的，而原子操作通常比非原子操作要慢。</p>
+<p>下面是一个非常简单的示例，实际的 <code>shared_ptr</code> 实现比这要复杂得多，因为它需要考虑线程安全、循环引用等。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">SimpleSharedPtr</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">SimpleSharedPtr</span>(T* ptr) : <span class="built_in">data</span>(ptr), <span class="built_in">count</span>(<span class="keyword">new</span> <span class="built_in">int</span>(<span class="number">1</span>)) &#123;&#125;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">SimpleSharedPtr</span>(<span class="type">const</span> SimpleSharedPtr&amp; other) : <span class="built_in">data</span>(other.data), <span class="built_in">count</span>(other.count)     &#123;</span><br><span class="line">        (*count)++;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    ~<span class="built_in">SimpleSharedPtr</span>()</span><br><span class="line">    &#123;</span><br><span class="line">        (*count)--;</span><br><span class="line">        <span class="keyword">if</span> (*count == <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">delete</span> data;</span><br><span class="line">            <span class="keyword">delete</span> count;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    SimpleSharedPtr&amp; <span class="keyword">operator</span>=(<span class="type">const</span> SimpleSharedPtr&amp; other) </span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">this</span> != &amp;other) &#123;</span><br><span class="line">            (*count)--;</span><br><span class="line">            <span class="keyword">if</span> (*count == <span class="number">0</span>) &#123;</span><br><span class="line">                <span class="keyword">delete</span> data;</span><br><span class="line">                <span class="keyword">delete</span> count;</span><br><span class="line">            &#125;</span><br><span class="line">            data = other.data;</span><br><span class="line">            count = other.count;</span><br><span class="line">            (*count)++;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> *<span class="keyword">this</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    T* data;</span><br><span class="line">    <span class="type">int</span>* count;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>接下来我们看一个这样的使用示例：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">auto</span> pw = <span class="keyword">new</span> Widget;               <span class="comment">//pw是原始指针</span></span><br><span class="line">…</span><br><span class="line"><span class="function">std::shared_ptr&lt;Widget&gt; <span class="title">spw1</span><span class="params">(pw)</span></span>;   <span class="comment">//为*pw创建控制块</span></span><br><span class="line">…</span><br><span class="line"><span class="function">std::shared_ptr&lt;Widget&gt; <span class="title">spw2</span><span class="params">(pw)</span></span>;   <span class="comment">//为*pw创建第二个控制块</span></span><br></pre></td></tr></table></figure>
+
+<p>用一个原始指针来创建两个<code>shared_ptr</code>对象，这很糟糕，<code>*pw</code>有两个引用计数值，每一个最后都会变成零，然后最终导致<code>*pw</code>销毁两次，第二个销毁会产生未定义行为。</p>
+<p>针对这种情况我们的建议<strong>是永远不要直接使用原始指针来创建<code>std::shared_ptr</code>，而应该使用<code>std::make_shared</code>来创建，如果你非要使用原始指针创建，请使用<code>new</code>出来的结果</strong>。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">std::shared_ptr&lt;Widget&gt; <span class="title">spw1</span><span class="params">(<span class="keyword">new</span> Widget)</span></span>;    <span class="comment">//直接使用new的结果</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>请记住：</strong></p>
+<blockquote>
+<ul>
+<li><code>std::shared_ptr</code>为有共享所有权的任意资源提供一种自动垃圾回收的便捷方式。</li>
+<li>较之于<code>std::unique_ptr</code>，<code>std::shared_ptr</code>对象通常大两倍，控制块会产生开销，需要原子性的引用计数修改操作。</li>
+<li>避免从原始指针变量上创建<code>std::shared_ptr</code>。</li>
+</ul>
+</blockquote>
+<h2 id="20-当std-shared-ptr可能悬空时使用std-weak-ptr"><a href="#20-当std-shared-ptr可能悬空时使用std-weak-ptr" class="headerlink" title="20. 当std::shared_ptr可能悬空时使用std::weak_ptr"></a>20. 当std::shared_ptr可能悬空时使用std::weak_ptr</h2>
     </div>
     
     <div class="post-footer">
@@ -531,7 +635,7 @@
             文章目录
         </h3>
         
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-text">前言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E7%B1%BB%E5%9E%8B%E6%8E%A8%E5%AF%BC"><span class="toc-text">一、类型推导</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E7%90%86%E8%A7%A3%E6%A8%A1%E6%9D%BF%E7%B1%BB%E5%9E%8B%E6%8E%A8%E5%AF%BC"><span class="toc-text">1. 理解模板类型推导</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E7%90%86%E8%A7%A3auto%E7%B1%BB%E5%9E%8B%E6%8E%A8%E5%AF%BC"><span class="toc-text">2. 理解auto类型推导</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E7%90%86%E8%A7%A3decltype"><span class="toc-text">3. 理解decltype</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-%E5%AD%A6%E4%BC%9A%E6%9F%A5%E7%9C%8B%E7%B1%BB%E5%9E%8B%E6%8E%A8%E5%AF%BC%E7%BB%93%E6%9E%9C"><span class="toc-text">4. 学会查看类型推导结果</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BA%8C%E3%80%81auto"><span class="toc-text">二、auto</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#5-%E4%BC%98%E5%85%88%E8%80%83%E8%99%91auto%E8%80%8C%E9%9D%9E%E6%98%BE%E5%BC%8F%E7%B1%BB%E5%9E%8B%E5%A3%B0%E6%98%8E"><span class="toc-text">5. 优先考虑auto而非显式类型声明</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-auto%E6%8E%A8%E5%AF%BC%E8%8B%A5%E9%9D%9E%E5%B7%B1%E6%84%BF%EF%BC%8C%E4%BD%BF%E7%94%A8%E6%98%BE%E5%BC%8F%E7%B1%BB%E5%9E%8B%E5%BC%BA%E8%BD%AC"><span class="toc-text">6. auto推导若非己愿，使用显式类型强转</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E7%A7%BB%E6%AD%A5%E7%8E%B0%E4%BB%A3C"><span class="toc-text">三、移步现代C++</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#7-%E5%8C%BA%E5%88%AB%E4%BD%BF%E7%94%A8-%E5%92%8C-%E5%88%9B%E5%BB%BA%E5%AF%B9%E8%B1%A1"><span class="toc-text">7. 区别使用()和{}创建对象</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#8-%E4%BC%98%E5%85%88%E8%80%83%E8%99%91nullptr%E8%80%8C%E9%9D%9E0%E5%92%8CNULL"><span class="toc-text">8. 优先考虑nullptr而非0和NULL</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#9-%E4%BC%98%E5%85%88%E8%80%83%E8%99%91%E5%88%AB%E5%90%8D%E5%A3%B0%E6%98%8E%E8%80%8C%E9%9D%9Etypedef"><span class="toc-text">9. 优先考虑别名声明而非typedef</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#10-%E4%BC%98%E5%85%88%E8%80%83%E8%99%91%E9%99%90%E5%9F%9F%E6%9E%9A%E4%B8%BE%E8%80%8C%E9%9D%9E%E6%9C%AA%E9%99%90%E5%9F%9F%E6%9E%9A%E4%B8%BE"><span class="toc-text">10. 优先考虑限域枚举而非未限域枚举</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#11-%E4%BC%98%E5%85%88%E8%80%83%E8%99%91%E4%BD%BF%E7%94%A8deleted%E5%87%BD%E6%95%B0%E8%80%8C%E9%9D%9E%E4%BD%BF%E7%94%A8%E6%9C%AA%E5%AE%9A%E4%B9%89%E7%9A%84%E7%A7%81%E6%9C%89%E5%A3%B0%E6%98%8E"><span class="toc-text">11. 优先考虑使用deleted函数而非使用未定义的私有声明</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#12-%E4%BD%BF%E7%94%A8override%E5%A3%B0%E6%98%8E%E9%87%8D%E5%86%99%E5%87%BD%E6%95%B0"><span class="toc-text">12. 使用override声明重写函数</span></a></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-text">前言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E7%B1%BB%E5%9E%8B%E6%8E%A8%E5%AF%BC"><span class="toc-text">一、类型推导</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E7%90%86%E8%A7%A3%E6%A8%A1%E6%9D%BF%E7%B1%BB%E5%9E%8B%E6%8E%A8%E5%AF%BC"><span class="toc-text">1. 理解模板类型推导</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E7%90%86%E8%A7%A3auto%E7%B1%BB%E5%9E%8B%E6%8E%A8%E5%AF%BC"><span class="toc-text">2. 理解auto类型推导</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E7%90%86%E8%A7%A3decltype"><span class="toc-text">3. 理解decltype</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-%E5%AD%A6%E4%BC%9A%E6%9F%A5%E7%9C%8B%E7%B1%BB%E5%9E%8B%E6%8E%A8%E5%AF%BC%E7%BB%93%E6%9E%9C"><span class="toc-text">4. 学会查看类型推导结果</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BA%8C%E3%80%81auto"><span class="toc-text">二、auto</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#5-%E4%BC%98%E5%85%88%E8%80%83%E8%99%91auto%E8%80%8C%E9%9D%9E%E6%98%BE%E5%BC%8F%E7%B1%BB%E5%9E%8B%E5%A3%B0%E6%98%8E"><span class="toc-text">5. 优先考虑auto而非显式类型声明</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-auto%E6%8E%A8%E5%AF%BC%E8%8B%A5%E9%9D%9E%E5%B7%B1%E6%84%BF%EF%BC%8C%E4%BD%BF%E7%94%A8%E6%98%BE%E5%BC%8F%E7%B1%BB%E5%9E%8B%E5%BC%BA%E8%BD%AC"><span class="toc-text">6. auto推导若非己愿，使用显式类型强转</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E7%A7%BB%E6%AD%A5%E7%8E%B0%E4%BB%A3C"><span class="toc-text">三、移步现代C++</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#7-%E5%8C%BA%E5%88%AB%E4%BD%BF%E7%94%A8-%E5%92%8C-%E5%88%9B%E5%BB%BA%E5%AF%B9%E8%B1%A1"><span class="toc-text">7. 区别使用()和{}创建对象</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#8-%E4%BC%98%E5%85%88%E8%80%83%E8%99%91nullptr%E8%80%8C%E9%9D%9E0%E5%92%8CNULL"><span class="toc-text">8. 优先考虑nullptr而非0和NULL</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#9-%E4%BC%98%E5%85%88%E8%80%83%E8%99%91%E5%88%AB%E5%90%8D%E5%A3%B0%E6%98%8E%E8%80%8C%E9%9D%9Etypedef"><span class="toc-text">9. 优先考虑别名声明而非typedef</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#10-%E4%BC%98%E5%85%88%E8%80%83%E8%99%91%E9%99%90%E5%9F%9F%E6%9E%9A%E4%B8%BE%E8%80%8C%E9%9D%9E%E6%9C%AA%E9%99%90%E5%9F%9F%E6%9E%9A%E4%B8%BE"><span class="toc-text">10. 优先考虑限域枚举而非未限域枚举</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#11-%E4%BC%98%E5%85%88%E8%80%83%E8%99%91%E4%BD%BF%E7%94%A8deleted%E5%87%BD%E6%95%B0%E8%80%8C%E9%9D%9E%E4%BD%BF%E7%94%A8%E6%9C%AA%E5%AE%9A%E4%B9%89%E7%9A%84%E7%A7%81%E6%9C%89%E5%A3%B0%E6%98%8E"><span class="toc-text">11. 优先考虑使用deleted函数而非使用未定义的私有声明</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#12-%E4%BD%BF%E7%94%A8override%E5%A3%B0%E6%98%8E%E9%87%8D%E5%86%99%E5%87%BD%E6%95%B0"><span class="toc-text">12. 使用override声明重写函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#13-%E4%BC%98%E5%85%88%E8%80%83%E8%99%91const-iterator%E8%80%8C%E9%9D%9Eiterator"><span class="toc-text">13. 优先考虑const_iterator而非iterator</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#14-%E5%A6%82%E6%9E%9C%E5%87%BD%E6%95%B0%E4%B8%8D%E6%8A%9B%E5%BC%82%E5%B8%B8%E8%AF%B7%E4%BD%BF%E7%94%A8noexcept"><span class="toc-text">14. 如果函数不抛异常请使用noexcept</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#15-%E5%B0%BD%E5%8F%AF%E8%83%BD%E7%9A%84%E4%BD%BF%E7%94%A8constexpr"><span class="toc-text">15. 尽可能的使用constexpr</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#16-%E8%AE%A9const%E6%88%90%E5%91%98%E5%87%BD%E6%95%B0%E7%BA%BF%E7%A8%8B%E5%AE%89%E5%85%A8"><span class="toc-text">16. 让const成员函数线程安全</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#17-%E7%90%86%E8%A7%A3%E7%89%B9%E6%AE%8A%E6%88%90%E5%91%98%E5%87%BD%E6%95%B0%E7%9A%84%E7%94%9F%E6%88%90"><span class="toc-text">17. 理解特殊成员函数的生成</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E6%99%BA%E8%83%BD%E6%8C%87%E9%92%88"><span class="toc-text">四、智能指针</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#18-%E5%AF%B9%E4%BA%8E%E7%8B%AC%E5%8D%A0%E8%B5%84%E6%BA%90%E4%BD%BF%E7%94%A8std-unique-ptr"><span class="toc-text">18. 对于独占资源使用std::unique_ptr</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#19-%E5%AF%B9%E4%BA%8E%E5%85%B1%E4%BA%AB%E8%B5%84%E6%BA%90%E4%BD%BF%E7%94%A8std-shared-ptr"><span class="toc-text">19. 对于共享资源使用std::shared_ptr</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#20-%E5%BD%93std-shared-ptr%E5%8F%AF%E8%83%BD%E6%82%AC%E7%A9%BA%E6%97%B6%E4%BD%BF%E7%94%A8std-weak-ptr"><span class="toc-text">20. 当std::shared_ptr可能悬空时使用std::weak_ptr</span></a></li></ol></li></ol>
         
     </div>
 </aside>
