@@ -1,0 +1,353 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+<head>
+    <!--Setting-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta name="apple-mobile-web-app-capable" content="Hexo">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    <meta name="browsermode" content="application">
+    <meta name="screen-orientation" content="portrait">
+    <meta name="theme-version" content="1.0.0">
+    <meta name="root" content="/">
+    <link rel="dns-prefetch" href="https://cxx001.gitee.io">
+    <!--SEO-->
+
+<meta name="keywords" content="bug" />
+
+
+<meta name="description" content="前言年纪大了，发现曾经踩过的坑老是健忘，简单记录下，做个汇总专栏，持续更新~
+此栏开始于：2023-11-21 10:57:55
+1. 调式时断点不命中常见两种情况：
+
+当前断点代码是独立编译成..." />
+
+
+<meta name="robots" content="all" />
+<meta name="google" content="all" />
+<meta name="googlebot" content="all" />
+<meta name="verify" content="all" />
+    <!--Title-->
+
+<title>
+    
+    踩坑汇总 |
+    
+    Hexo
+</title>
+
+<link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+
+
+<link rel="icon" href="/favicon.ico">
+
+    
+
+
+<link rel="stylesheet" href="/css/bootstrap.min.css?rev=3.3.7.css">
+<link rel="stylesheet" href="/css/font-awesome.min.css?rev=4.7.0.css">
+<link rel="stylesheet" href="/css/style.css?rev=@@hash.css">
+
+    
+<div class="hide">
+    <script type="text/javascript">
+    var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+    document.write(unescape("%3Cspan class='cnzz_stat_icon_1263868967 hide' %3E%3Cscript%20src%3D%22https%3A%2F%2Fs95.cnzz.com%2Fz_stat.php%3Fweb_id%3D1272564536%22%3E%3C%2Fscript%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s19.cnzz.com/z_stat.php%3Fid%3D1263868967%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+    </script>
+</div>
+
+
+
+
+    
+
+<meta name="generator" content="Hexo 6.2.0"></head>
+<!--[if lte IE 8]>
+<style>
+    html{ font-size: 1em }
+</style>
+<![endif]-->
+<!--[if lte IE 9]>
+<div style="ie">你使用的浏览器版本过低，为了你更好的阅读体验，请更新浏览器的版本或者使用其他现代浏览器，比如Chrome、Firefox、Safari等。</div>
+<![endif]-->
+<body>
+    <header class="main-header"  style="background-image:url(
+    https://hexo-theme-snippet-1251680922.cos.ap-beijing.myqcloud.com/img/banner.jpg)"
+     >
+    <div class="main-header-box">
+        <a class="header-avatar" href="/" title='John Doe'>
+            <img src="/img/avatar.jpg" alt="logo头像" class="img-responsive center-block">
+        </a>
+        <div class="branding">
+            <!--<h2 class="text-hide">Snippet主题,从未如此简单有趣</h2>-->
+            
+            <img src="/img/branding.png" alt="Snippet 博客主题" class="img-responsive center-block">
+            
+        </div>
+    </div>
+</header>
+    <nav class="main-navigation">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="navbar-header"><span class="nav-toggle-button collapsed pull-right" data-toggle="collapse" data-target="#main-menu" id="mnav">
+                        <span class="sr-only"></span>
+                        <i class="fa fa-bars"></i>
+                    </span>
+                    <a class="navbar-brand" href="https://cxx001.gitee.io">
+                        Hexo</a>
+                </div>
+                <div class="collapse navbar-collapse" id="main-menu">
+                    <ul class="menu">
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/"><i class="fa "></i>
+                                首页</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/archives/"><i class="fa "></i>
+                                时间轴</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/guestbook/"><i class="fa "></i>
+                                留言</a>
+                        </li>
+                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+    <section class="content-wrap">
+        <div class="container">
+            <div class="row">
+                <main class="col-md-8 main-content m-post">
+                    <p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id="踩坑汇总">
+            
+            踩坑汇总
+            
+        </h1>
+        <div class="post-meta">
+    
+    <span class="categories-meta fa-wrap">
+        <i class="fa fa-folder-open-o"></i>
+        <a class="category-link" href="/categories/project/">project</a>
+    </span>
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-tags"></i>
+        <span class="tags-meta">
+            
+            <a class="tag-none-link" href="/tags/bug/" rel="tag">bug</a>
+            
+        </span>
+    </span>
+    
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-clock-o"></i>
+        <span class="date-meta">
+            2023/11/21</span>
+    </span>
+    
+    <span class="fa-wrap">
+        <i class="fa fa-eye"></i>
+        <span id="busuanzi_value_page_pv"></span>
+    </span>
+    
+    
+</div>
+        
+        
+    </div>
+    
+    <div class="post-body post-content">
+        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>年纪大了，发现曾经踩过的坑老是健忘，简单记录下，做个汇总专栏，持续更新~</p>
+<p>此栏开始于：<strong>2023-11-21 10:57:55</strong></p>
+<h1 id="1-调式时断点不命中"><a href="#1-调式时断点不命中" class="headerlink" title="1. 调式时断点不命中"></a>1. 调式时断点不命中</h1><p>常见两种情况：</p>
+<ol>
+<li>当前断点代码是独立编译成动态库被主程序加载使用，这种情况断点不命中基本是：<ul>
+<li>主程序没有加载这个dll</li>
+<li>加载了这个dll，但是失败了。一般是内部错误，如内部所依赖的其它库不存在，如果内部是动态加载其它库，那就很隐蔽了，工具还查不到依赖关系。</li>
+</ul>
+</li>
+<li>祖传方式，就是格式化下代码，或随便加点注释。</li>
+</ol>
+<br>
+
+<h1 id="2-项目Debug正常但Release会崩溃"><a href="#2-项目Debug正常但Release会崩溃" class="headerlink" title="2. 项目Debug正常但Release会崩溃"></a>2. 项目Debug正常但Release会崩溃</h1><p>同一份代码，debug和release表现不一样，很有可能是它们的依赖库属性配置的问题，如把debug版的依赖库配到了release下，混用是可能出现不稳定、崩溃问题的。</p>
+<p>这个问题基本就是检测它们的属性，附加依赖项这些配置，一般是这个原因。</p>
+<p>如下，就是release版，却添加的带d的debug依赖：</p>
+<p><img src="https://cxx001.gitee.io/2023/11/21/project/%E8%B8%A9%E5%9D%91%E6%B1%87%E6%80%BB/image-20231121145430224.png"></p>
+<br>
+
+<h1 id="3-把静态库编译链接到动态库中"><a href="#3-把静态库编译链接到动态库中" class="headerlink" title="3. 把静态库编译链接到动态库中"></a>3. 把静态库编译链接到动态库中</h1><p>这个事情网上有总结一个表格，很到位：</p>
+<p><img src="https://cxx001.gitee.io/2023/11/21/project/%E8%B8%A9%E5%9D%91%E6%B1%87%E6%80%BB/image-20231121150309305.png"></p>
+<p>总结是两点：</p>
+<ol>
+<li>动态库和静态库都要是加了<code>shared -fPIC</code>选项编译出来的。</li>
+<li>注意静态库要紧跟动态库的后面，这个位置也有遵守。</li>
+</ol>
+<p>如果你不这么干，要么编译失败，要么使用时静态库接口未定义。</p>
+<br>
+
+<h1 id="4-msvc编译时报“Error-C1902：程序数据库管理器不匹配”错误"><a href="#4-msvc编译时报“Error-C1902：程序数据库管理器不匹配”错误" class="headerlink" title="4. msvc编译时报“Error C1902：程序数据库管理器不匹配”错误"></a>4. msvc编译时报“Error C1902：程序数据库管理器不匹配”错误</h1><p><img src="https://cxx001.gitee.io/2023/11/21/project/%E8%B8%A9%E5%9D%91%E6%B1%87%E6%80%BB/image-20231121151119184.png"></p>
+<p>解决办法：</p>
+<p>把<code>mspdbcore.dll</code>(C:\Program Files (x86)\Microsoft Visual Studio 10.0\Common7\IDE目录下) 和 <code> mspdbsrv.exe(C:\Program Files (x86)\Microsoft Visual Studio 10.0\Common7\IDE目录下)</code>拷贝到<code>C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin</code>目录下。</p>
+<p>什么原因造成的暂不清楚！</p>
+<br>
+
+<h1 id="5-某台机器编译的一个库，放另一台机器运行崩溃"><a href="#5-某台机器编译的一个库，放另一台机器运行崩溃" class="headerlink" title="5. 某台机器编译的一个库，放另一台机器运行崩溃"></a>5. 某台机器编译的一个库，放另一台机器运行崩溃</h1><p>一般是由于这两台机器CPU型号不一致，或版本有差异。</p>
+<p>遇到过的一个坑是，运行报<code>非法指令（核心已转储）</code>，原因是在某台机器上编译出的依赖库cmake脚本，用了<code>-mavx </code>和<code>-mfma</code> cpu指令，而另一台机器的cpu不支持这两个选项。删掉这两个指令重新编译动态库解决。</p>
+<br>
+
+<h1 id="6-vscode用cmake编译c-项目时提示一堆-“注意：包含文件”-的问题"><a href="#6-vscode用cmake编译c-项目时提示一堆-“注意：包含文件”-的问题" class="headerlink" title="6. vscode用cmake编译c++项目时提示一堆 “注意：包含文件” 的问题"></a>6. vscode用cmake编译c++项目时提示一堆 “注意：包含文件” 的问题</h1><ol>
+<li>先删除配置、重新配置。</li>
+</ol>
+<p><img src="https://cxx001.gitee.io/2023/11/21/project/%E8%B8%A9%E5%9D%91%E6%B1%87%E6%80%BB/image-20231121152552967.png"></p>
+<ol start="2">
+<li>换成vs自己的编译器构建试一下，最后会报错，不用管。</li>
+</ol>
+<p><img src="https://cxx001.gitee.io/2023/11/21/project/%E8%B8%A9%E5%9D%91%E6%B1%87%E6%80%BB/image-20231121152639337.png"></p>
+<ol start="3">
+<li>再重复1，清理再配置。然后2还原为<code>&quot;cmake.generator&quot;: &quot;Ninja Multi-Config&quot;</code>，再build就没问题了。(至于原理还不清楚，很神奇！！！)</li>
+</ol>
+<br>
+
+<h1 id="7-TCP服务端解包，数据很容易出现异常"><a href="#7-TCP服务端解包，数据很容易出现异常" class="headerlink" title="7. TCP服务端解包，数据很容易出现异常"></a>7. TCP服务端解包，数据很容易出现异常</h1><p>考虑了粘包问题后，如果还有异常，大概率是多线程资源抢占问题了，常见的服务端对每个客户端连接都会开一个线程单独处理，而上层解包又是一个公共接口，这时，如果存在公共资源，一定注意<strong>加锁</strong>。</p>
+<br>
+
+<h1 id="8-程序随机崩溃，断点调试每次错误值还不一样"><a href="#8-程序随机崩溃，断点调试每次错误值还不一样" class="headerlink" title="8. 程序随机崩溃，断点调试每次错误值还不一样"></a>8. 程序随机崩溃，断点调试每次错误值还不一样</h1><p>这一般是指针访问到非法内存导致的，如申请了一块固定大小的内存空间，在这上面做操作时，没有考虑到<strong>内存越界访问</strong>的情况。</p>
+<br>
+
+<h1 id="9-double类型计算误差问题"><a href="#9-double类型计算误差问题" class="headerlink" title="9. double类型计算误差问题"></a>9. double类型计算误差问题</h1><p>double类型数据的乘除计算是和<strong>编译器和优化等级</strong>有关系的，不过主要是优化等级有关，不同编译器，如msvc与g++它们在同一优化等级<code>O2</code>时，结果到15~17位都还是完全一致的。</p>
+
+    </div>
+    
+    <div class="post-footer">
+        <div>
+            
+            转载声明：
+            商业转载请联系作者获得授权,非商业转载请注明出处 © <a href="" target="_blank">cxx</a>
+            
+            
+        </div>
+        <div>
+            
+        </div>
+    </div>
+</article>
+<div class="article-nav prev-next-wrap clearfix">
+    
+    
+    <a href="/2023/11/06/project/1553B%E6%9D%BF%E5%8D%A1%E8%AF%A6%E8%A7%A3/" class="next-post btn btn-default" title='1553B板卡详解'>
+        <span class="hidden-lg">下一篇</span>
+        <span class="hidden-xs">
+            1553B板卡详解</span><i class="fa fa-angle-right fa-fw"></i>
+    </a>
+    
+</div>
+
+<div id="comments">
+    
+    <script src="https://giscus.app/client.js"
+        data-repo="cxx001/myblog-comment"
+        data-repo-id="R_kgDOHvvgeg"
+        data-category="General"
+        data-category-id="DIC_kwDOHvvges4CZehr"
+        data-mapping="title"
+        data-strict="0"
+        data-reactions-enabled="1"
+        data-emit-metadata="0"
+        data-input-position="top"
+        data-theme="light"
+        data-lang="zh-CN"
+        data-loading="lazy"
+        crossorigin="anonymous"
+        async>
+    </script>
+
+</div>
+
+                </main>
+                
+                    <aside id="article-toc" role="navigation" class="col-md-4">
+    <div class="widget">
+        <h3 class="title">
+            文章目录
+        </h3>
+        
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-text">前言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#1-%E8%B0%83%E5%BC%8F%E6%97%B6%E6%96%AD%E7%82%B9%E4%B8%8D%E5%91%BD%E4%B8%AD"><span class="toc-text">1. 调式时断点不命中</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#2-%E9%A1%B9%E7%9B%AEDebug%E6%AD%A3%E5%B8%B8%E4%BD%86Release%E4%BC%9A%E5%B4%A9%E6%BA%83"><span class="toc-text">2. 项目Debug正常但Release会崩溃</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#3-%E6%8A%8A%E9%9D%99%E6%80%81%E5%BA%93%E7%BC%96%E8%AF%91%E9%93%BE%E6%8E%A5%E5%88%B0%E5%8A%A8%E6%80%81%E5%BA%93%E4%B8%AD"><span class="toc-text">3. 把静态库编译链接到动态库中</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#4-msvc%E7%BC%96%E8%AF%91%E6%97%B6%E6%8A%A5%E2%80%9CError-C1902%EF%BC%9A%E7%A8%8B%E5%BA%8F%E6%95%B0%E6%8D%AE%E5%BA%93%E7%AE%A1%E7%90%86%E5%99%A8%E4%B8%8D%E5%8C%B9%E9%85%8D%E2%80%9D%E9%94%99%E8%AF%AF"><span class="toc-text">4. msvc编译时报“Error C1902：程序数据库管理器不匹配”错误</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#5-%E6%9F%90%E5%8F%B0%E6%9C%BA%E5%99%A8%E7%BC%96%E8%AF%91%E7%9A%84%E4%B8%80%E4%B8%AA%E5%BA%93%EF%BC%8C%E6%94%BE%E5%8F%A6%E4%B8%80%E5%8F%B0%E6%9C%BA%E5%99%A8%E8%BF%90%E8%A1%8C%E5%B4%A9%E6%BA%83"><span class="toc-text">5. 某台机器编译的一个库，放另一台机器运行崩溃</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#6-vscode%E7%94%A8cmake%E7%BC%96%E8%AF%91c-%E9%A1%B9%E7%9B%AE%E6%97%B6%E6%8F%90%E7%A4%BA%E4%B8%80%E5%A0%86-%E2%80%9C%E6%B3%A8%E6%84%8F%EF%BC%9A%E5%8C%85%E5%90%AB%E6%96%87%E4%BB%B6%E2%80%9D-%E7%9A%84%E9%97%AE%E9%A2%98"><span class="toc-text">6. vscode用cmake编译c++项目时提示一堆 “注意：包含文件” 的问题</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#7-TCP%E6%9C%8D%E5%8A%A1%E7%AB%AF%E8%A7%A3%E5%8C%85%EF%BC%8C%E6%95%B0%E6%8D%AE%E5%BE%88%E5%AE%B9%E6%98%93%E5%87%BA%E7%8E%B0%E5%BC%82%E5%B8%B8"><span class="toc-text">7. TCP服务端解包，数据很容易出现异常</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#8-%E7%A8%8B%E5%BA%8F%E9%9A%8F%E6%9C%BA%E5%B4%A9%E6%BA%83%EF%BC%8C%E6%96%AD%E7%82%B9%E8%B0%83%E8%AF%95%E6%AF%8F%E6%AC%A1%E9%94%99%E8%AF%AF%E5%80%BC%E8%BF%98%E4%B8%8D%E4%B8%80%E6%A0%B7"><span class="toc-text">8. 程序随机崩溃，断点调试每次错误值还不一样</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#9-double%E7%B1%BB%E5%9E%8B%E8%AE%A1%E7%AE%97%E8%AF%AF%E5%B7%AE%E9%97%AE%E9%A2%98"><span class="toc-text">9. double类型计算误差问题</span></a></li></ol>
+        
+    </div>
+</aside>
+                
+            </div>
+        </div>
+    </section>
+    <footer class="main-footer">
+    <div class="container">
+        <div class="row">
+        </div>
+    </div>
+</footer>
+<a id="back-to-top" class="icon-btn hide">
+    <i class="fa fa-chevron-up"></i>
+</a>
+    <div class="copyright">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="busuanzi">
+    
+    访问量:
+    <strong id="busuanzi_value_site_pv">
+        <i class="fa fa-spinner fa-spin"></i>
+    </strong>
+    &nbsp; | &nbsp;
+    访客数:
+    <strong id="busuanzi_value_site_uv">
+        <i class="fa fa-spinner fa-spin"></i>
+    </strong>
+    
+</div>
+            </div>
+            <div class="col-sm-12">
+                <span>Copyright &copy;
+                    2022
+                    
+                </span> |
+                <span>
+                    Powered by <a href="//hexo.io" class="copyright-links" target="_blank" rel="nofollow">Hexo</a>
+                </span> |
+                <span>
+                    Theme by <a href="//github.com/shenliyang/hexo-theme-snippet.git" class="copyright-links" target="_blank" rel="nofollow">Snippet</a>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+<script src="/js/app.js?rev=@@hash.js"></script>
+
+</body>
+</html>
