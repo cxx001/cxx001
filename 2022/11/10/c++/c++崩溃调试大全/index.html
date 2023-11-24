@@ -23,10 +23,7 @@
 
 
 <meta name="description" content="windows上程序崩溃调试场景1 调用第三方dll崩溃调试需求
-需要第三方提供对应的pdb和相关源码，注意一定要dll和pdb是同一时间编译完全匹配的版本。
-
-调试步骤
-把dll 、pdb和e..." />
+需要第三方提供对应的pdb和源码（源码不是必须，只是不能进入代码里边断点调试，但是可以看到堆栈信息，哪个接口哪一行崩溃)，注意一..." />
 
 
 <meta name="robots" content="all" />
@@ -177,7 +174,7 @@
     
     <div class="post-body post-content">
         <h1 id="windows上程序崩溃调试"><a href="#windows上程序崩溃调试" class="headerlink" title="windows上程序崩溃调试"></a>windows上程序崩溃调试</h1><h2 id="场景1-调用第三方dll崩溃"><a href="#场景1-调用第三方dll崩溃" class="headerlink" title="场景1 调用第三方dll崩溃"></a>场景1 调用第三方dll崩溃</h2><h3 id="调试需求"><a href="#调试需求" class="headerlink" title="调试需求"></a>调试需求</h3><ul>
-<li>需要第三方提供对应的<code>pdb</code>和相关源码，注意一定要dll和pdb是同一时间编译完全匹配的版本。</li>
+<li>需要第三方提供对应的<code>pdb</code>和源码（源码不是必须，只是不能进入代码里边断点调试，但是可以看到堆栈信息，哪个接口哪一行崩溃)，注意一定<strong>要dll和pdb是同一时间编译</strong>完全匹配的版本。</li>
 </ul>
 <h3 id="调试步骤"><a href="#调试步骤" class="headerlink" title="调试步骤"></a>调试步骤</h3><ol>
 <li>把<code>dll</code> 、<code>pdb</code>和<code>exe</code>程序放同级目录。</li>
