@@ -16,7 +16,7 @@
     <meta name="screen-orientation" content="portrait">
     <meta name="theme-version" content="1.0.0">
     <meta name="root" content="/">
-    <link rel="dns-prefetch" href="https://cxx001.gitee.io">
+    <link rel="dns-prefetch" href="https://cxx001.github.io">
     <!--SEO-->
 
 <meta name="keywords" content="bug" />
@@ -102,7 +102,7 @@
                         <span class="sr-only"></span>
                         <i class="fa fa-bars"></i>
                     </span>
-                    <a class="navbar-brand" href="https://cxx001.gitee.io">
+                    <a class="navbar-brand" href="https://cxx001.github.io">
                         Hexo</a>
                 </div>
                 <div class="collapse navbar-collapse" id="main-menu">
@@ -196,11 +196,11 @@
 <h1 id="2-项目Debug正常但Release会崩溃"><a href="#2-项目Debug正常但Release会崩溃" class="headerlink" title="2. 项目Debug正常但Release会崩溃"></a>2. 项目Debug正常但Release会崩溃</h1><p>同一份代码，debug和release表现不一样，很有可能是它们的依赖库属性配置的问题，如把debug版的依赖库配到了release下，混用是可能出现不稳定、崩溃问题的。</p>
 <p>这个问题基本就是检测它们的属性，附加依赖项这些配置，一般是这个原因。</p>
 <p>如下，就是release版，却添加的带d的debug依赖：</p>
-<p><img src="https://cxx001.gitee.io/2023/11/21/project/%E8%B8%A9%E5%9D%91%E6%B1%87%E6%80%BB/image-20231121145430224.png"></p>
+<p><img src="https://cxx001.github.io/2023/11/21/project/%E8%B8%A9%E5%9D%91%E6%B1%87%E6%80%BB/image-20231121145430224.png"></p>
 <br>
 
 <h1 id="3-把静态库编译链接到动态库中"><a href="#3-把静态库编译链接到动态库中" class="headerlink" title="3. 把静态库编译链接到动态库中"></a>3. 把静态库编译链接到动态库中</h1><p>这个事情网上有总结一个表格，很到位：</p>
-<p><img src="https://cxx001.gitee.io/2023/11/21/project/%E8%B8%A9%E5%9D%91%E6%B1%87%E6%80%BB/image-20231121150309305.png"></p>
+<p><img src="https://cxx001.github.io/2023/11/21/project/%E8%B8%A9%E5%9D%91%E6%B1%87%E6%80%BB/image-20231121150309305.png"></p>
 <p>总结是两点：</p>
 <ol>
 <li>动态库和静态库都要是加了<code>shared -fPIC</code>选项编译出来的。</li>
@@ -209,7 +209,7 @@
 <p>如果你不这么干，要么编译失败，要么使用时静态库接口未定义。</p>
 <br>
 
-<h1 id="4-msvc编译时报“Error-C1902：程序数据库管理器不匹配”错误"><a href="#4-msvc编译时报“Error-C1902：程序数据库管理器不匹配”错误" class="headerlink" title="4. msvc编译时报“Error C1902：程序数据库管理器不匹配”错误"></a>4. msvc编译时报“Error C1902：程序数据库管理器不匹配”错误</h1><p><img src="https://cxx001.gitee.io/2023/11/21/project/%E8%B8%A9%E5%9D%91%E6%B1%87%E6%80%BB/image-20231121151119184.png"></p>
+<h1 id="4-msvc编译时报“Error-C1902：程序数据库管理器不匹配”错误"><a href="#4-msvc编译时报“Error-C1902：程序数据库管理器不匹配”错误" class="headerlink" title="4. msvc编译时报“Error C1902：程序数据库管理器不匹配”错误"></a>4. msvc编译时报“Error C1902：程序数据库管理器不匹配”错误</h1><p><img src="https://cxx001.github.io/2023/11/21/project/%E8%B8%A9%E5%9D%91%E6%B1%87%E6%80%BB/image-20231121151119184.png"></p>
 <p>解决办法：</p>
 <p>把<code>mspdbcore.dll</code>(C:\Program Files (x86)\Microsoft Visual Studio 10.0\Common7\IDE目录下) 和 <code> mspdbsrv.exe(C:\Program Files (x86)\Microsoft Visual Studio 10.0\Common7\IDE目录下)</code>拷贝到<code>C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin</code>目录下。</p>
 <p>什么原因造成的暂不清楚！</p>
@@ -222,11 +222,11 @@
 <h1 id="6-vscode用cmake编译c-项目时提示一堆-“注意：包含文件”-的问题"><a href="#6-vscode用cmake编译c-项目时提示一堆-“注意：包含文件”-的问题" class="headerlink" title="6. vscode用cmake编译c++项目时提示一堆 “注意：包含文件” 的问题"></a>6. vscode用cmake编译c++项目时提示一堆 “注意：包含文件” 的问题</h1><ol>
 <li>先删除配置、重新配置。</li>
 </ol>
-<p><img src="https://cxx001.gitee.io/2023/11/21/project/%E8%B8%A9%E5%9D%91%E6%B1%87%E6%80%BB/image-20231121152552967.png"></p>
+<p><img src="https://cxx001.github.io/2023/11/21/project/%E8%B8%A9%E5%9D%91%E6%B1%87%E6%80%BB/image-20231121152552967.png"></p>
 <ol start="2">
 <li>换成vs自己的编译器构建试一下，最后会报错，不用管。</li>
 </ol>
-<p><img src="https://cxx001.gitee.io/2023/11/21/project/%E8%B8%A9%E5%9D%91%E6%B1%87%E6%80%BB/image-20231121152639337.png"></p>
+<p><img src="https://cxx001.github.io/2023/11/21/project/%E8%B8%A9%E5%9D%91%E6%B1%87%E6%80%BB/image-20231121152639337.png"></p>
 <ol start="3">
 <li>再重复1，清理再配置。然后2还原为<code>&quot;cmake.generator&quot;: &quot;Ninja Multi-Config&quot;</code>，再build就没问题了。(至于原理还不清楚，很神奇！！！)</li>
 </ol>

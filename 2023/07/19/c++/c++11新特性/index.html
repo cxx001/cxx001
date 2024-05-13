@@ -16,7 +16,7 @@
     <meta name="screen-orientation" content="portrait">
     <meta name="theme-version" content="1.0.0">
     <meta name="root" content="/">
-    <link rel="dns-prefetch" href="https://cxx001.gitee.io">
+    <link rel="dns-prefetch" href="https://cxx001.github.io">
     <!--SEO-->
 
 <meta name="keywords" content="c++11" />
@@ -97,7 +97,7 @@
                         <span class="sr-only"></span>
                         <i class="fa fa-bars"></i>
                     </span>
-                    <a class="navbar-brand" href="https://cxx001.gitee.io">
+                    <a class="navbar-brand" href="https://cxx001.github.io">
                         Hexo</a>
                 </div>
                 <div class="collapse navbar-collapse" id="main-menu">
@@ -445,7 +445,7 @@
 
 
 <h1 id="14-long-long超长整形"><a href="#14-long-long超长整形" class="headerlink" title="14. long long超长整形"></a>14. long long超长整形</h1><p>C++11加入了long long超长整形，整数后一般添加<code>ll/ull</code>表示。</p>
-<p><img src="https://cxx001.gitee.io/2023/07/19/c++/c++11%E6%96%B0%E7%89%B9%E6%80%A7/image-20230718142025000.png"></p>
+<p><img src="https://cxx001.github.io/2023/07/19/c++/c++11%E6%96%B0%E7%89%B9%E6%80%A7/image-20230718142025000.png"></p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;climits&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iomanip&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;long long最小值：&quot;</span> &lt;&lt; LLONG_MIN &lt;&lt; <span class="string">&quot; &quot;</span> &lt;&lt; hex &lt;&lt; LLONG_MIN &lt;&lt; <span class="string">&quot;\n&quot;</span>;</span><br><span class="line">    cout &lt;&lt; dec &lt;&lt; <span class="string">&quot;long long最大值：&quot;</span> &lt;&lt; LLONG_MAX &lt;&lt; <span class="string">&quot; &quot;</span> &lt;&lt; hex &lt;&lt; LLONG_MAX &lt;&lt; <span class="string">&quot;\n&quot;</span>;</span><br><span class="line">    cout &lt;&lt; dec &lt;&lt; <span class="string">&quot;unsigned long long最大值：&quot;</span> &lt;&lt; ULLONG_MAX &lt;&lt; <span class="string">&quot; &quot;</span> &lt;&lt; hex &lt;&lt; ULLONG_MAX &lt;&lt; <span class="string">&quot;\n&quot;</span>;</span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;long long int当前平台所占字节数:&quot;</span> &lt;&lt; <span class="built_in">sizeof</span>(<span class="type">long</span> <span class="type">long</span> <span class="type">int</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">long long最小值：-9223372036854775808 8000000000000000</span><br><span class="line">long long最大值：9223372036854775807 7fffffffffffffff</span><br><span class="line">unsigned long long最大值：18446744073709551615 ffffffffffffffff</span><br><span class="line">long long int当前平台所占字节数:8</span><br></pre></td></tr></table></figure>
